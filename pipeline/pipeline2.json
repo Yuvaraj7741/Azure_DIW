@@ -39,23 +39,7 @@
 					"expression": {
 						"value": "@{equals(activity('Lookup1').output.firstRow.ComponentState,'Waitingb')}",
 						"type": "Expression"
-					},
-					"ifTrueActivities": [
-						{
-							"name": "Execute SSIS Package1",
-							"type": "ExecuteSSISPackage",
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"typeProperties": {
-								"loggingLevel": "Basic"
-							}
-						}
-					]
+					}
 				}
 			}
 		]
