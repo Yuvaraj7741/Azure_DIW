@@ -1,0 +1,6 @@
+{
+	"name": "AzureMySqlTable1",
+	"properties": {
+		"type": "AzureMySqlTable"
+	}
+}
