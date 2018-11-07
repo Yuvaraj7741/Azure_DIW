@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Data1",
-				"type": "Copy",
+				"name": "Lookup1",
+				"type": "Lookup",
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -17,24 +17,46 @@
 						"type": "BlobSource",
 						"recursive": true
 					},
-					"sink": {
-						"type": "BlobSink"
-					},
-					"enableStaging": false,
-					"dataIntegrationUnits": 0
-				},
-				"inputs": [
-					{
-						"referenceName": "Input",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
+					"dataset": {
 						"referenceName": "Lookup",
 						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
-				]
+				],
+				"typeProperties": {
+					"expression": {
+						"value": "@{equals(activity(‘Lookup1′).output.firstRow.ComponentState,’Waiting’)}",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "Execute SSIS Package1",
+							"type": "ExecuteSSISPackage",
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"typeProperties": {
+								"loggingLevel": "Basic"
+							}
+						}
+					]
+				}
 			}
 		]
 	}
