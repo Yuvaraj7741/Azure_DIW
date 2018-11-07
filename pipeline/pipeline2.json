@@ -37,7 +37,7 @@
 				],
 				"typeProperties": {
 					"expression": {
-						"value": "@{equals(activity(‘Lookup1′).output.firstRow.ComponentState,’Waiting’)}",
+						"value": "@{equals(activity('Lookup1').output.firstRow.ComponentState,'Waitingb')}",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
