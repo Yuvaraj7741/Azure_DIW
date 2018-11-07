@@ -6,30 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory Name",
 			"defaultValue": "trial123"
-		},
-		"AzureBlobStorage1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
-		},
-		"AzureBlobStorage2_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
-		},
-		"Input_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "my.txt"
-		},
-		"Input_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "myblob"
-		},
-		"Lookup_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "lookupSrc.txt"
-		},
-		"Lookup_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "myblob"
 		}
 	},
 	"variables": {
@@ -45,7 +21,6 @@
 					{
 						"name": "Lookup1",
 						"type": "Lookup",
-						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -53,7 +28,6 @@
 							"secureOutput": false,
 							"secureInput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"source": {
 								"type": "BlobSource",
@@ -61,8 +35,7 @@
 							},
 							"dataset": {
 								"referenceName": "Lookup",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": false
 						}
@@ -78,7 +51,6 @@
 								]
 							}
 						],
-						"userProperties": [],
 						"typeProperties": {
 							"expression": {
 								"value": "@{equals(activity('Lookup1').output.firstRow.ComponentState,'Waitingb')}",
@@ -86,8 +58,7 @@
 							}
 						}
 					}
-				],
-				"annotations": []
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Lookup')]"
@@ -102,7 +73,6 @@
 					"referenceName": "AzureBlobStorage2",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureBlob",
 				"structure": [
 					{
@@ -124,13 +94,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
 					},
-					"fileName": "[parameters('Input_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('Input_properties_typeProperties_folderPath')]"
+					"fileName": "my.txt",
+					"folderPath": "myblob"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Lookup')]",
@@ -141,7 +108,6 @@
 					"referenceName": "AzureBlobStorage2",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureBlob",
 				"structure": [
 					{
@@ -163,39 +129,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
 					},
-					"fileName": "[parameters('Lookup_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('Lookup_properties_typeProperties_folderPath')]"
+					"fileName": "lookupSrc.txt",
+					"folderPath": "myblob"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage2_connectionString')]"
-				}
-			},
-			"dependsOn": []
+			}
 		}
 	]
 }
