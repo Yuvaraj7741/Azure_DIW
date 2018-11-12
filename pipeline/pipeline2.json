@@ -55,9 +55,29 @@
 					"secureInput": false
 				},
 				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "BlobSink",
+						"copyBehavior": "MergeFiles"
+					},
 					"enableStaging": false,
 					"dataIntegrationUnits": 0
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "Lookup1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Lookup1",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		]
 	}
