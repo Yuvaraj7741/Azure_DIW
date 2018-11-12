@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
-				"type": "Lookup",
+				"name": "Copy Data1",
+				"type": "Copy",
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -17,22 +17,13 @@
 						"type": "BlobSource",
 						"recursive": true
 					},
-					"dataset": {
-						"referenceName": "Lookup",
-						"type": "DatasetReference"
-					},
-					"firstRowOnly": false
-				}
-			},
-			{
-				"name": "If Condition1",
-				"type": "IfCondition",
-				"dependsOn": [
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
 					{
-						"activity": "Lookup1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
+						"referenceName": "Input1",
+						"type": "DatasetReference"
 					}
 				]
 			}
