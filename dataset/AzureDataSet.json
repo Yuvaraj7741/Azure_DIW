@@ -1,10 +1,19 @@
 {
-	"name": "AzureDataSet",
-	"properties": {
-		"type": "AzureBlob",
-		"typeProperties": {
-			"fileName": "my.txt",
-			"folderPath": "myblob"
-		}
-	}
+   "name" : "AzureDataSet",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlob",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureBlob",
+      "typeProperties" : {
+         "format" : {
+            "type" : "Text Format",
+            "columnDelimiter" : ",",
+            "skipLineCount" : 0
+         },
+         "fileName" : "my.txt",
+         "folderPath" : "myblob"
+      }
+   }
 }
