@@ -1,5 +1,5 @@
 {
-   "name" : "Pipeline",
+   "name" : "AzureDataSet",
    "properties" : {
       "activities" : [ {
          "name" : "Copy Data1",
