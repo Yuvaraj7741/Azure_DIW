@@ -1,0 +1,19 @@
+{
+   "name" : "Input3",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "Input_Name",
+         "type" : "Linked Service Reference"
+      },
+      "type" : "Azure Blob",
+      "typeProperties" : {
+         "format" : {
+            "type" : "Text Format",
+            "columnDelimiter" : ".,",
+            "skipLineCount" : 0
+         },
+         "fileName" : "my.txt",
+         "folderPath" : "myblob"
+      }
+   }
+}
