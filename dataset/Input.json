@@ -1,17 +1,20 @@
 {
 	"name": "Input",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage2",
+			"type": "LinkedServiceReference"
+		},
 		"type": "AzureBlob",
 		"typeProperties": {
 			"format": {
 				"type": "TextFormat",
 				"columnDelimiter": ",",
 				"rowDelimiter": "",
-				"nullValue": "\\N",
-				"treatEmptyAsNull": true,
-				"skipLineCount": 0,
-				"firstRowAsHeader": false
-			}
+				"treatEmptyAsNull": true
+			},
+			"fileName": "my.txt",
+			"folderPath": "myblob"
 		}
 	}
 }
