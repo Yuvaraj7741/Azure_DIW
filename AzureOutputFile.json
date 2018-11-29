@@ -1,8 +1,8 @@
 {
-   "name" : "AzureDataSet",
+   "name" : "AzureOutputFile",
    "properties" : {
       "activities" : [ {
-         "name" : "Copy Data1",
+         "name" : "lkp_sample2",
          "type" : "Copy",
          "policy" : {
             "timeout" : "7.00:00:00",
@@ -24,7 +24,7 @@
          },
          "inputs" : {
             "referenceName" : "DatasetReference",
-            "type" : "Input1"
+            "type" : "FlatFiles_Ctlg1"
          },
          "outputs" : {
             "referenceName" : "Lookup1",
