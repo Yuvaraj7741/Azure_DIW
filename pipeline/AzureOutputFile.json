@@ -1,0 +1,35 @@
+{
+   "name" : "AzureOutputFile",
+   "properties" : {
+      "activities" : [ {
+         "name" : "lkp_sample2",
+         "type" : "Copy",
+         "policy" : {
+            "timeout" : "7.00:00:00",
+            "retry" : 0,
+            "retryIntervalInSeconds" : 30,
+            "secureOutput" : "false",
+            "secureInput" : "false"
+         },
+         "typeProperties" : {
+            "source" : {
+               "type" : "BlobSource",
+               "recursive" : "true"
+            },
+            "sink" : {
+               "type" : "BlobSink"
+            },
+            "enableStaging" : "false",
+            "dataIntegrationUnits" : 0
+         },
+         "inputs" : {
+            "referenceName" : "DatasetReference",
+            "type" : "FlatFiles_Ctlg1"
+         },
+         "outputs" : {
+            "referenceName" : "Lookup1",
+            "type" : "DatasetReference"
+         }
+      } ]
+   }
+}
