@@ -1,5 +1,5 @@
 {
-	"name": "Lookup1",
+	"name": "Output",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage3",
