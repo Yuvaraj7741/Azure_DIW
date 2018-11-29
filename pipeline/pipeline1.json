@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Data1",
+				"name": "Catalogue1",
 				"type": "Copy",
 				"policy": {
 					"timeout": "7.00:00:00",
@@ -31,17 +31,17 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Lookup1",
+						"referenceName": "Output",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Copy Data2",
+				"name": "Catalogue2",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Copy Data1",
+						"activity": "Catalogue1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -73,7 +73,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Lookup2",
+						"referenceName": "Output1",
 						"type": "DatasetReference"
 					}
 				]
