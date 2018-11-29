@@ -1,8 +1,8 @@
 {
-	"name": "InputDataset1",
+	"name": "Lookup1",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage1",
+			"referenceName": "AzureBlobStorage3",
 			"type": "LinkedServiceReference"
 		},
 		"type": "AzureBlob",
@@ -16,9 +16,8 @@
 				"skipLineCount": 0,
 				"firstRowAsHeader": true
 			},
-			"fileName": "my.txt",
-			"folderPath": "myblob/input"
+			"fileName": "sink.txt",
+			"folderPath": "myblob"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }
