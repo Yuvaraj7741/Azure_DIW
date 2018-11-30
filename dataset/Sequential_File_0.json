@@ -1,0 +1,29 @@
+{
+   "name" : "Sequential_File_0",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureBlob",
+      "typeProperties" : {
+         "format" : {
+            "type" : "Text Format",
+            "columnDelimiter" : ",",
+            "skipLineCount" : 0
+         },
+         "fileName" : "my.txt",
+         "folderPath" : "myblob"
+      },
+      "structure" : [ {
+         "name" : "emp_id",
+         "type" : "String"
+      }, {
+         "name" : "name",
+         "type" : "String"
+      }, {
+         "name" : "dept_code",
+         "type" : "String"
+      } ]
+   }
+}
