@@ -1,0 +1,24 @@
+{
+	"name": "FlatFiles_Ctlg1",
+	"properties": {
+		"type": "AzureBlob",
+		"structure": [
+			{
+				"name": "emp_id",
+				"type": "String"
+			},
+			{
+				"name": "name",
+				"type": "String"
+			},
+			{
+				"name": "dept_code",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"fileName": "my.txt",
+			"folderPath": "myblob"
+		}
+	}
+}
