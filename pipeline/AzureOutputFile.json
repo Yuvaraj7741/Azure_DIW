@@ -39,6 +39,14 @@
 			{
 				"name": "lkp_sample3",
 				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "lkp_sample2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
