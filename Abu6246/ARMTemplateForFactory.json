@@ -114,11 +114,8 @@
 					"format": {
 						"type": "TextFormat",
 						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"nullValue": "\\N",
 						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": false
+						"skipLineCount": 0
 					},
 					"fileName": "[parameters('Data_Set_25_properties_typeProperties_fileName')]",
 					"folderPath": "[parameters('Data_Set_25_properties_typeProperties_folderPath')]"
