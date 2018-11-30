@@ -1,0 +1,19 @@
+{
+   "name" : "Data_Set_25",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureBlob",
+      "typeProperties" : {
+         "format" : {
+            "type" : "TextFormat",
+            "columnDelimiter" : ",",
+            "skipLineCount" : 0
+         },
+         "fileName" : "sink.txt",
+         "folderPath" : "myblob"
+      }
+   }
+}
