@@ -32,9 +32,10 @@
 					"translator": {
 						"type": "TabularTranslator",
 						"columnMappings": {
-							"emp_id": "emp_id",
-							"name": "name",
-							"dept_code": "dept_code"
+							"ID": "ID",
+							"Name": "Name",
+							"Oragnisation": "Organisation",
+							"Salary": "Salary"
 						}
 					}
 				},
@@ -46,7 +47,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Sequential_File_0",
+						"referenceName": "Data_Set_25",
 						"type": "DatasetReference"
 					}
 				]
