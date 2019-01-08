@@ -12,7 +12,7 @@
             "columnDelimiter" : ",",
             "skipLineCount" : 0
          },
-         "fileName" : "my.txt",
+         "fileName" : "C:\\Users\\680910\\Desktop\\SSIS_flat_source.txt",
          "folderPath" : "myblob"
       },
       "structure" : [ {

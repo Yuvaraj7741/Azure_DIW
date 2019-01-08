@@ -12,7 +12,7 @@
             "columnDelimiter" : ",",
             "skipLineCount" : 0
          },
-         "fileName" : "sink.txt",
+         "fileName" : "E:\\test\\output.txt",
          "folderPath" : "myblob"
       }
    }
