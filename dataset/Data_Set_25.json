@@ -1,19 +1,21 @@
 {
-   "name" : "Data_Set_25",
-   "properties" : {
-      "linkedServiceName" : {
-         "referenceName" : "AzureBlobStorage3",
-         "type" : "LinkedServiceReference"
-      },
-      "type" : "AzureBlob",
-      "typeProperties" : {
-         "format" : {
-            "type" : "TextFormat",
-            "columnDelimiter" : ",",
-            "skipLineCount" : 0
-         },
-         "fileName" : "E:\\test\\output.txt",
-         "folderPath" : "myblob"
-      }
-   }
+	"name": "Data_Set_25",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage4",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureBlob",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": true
+			},
+			"fileName": "",
+			"folderPath": "azureoutput"
+		}
+	}
 }
