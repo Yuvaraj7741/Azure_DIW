@@ -1,29 +1,34 @@
 {
-   "name" : "Sequential_File_0",
-   "properties" : {
-      "linkedServiceName" : {
-         "referenceName" : "AzureBlobStorage3",
-         "type" : "LinkedServiceReference"
-      },
-      "type" : "AzureBlob",
-      "typeProperties" : {
-         "format" : {
-            "type" : "TextFormat",
-            "columnDelimiter" : ",",
-            "skipLineCount" : 0
-         },
-         "fileName" : "C:\\Users\\680910\\Desktop\\SSIS_flat_source.txt",
-         "folderPath" : "myblob"
-      },
-      "structure" : [ {
-         "name" : "emp_id",
-         "type" : "String"
-      }, {
-         "name" : "name",
-         "type" : "String"
-      }, {
-         "name" : "dept_code",
-         "type" : "String"
-      } ]
-   }
+	"name": "Sequential_File_0",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage4",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureBlob",
+		"structure": [
+			{
+				"name": "emp_id",
+				"type": "String"
+			},
+			{
+				"name": "name",
+				"type": "String"
+			},
+			{
+				"name": "dept_code",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0
+			},
+			"fileName": "",
+			"folderPath": "azureinput"
+		}
+	}
 }
