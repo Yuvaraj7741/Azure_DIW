@@ -1,39 +1,19 @@
 {
-	"name": "Data_Set_25",
-	"properties": {
-		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage4",
-			"type": "LinkedServiceReference"
-		},
-		"type": "AzureBlob",
-		"structure": [
-			{
-				"name": "ID",
-				"type": "String"
-			},
-			{
-				"name": "Name",
-				"type": "String"
-			},
-			{
-				"name": "Organisation",
-				"type": "String"
-			},
-			{
-				"name": "Salary",
-				"type": "String"
-			}
-		],
-		"typeProperties": {
-			"format": {
-				"type": "TextFormat",
-				"columnDelimiter": ",",
-				"treatEmptyAsNull": true,
-				"skipLineCount": 0,
-				"firstRowAsHeader": true
-			},
-			"fileName": "",
-			"folderPath": "azureoutput"
-		}
-	}
+   "name" : "Data_Set_25",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureBlob",
+      "typeProperties" : {
+         "format" : {
+            "type" : "TextFormat",
+            "columnDelimiter" : ",",
+            "skipLineCount" : 0
+         },
+         "fileName" : "",
+         "folderPath" : "azureoutput"
+      }
+   }
 }
