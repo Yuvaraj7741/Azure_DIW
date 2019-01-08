@@ -31,7 +31,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureBlob2",
+						"referenceName": "AzureBlob3",
 						"type": "DatasetReference"
 					}
 				]
