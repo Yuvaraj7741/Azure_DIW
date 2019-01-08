@@ -8,15 +8,19 @@
 		"type": "AzureBlob",
 		"structure": [
 			{
-				"name": "emp_id",
+				"name": "ID",
 				"type": "String"
 			},
 			{
-				"name": "name",
+				"name": "Name",
 				"type": "String"
 			},
 			{
-				"name": "dept_code",
+				"name": "Oragnisation",
+				"type": "String"
+			},
+			{
+				"name": "Salary",
 				"type": "String"
 			}
 		],
