@@ -2,7 +2,7 @@
    "name" : "Sequential_File_0",
    "properties" : {
       "linkedServiceName" : {
-         "referenceName" : "AzureBlobStorage3",
+         "referenceName" : "AzureBlobStorage4",
          "type" : "LinkedServiceReference"
       },
       "type" : "AzureBlob",
