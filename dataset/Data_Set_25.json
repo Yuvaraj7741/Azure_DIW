@@ -1,0 +1,22 @@
+{
+   "name" : "Data_Set_25",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage4",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureBlob",
+      "typeProperties" : {
+         "format" : {
+            "type" : "TextFormat",
+            "columnDelimiter" : ",",
+            "rowDelimiter" : "\\N",
+            "treatEmptyAsNull" : "true",
+            "skipLineCount" : 0,
+            "firstRowAsHeader" : "true"
+         },
+         "fileName" : "Tgt_Employee.txt",
+         "folderPath" : "azureoutput"
+      }
+   }
+}
