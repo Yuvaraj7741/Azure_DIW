@@ -21,7 +21,23 @@
 						"type": "BlobSink"
 					},
 					"enableStaging": "false",
-					"dataIntegrationUnits": 0
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage4",
+							"type": "LinkedServiceReference"
+						},
+						"path": "azureoutput"
+					},
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"ID": "Id",
+							"Name": "Name",
+							"Organisation": "Organisation",
+							"Salary": "Salary"
+						}
+					}
 				},
 				"inputs": [
 					{
