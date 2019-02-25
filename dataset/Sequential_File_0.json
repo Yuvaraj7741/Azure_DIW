@@ -1,0 +1,34 @@
+{
+   "name" : "Sequential_File_0",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage4",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureBlob",
+      "typeProperties" : {
+         "format" : {
+            "type" : "TextFormat",
+            "columnDelimiter" : ",",
+            "treatEmptyAsNull" : "true",
+            "skipLineCount" : 0,
+            "firstRowAsHeader" : "true"
+         },
+         "fileName" : "Src_Employee.txt",
+         "folderPath" : "azureinput"
+      },
+      "structure" : [ {
+         "name" : "emp_id",
+         "type" : "String"
+      }, {
+         "name" : "name",
+         "type" : "String"
+      }, {
+         "name" : "dept_code",
+         "type" : "String"
+      }, {
+         "name" : "salary",
+         "type" : "Integer"
+      } ]
+   }
+}

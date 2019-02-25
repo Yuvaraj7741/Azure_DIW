@@ -1,0 +1,37 @@
+{
+   "name" : "Sequential_File_join",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage4",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureBlob",
+      "typeProperties" : {
+         "format" : {
+            "type" : "TextFormat",
+            "columnDelimiter" : ",",
+            "treatEmptyAsNull" : "true",
+            "skipLineCount" : 0,
+            "firstRowAsHeader" : "true"
+         },
+         "fileName" : "Src_Employee.txt",
+         "folderPath" : "azureinput"
+      },
+      "structure" : [ {
+         "name" : "id",
+         "type" : "String"
+      }, {
+         "name" : "sur_name",
+         "type" : "String"
+      }, {
+         "name" : "emp_dept_code",
+         "type" : "String"
+      }, {
+         "name" : "location",
+         "type" : "String"
+      }, {
+         "name" : "designation",
+         "type" : "String"
+      } ]
+   }
+}
