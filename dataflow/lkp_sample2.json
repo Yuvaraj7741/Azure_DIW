@@ -1,6 +1,7 @@
 {
    "name" : "lkp_sample2",
    "properties" : {
+      "type": "MappingDataFlow"
       "sources" : [ {
          "dataset" : {
             "referenceName" : "Sequential_File_1",
