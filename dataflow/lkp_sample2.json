@@ -2,6 +2,7 @@
    "name" : "lkp_sample2",
    "properties" : {
       "type": "MappingDataFlow",
+      "typeProperties": {
       "sources" : [ {
          "dataset" : {
             "referenceName" : "Sequential_File_1",
@@ -79,5 +80,6 @@
          "name" : "Lookup_6",
          "script" : "JNR_EMP, Sequential_File_lkp lookup(Sequential_File2@emp_id == Sequential_File_lkp@id) ~> Lookup_6"
       } ]
+    }
    }
 }
