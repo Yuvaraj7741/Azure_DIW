@@ -1,6 +1,26 @@
 {
 	"name": "dataflow1",
 	"properties": {
-		"type": "MappingDataFlow"
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "source1",
+					"script": "source(output(\n\t\t\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "sink1",
+					"script": "DerivedColumn1 sink() ~> sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedColumn1",
+					"script": "source1 derive() ~> DerivedColumn1"
+				}
+			]
+		}
 	}
 }
