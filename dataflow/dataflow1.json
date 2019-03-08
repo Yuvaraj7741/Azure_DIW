@@ -5,20 +5,28 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
 					"name": "source1",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1"
+					"script": "source(output(\n\t\tId as integer,\n\t\tName as string,\n\t\tSalary as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1"
 				}
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
 					"name": "sink1",
-					"script": "DerivedColumn1 sink() ~> sink1"
+					"script": "Aggregate1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionBy('hash', 1)) ~> sink1"
 				}
 			],
 			"transformations": [
 				{
-					"name": "DerivedColumn1",
-					"script": "source1 derive() ~> DerivedColumn1"
+					"name": "Aggregate1",
+					"script": "source1 aggregate(groupBy(Id),\n\tSalary = sum(Salary)) ~> Aggregate1"
 				}
 			]
 		}
