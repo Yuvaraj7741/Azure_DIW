@@ -17,6 +17,13 @@
 						"referenceName": "dataflow1",
 						"type": "DataFlowReference"
 					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "AzureBlobStorage3",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "diw"
+					},
 					"compute": {
 						"computeType": "General",
 						"coreCount": 8
