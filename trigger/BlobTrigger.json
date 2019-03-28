@@ -1,0 +1,25 @@
+{
+	"name": "BlobTrigger",
+	"properties": {
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Load JSON Blob To SQLDB - With Trigger",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"Filename": "@triggerBody().fileName"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/rawzone/",
+			"scope": "/subscriptions/c799623a-3f04-4e86-b158-d98a2abd8139/resourceGroups/IDWIngestion/providers/Microsoft.Storage/storageAccounts/idwlake",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

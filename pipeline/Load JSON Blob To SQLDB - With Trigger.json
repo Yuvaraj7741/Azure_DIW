@@ -1,0 +1,74 @@
+{
+	"name": "Load JSON Blob To SQLDB - With Trigger",
+	"properties": {
+		"description": "Use this pipeline to load data from JSON files in Blob Storage to Azure SQL database without using a blob based trigger.",
+		"activities": [
+			{
+				"name": "LoadStagingTable",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Set Filename",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"sqlReaderQuery": {
+							"value": "@concat(variables('QueryPart1'),string(pipeline().parameters.Filename),variables('QueryPart2'))",
+							"type": "Expression"
+						}
+					},
+					"dataset": {
+						"referenceName": "StagingTable",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": true
+				}
+			},
+			{
+				"name": "Set Filename",
+				"description": "Set Filename from blob trigger parameter.",
+				"type": "SetVariable",
+				"typeProperties": {
+					"variableName": "FullQuery",
+					"value": {
+						"value": "@concat(variables('QueryPart1'),string(pipeline().parameters.Filename),variables('QueryPart2'))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Filename": {
+				"type": "String",
+				"defaultValue": "String.Empty"
+			}
+		},
+		"variables": {
+			"QueryPart1": {
+				"type": "String",
+				"defaultValue": "DECLARE @query VARCHAR(1000) DECLARE @filename VARCHAR(20) SET @filename = '"
+			},
+			"QueryPart2": {
+				"type": "String",
+				"defaultValue": "' SET @query ='With CTE AS (SELECT CAST(BulkColumn as NVarchar(Max)) as JSONData  FROM OPENROWSET (BULK '''+@filename+''', DATA_SOURCE = ''EDSrawzone'', SINGLE_CLOB) AS AzureBlob) INSERT INTO StagingTable SELECT Id, [Name], [Address], Phone, Qualification FROM CTE CROSS APPLY OPENJSON(CTE.JSONData) WITH (     Id VARCHAR(30),     [Name] VARCHAR(30),     [Address] VARCHAR(200),     Phone VARCHAR(30),     Qualification VARCHAR(100) )' Exec(@query)  SELECT 'OK'"
+			},
+			"FullQuery": {
+				"type": "String",
+				"defaultValue": "''"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,29 @@
+{
+	"name": "AzureSqlDatabase",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "AzureSqlDatabase",
+		"parameters": {
+			"DBServer": {
+				"type": "String",
+				"defaultValue": "idwsqlsvr.database.windows.net"
+			},
+			"DBName": {
+				"type": "String",
+				"defaultValue": "IDWSqlDB"
+			},
+			"DBUserId": {
+				"type": "String",
+				"defaultValue": "idwadmin"
+			},
+			"DBPassword": {
+				"type": "String",
+				"defaultValue": "abcd1234$"
+			}
+		},
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=@{linkedService().DBServer};Initial Catalog=@{linkedService().DBName};User ID=@{linkedService().DBUserId};Password=@{linkedService().DBPassword}"
+		}
+	}
+}

@@ -1,0 +1,192 @@
+{
+	"name": "Stop SSIS IR with Custom Business Logic",
+	"properties": {
+		"description": "Use this pipeline to stop the SSIS integration runtime based on organization specific criteria. ",
+		"activities": [
+			{
+				"name": "CheckLoadCompletion",
+				"description": "Use this lookup activity to implement organization specific criteria to determine whether the SSIS integration runtime is no longer needed for running any further SSIS packages. You may query a control table in your organization database to determine whether all data loads for the day have completed.",
+				"type": "Lookup",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"sqlReaderQuery": "SELECT COUNT(1) AS RecordCount\nFROM [dbo].[PipelineControl]\nWHERE BatchStartTime = CONVERT(DATE, GETDATE())\nAND BatchName = 'LastBatchOfTheDay'\nAND RunStatus = 'COMPLETED'\n"
+					},
+					"dataset": {
+						"referenceName": "AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "SetLoadCompletionIndex",
+				"description": "Use this variable to hold a pre-determined value that will indicate whether the data load jobs for the day have completed.",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "CheckLoadCompletion",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"variableName": "LoadCompletionIndex",
+					"value": {
+						"value": "@string(activity('CheckLoadCompletion').output.firstRow.RecordCount)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "UntilLoadCompleted",
+				"description": "The pipeline control will keep looping here until the pre-determined value in the 'LoadCompletionIndex' variable meets the criteria that determines that all the data load jobs for the day have completed.",
+				"type": "Until",
+				"dependsOn": [
+					{
+						"activity": "SetLoadCompletionIndex",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('LoadCompletionIndex'), variables('LoadCompletionCriteria'))",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "WaitBeforeCheckingAgain",
+							"description": "Use this task to set the wait interval before checking again whether all data loads for the day have been completed. By default the wait duration is set to 900 seconds (i.e. 15 minutes). Set this in the 'Settings' tab as per your organization requirements.",
+							"type": "Wait",
+							"typeProperties": {
+								"waitTimeInSeconds": 900
+							}
+						},
+						{
+							"name": "CheckLoadCompletionInner",
+							"description": "Use this lookup activity to implement organization specific criteria to determine whether the SSIS integration runtime is no longer needed for running any further SSIS packages. You may query a control table in your organization database to determine whether all data loads for the day have completed.",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "WaitBeforeCheckingAgain",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"typeProperties": {
+								"source": {
+									"type": "SqlSource",
+									"sqlReaderQuery": "SELECT COUNT(1) AS RecordCount\nFROM [dbo].[PipelineControl]\nWHERE BatchStartTime = CONVERT(DATE, GETDATE())\nAND BatchName = 'LastBatchOfTheDay'\nAND RunStatus = 'COMPLETED'\n"
+								},
+								"dataset": {
+									"referenceName": "AzureSqlTable",
+									"type": "DatasetReference"
+								}
+							}
+						},
+						{
+							"name": "SetLoadCompletionIndexInner",
+							"description": "Use this variable to hold a pre-determined value that will indicate whether the data load jobs for the day have completed.",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "CheckLoadCompletionInner",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"typeProperties": {
+								"variableName": "LoadCompletionIndex",
+								"value": {
+									"value": "@string(activity('CheckLoadCompletionInner').output.firstRow.RecordCount)",
+									"type": "Expression"
+								}
+							}
+						}
+					],
+					"timeout": "7.00:00:00"
+				}
+			},
+			{
+				"name": "IsLoadCompleted",
+				"description": "If the condition is satisfied then the SSIS integration runtime will be stopped.",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "UntilLoadCompleted",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('LoadCompletionIndex'), variables('LoadCompletionCriteria'))",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "InvokeStopRESTAPI",
+							"description": "Use this activity to invoke the REST API for stopping the SSIS integration runtime.",
+							"type": "WebActivity",
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"typeProperties": {
+								"url": {
+									"value": "@variables('StopURI')",
+									"type": "Expression"
+								},
+								"method": "POST",
+								"body": {
+									"message": "Stop IR"
+								},
+								"authentication": {
+									"type": "MSI",
+									"resource": "https://management.azure.com"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"LoadCompletionIndex": {
+				"type": "String",
+				"defaultValue": "-1"
+			},
+			"LoadCompletionCriteria": {
+				"type": "String",
+				"defaultValue": "1"
+			},
+			"StopURI": {
+				"type": "String",
+				"defaultValue": "https://management.azure.com/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.DataFactory/factories/{data-factory-name}/integrationRuntimes/{adf-integration-runtime-name}/stop?api-version=2018-06-01"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
