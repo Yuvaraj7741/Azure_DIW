@@ -15,6 +15,43 @@
 			"columnDelimiter": ",",
 			"firstRowAsHeader": true
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "Code",
+				"type": "String"
+			},
+			{
+				"name": "Active",
+				"type": "String"
+			},
+			{
+				"name": "TimeZoneCode",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "CurrencyCode",
+				"type": "String"
+			},
+			{
+				"name": "Address",
+				"type": "String"
+			},
+			{
+				"name": "City",
+				"type": "String"
+			},
+			{
+				"name": "State",
+				"type": "String"
+			},
+			{
+				"name": "ZipCode",
+				"type": "String"
+			}
+		]
 	}
 }
