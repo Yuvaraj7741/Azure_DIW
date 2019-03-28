@@ -1,0 +1,49 @@
+{
+   "name" : "Trial",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage4",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureBlob",
+      "typeProperties" : {
+         "format" : {
+            "type" : "TextFormat",
+            "columnDelimiter" : ",",
+            "treatEmptyAsNull" : "true",
+            "skipLineCount" : 0,
+            "firstRowAsHeader" : "true"
+         },
+         "fileName" : "Src_Employee.txt",
+         "folderPath" : "azureinput"
+      },
+      "structure" : [ {
+         "name" : "Code",
+         "type" : "String"
+      }, {
+         "name" : "ACTIVE",
+         "type" : "Integer"
+      }, {
+         "name" : "TimeZoneCode",
+         "type" : "Integer"
+      }, {
+         "name" : "Name",
+         "type" : "String"
+      }, {
+         "name" : "CurrencyCode",
+         "type" : "String"
+      }, {
+         "name" : "Address",
+         "type" : "String"
+      }, {
+         "name" : "City",
+         "type" : "String"
+      }, {
+         "name" : "State",
+         "type" : "String"
+      }, {
+         "name" : "ZipCode",
+         "type" : "String"
+      } ]
+   }
+}
