@@ -12,6 +12,28 @@
 			}
 		},
 		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "Id",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "Address",
+				"type": "String"
+			},
+			{
+				"name": "Phone",
+				"type": "String"
+			},
+			{
+				"name": "Qualification",
+				"type": "String"
+			}
+		],
 		"typeProperties": {
 			"tableName": "[dbo].[StagingTable]"
 		}
