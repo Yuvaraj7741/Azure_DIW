@@ -15,8 +15,12 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "DelimitedText5",
+						"type": "DatasetReference"
+					},
 					"name": "sink1",
-					"script": "source1 sink() ~> sink1"
+					"script": "source1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> sink1"
 				}
 			]
 		}
