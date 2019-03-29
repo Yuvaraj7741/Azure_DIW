@@ -1,0 +1,26 @@
+{
+   "name" : "trial1",
+   "properties" : {
+      "activities" : [ {
+         "name" : "trial1",
+         "type" : "ExecuteDataFlow",
+         "policy" : {
+            "timeout" : "7.00:00:00",
+            "retry" : 0,
+            "retryIntervalInSeconds" : 30,
+            "secureOutput" : "false"
+         },
+         "typeProperties" : {
+            "dataflow" : {
+               "type" : "DataFlowReference",
+               "referenceName" : "trial1"
+            },
+            "linkedService" : {
+               "type" : "LinkedServiceReference",
+               "referenceName" : "AzureBlobStorage4"
+            },
+            "dataIntegrationUnits" : 0
+         }
+      } ]
+   }
+}
