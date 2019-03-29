@@ -5,7 +5,7 @@
          "referenceName" : "AzureBlobStorage4",
          "type" : "LinkedServiceReference"
       },
-      "type" : "AzureBlob",
+      "type" : "DelimitedText",
       "typeProperties" : {
          "format" : {
             "type" : "TextFormat",
