@@ -1,0 +1,24 @@
+{
+   "name" : "trial2",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "Trial",
+               "type" : "DatasetReference"
+            },
+            "name" : "Trial_comp0",
+            "script" : "source(output(\n\t\tACTIVE as string,\n\t\tAddress as string,\n\t\tState as string,\n\t\tCity as string,\n\t\tCode as string,\n\t\tName as string,\n\t\tCurrency_Code as string,\n\t\tZip_Code as string,\n\t\tTime_Zone_Code as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Trial_comp0"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "Dataset",
+               "type" : "DatasetReference"
+            },
+            "name" : "Dataset_comp0",
+            "script" : "Trial_comp0 sink(saveMode:'overwrite' ) ~> Dataset_comp0"
+         } ]
+      }
+   }
+}
