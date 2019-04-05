@@ -1,0 +1,42 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DBServer": "idwsqlsvr.database.windows.net",
+				"DBName": "IDWSqlDB",
+				"DBUserId": "idwadmin",
+				"DBPassword": "abcd1234$"
+			}
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Id",
+				"type": "varchar"
+			},
+			{
+				"name": "Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Address",
+				"type": "varchar"
+			},
+			{
+				"name": "Phone",
+				"type": "varchar"
+			},
+			{
+				"name": "Qualification",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[StagingTable]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
