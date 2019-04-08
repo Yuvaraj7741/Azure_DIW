@@ -1,0 +1,49 @@
+{
+   "name" : "Offices_input",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage4",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "DelimitedText",
+      "typeProperties" : {
+         "format" : {
+            "type" : "TextFormat",
+            "columnDelimiter" : ",",
+            "treatEmptyAsNull" : "true",
+            "skipLineCount" : 0,
+            "firstRowAsHeader" : "true"
+         },
+         "fileName" : "Src_Employee.txt",
+         "folderPath" : "azureinput"
+      },
+      "structure" : [ {
+         "name" : "Currency_Code",
+         "type" : "String"
+      }, {
+         "name" : "Active",
+         "type" : "Integer"
+      }, {
+         "name" : "Address",
+         "type" : "String"
+      }, {
+         "name" : "State",
+         "type" : "String"
+      }, {
+         "name" : "Zip_Code",
+         "type" : "String"
+      }, {
+         "name" : "Time_Zone_Code",
+         "type" : "Integer"
+      }, {
+         "name" : "City",
+         "type" : "String"
+      }, {
+         "name" : "Code",
+         "type" : "String"
+      }, {
+         "name" : "Name",
+         "type" : "String"
+      } ]
+   }
+}
