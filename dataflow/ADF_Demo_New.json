@@ -1,0 +1,24 @@
+{
+   "name" : "ADF_Demo_New",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "Offices_input",
+               "type" : "DatasetReference"
+            },
+            "name" : "Offices_input_comp0",
+            "script" : "source(output(\n\t\tCurrency_Code as string,\n\t\tActive as string,\n\t\tAddress as string,\n\t\tState as string,\n\t\tZip_Code as string,\n\t\tTime_Zone_Code as string,\n\t\tCity as string,\n\t\tCode as string,\n\t\tName as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Offices_input_comp0"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "Offices_Output",
+               "type" : "DatasetReference"
+            },
+            "name" : "Offices_Output_comp0",
+            "script" : "Offices_input_comp0 sink(saveMode:'overwrite' ) ~> Offices_Output_comp0"
+         } ]
+      }
+   }
+}
