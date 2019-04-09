@@ -1,26 +1,32 @@
 {
-   "name" : "trial2",
-   "properties" : {
-      "activities" : [ {
-         "name" : "trial2",
-         "type" : "ExecuteDataFlow",
-         "policy" : {
-            "timeout" : "7.00:00:00",
-            "retry" : 0,
-            "retryIntervalInSeconds" : 30,
-            "secureOutput" : "false"
-         },
-         "typeProperties" : {
-            "dataflow" : {
-               "type" : "DataFlowReference",
-               "referenceName" : "trial2"
-            },
-            "linkedService" : {
-               "type" : "LinkedServiceReference",
-               "referenceName" : "AzureBlobStorage4"
-            },
-            "dataIntegrationUnits" : 0
-         }
-      } ]
-   }
+	"name": "trial2",
+	"properties": {
+		"activities": [
+			{
+				"name": "trial2",
+				"type": "ExecuteDataFlow",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": "false"
+				},
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "trial2",
+						"type": "DataFlowReference"
+					},
+					"linkedService": {
+						"referenceName": "AzureBlobStorage4",
+						"type": "LinkedServiceReference"
+					},
+					"compute": {
+						"computeType": "General",
+						"coreCount": 8
+					},
+					"dataIntegrationUnits": 0
+				}
+			}
+		]
+	}
 }

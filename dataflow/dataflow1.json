@@ -5,12 +5,8 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "AzureSqlTable1",
-						"type": "DatasetReference"
-					},
 					"name": "sourceEmp",
-					"script": "source(output(\n\t\tId as string,\n\t\tName as string,\n\t\tAddress as string,\n\t\tPhone as string,\n\t\tQualification as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table') ~> sourceEmp"
+					"script": "source(output(\n\t\tId as string,\n\t\tName as string,\n\t\tAddress as string,\n\t\tPhone as string,\n\t\tQualification as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> sourceEmp"
 				}
 			],
 			"sinks": [
