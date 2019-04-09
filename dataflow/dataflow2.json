@@ -30,7 +30,7 @@
 				},
 				{
 					"name": "Lookup6",
-					"script": "Filter4, SequentialFile1 lookup(state_code == SequentialFile1@state_code,\n\tbroadcast: 'none')~> Lookup6"
+					"script": "Filter4, SequentialFile1 lookup(SequentialFile0@state_code == SequentialFile1@state_code,\n\tbroadcast: 'none')~> Lookup6"
 				},
 				{
 					"name": "Aggregator9",
