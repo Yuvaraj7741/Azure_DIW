@@ -1,5 +1,5 @@
 {
-	"name": "AzureSqlTable1",
+	"name": "StagingTable1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase",
@@ -12,28 +12,6 @@
 			}
 		},
 		"type": "AzureSqlTable",
-		"schema": [
-			{
-				"name": "Id",
-				"type": "varchar"
-			},
-			{
-				"name": "Name",
-				"type": "varchar"
-			},
-			{
-				"name": "Address",
-				"type": "varchar"
-			},
-			{
-				"name": "Phone",
-				"type": "varchar"
-			},
-			{
-				"name": "Qualification",
-				"type": "varchar"
-			}
-		],
 		"typeProperties": {
 			"tableName": "[dbo].[StagingTable]"
 		}
