@@ -6,11 +6,11 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText5",
+						"referenceName": "DelimitedText7",
 						"type": "DatasetReference"
 					},
 					"name": "SequentialFile0",
-					"script": "source(output(\n\t\t{_c0} as string,\n\t\t{_c1} as string,\n\t\t{_c2} as string,\n\t\t{_c3} as string,\n\t\t{_c4} as string,\n\t\t{_c5} as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile0"
+					"script": "source(output(\n\t\tbnk_id as string,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as string,\n\t\tcontact_no as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile0"
 				},
 				{
 					"dataset": {
