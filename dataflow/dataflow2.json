@@ -5,30 +5,18 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "DelimitedText7",
-						"type": "DatasetReference"
-					},
 					"name": "SequentialFile0",
 					"script": "source(output(\n\t\tbnk_id as integer,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as long,\n\t\tstate_code as integer,\n\t\tcontact_no as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile0"
 				},
 				{
-					"dataset": {
-						"referenceName": "DelimitedText8",
-						"type": "DatasetReference"
-					},
 					"name": "SequentialFile1",
 					"script": "source(output(\n\t\tstate_name as string,\n\t\tstate_code as integer,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile1"
 				}
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "DelimitedText9",
-						"type": "DatasetReference"
-					},
 					"name": "SequentialFile11",
-					"script": "Aggregator9 sink(input(\n\t\tbnk_name as string,\n\t\tstate_name as string,\n\t\tcity as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionBy('hash', 1)) ~> SequentialFile11"
+					"script": "Aggregator9 sink(partitionBy('hash', 1)) ~> SequentialFile11"
 				}
 			],
 			"transformations": [
