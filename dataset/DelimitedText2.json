@@ -9,6 +9,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "load_bnk_ref.csv",
 				"container": "diw"
 			},
 			"columnDelimiter": ",",
