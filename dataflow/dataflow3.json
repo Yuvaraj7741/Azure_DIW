@@ -1,0 +1,38 @@
+{
+	"name": "dataflow3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText7",
+						"type": "DatasetReference"
+					},
+					"name": "source1",
+					"script": "source(output(\n\t\tbnk_id as string,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as string,\n\t\tcontact_no as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText8",
+						"type": "DatasetReference"
+					},
+					"name": "source2",
+					"script": "source(output(\n\t\tstate_name as string,\n\t\tstate_code as string,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source2"
+				}
+			],
+			"sinks": [
+				{
+					"name": "sink1",
+					"script": "Lookup1 sink() ~> sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Lookup1",
+					"script": "source1, source2 lookup(source1@state_code == source2@state_code,\n\tbroadcast: 'none')~> Lookup1"
+				}
+			]
+		}
+	}
+}
