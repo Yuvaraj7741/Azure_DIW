@@ -28,7 +28,7 @@
 						"type": "DatasetReference"
 					},
 					"name": "SequentialFile11",
-					"script": "Aggregator9 sink(input(\n\t\tbnk_name as string,\n\t\tstate_name as string,\n\t\tcity as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> SequentialFile11"
+					"script": "Aggregator9 sink(input(\n\t\tbnk_name as string,\n\t\tstate_name as string,\n\t\tcity as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionBy('hash', 1),\n\tpartitionFileNames:['tgt_new.csv'],\n\ttruncate:true) ~> SequentialFile11"
 				}
 			],
 			"transformations": [
