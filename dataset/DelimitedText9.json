@@ -9,7 +9,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "",
+				"fileName": "tgt_new.csv",
 				"container": "diw"
 			},
 			"columnDelimiter": ",",
