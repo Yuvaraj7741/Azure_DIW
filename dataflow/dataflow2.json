@@ -14,7 +14,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "DelimitedText6",
+						"referenceName": "DelimitedText8",
 						"type": "DatasetReference"
 					},
 					"name": "SequentialFile1",
@@ -24,11 +24,11 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText8",
+						"referenceName": "DelimitedText9",
 						"type": "DatasetReference"
 					},
 					"name": "SequentialFile11",
-					"script": "Aggregator9 sink(input(\n\t\t{_c0} as string,\n\t\t{_c1} as string,\n\t\t{_c2} as string,\n\t\t{_c3} as string,\n\t\t{_c4} as string,\n\t\t{_c5} as string,\n\t\t{_c6} as string,\n\t\t{_c7} as string,\n\t\t{_c8} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> SequentialFile11"
+					"script": "Aggregator9 sink(input(\n\t\tbnk_name as string,\n\t\tstate_name as string,\n\t\tcity as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> SequentialFile11"
 				}
 			],
 			"transformations": [
