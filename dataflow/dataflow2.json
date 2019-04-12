@@ -6,19 +6,19 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText3",
+						"referenceName": "DelimitedText5",
 						"type": "DatasetReference"
 					},
 					"name": "SequentialFile0",
-					"script": "source(output(\n\t\tbnk_id as integer,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as long,\n\t\tstate_code as integer,\n\t\tcontact_no as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile0"
+					"script": "source(output(\n\t\t{_c0} as string,\n\t\t{_c1} as string,\n\t\t{_c2} as string,\n\t\t{_c3} as string,\n\t\t{_c4} as string,\n\t\t{_c5} as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile0"
 				},
 				{
 					"dataset": {
-						"referenceName": "DelimitedText2",
+						"referenceName": "DelimitedText6",
 						"type": "DatasetReference"
 					},
 					"name": "SequentialFile1",
-					"script": "source(output(\n\t\tstate_name as string,\n\t\tstate_code as integer,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile1"
+					"script": "source(output(\n\t\tstate_name as string,\n\t\tstate_code as string,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile1"
 				}
 			],
 			"sinks": [
