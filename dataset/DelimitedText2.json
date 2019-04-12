@@ -17,19 +17,7 @@
 		},
 		"schema": [
 			{
-				"name": "bnk_id",
-				"type": "String"
-			},
-			{
-				"name": "bnk_name",
-				"type": "String"
-			},
-			{
-				"name": "address",
-				"type": "String"
-			},
-			{
-				"name": "city",
+				"name": "state_name",
 				"type": "String"
 			},
 			{
@@ -37,7 +25,7 @@
 				"type": "String"
 			},
 			{
-				"name": "contact_no",
+				"name": "country",
 				"type": "String"
 			}
 		]
