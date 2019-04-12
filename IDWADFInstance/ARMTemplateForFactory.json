@@ -1,0 +1,944 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "idwadfinstance"
+		},
+		"AzureBlobStorage3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage3'"
+		},
+		"AzureBlobStorage4_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage4'"
+		},
+		"AzureSqlDatabase_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
+		},
+		"Dataset_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "Src_Employee.txt"
+		},
+		"Dataset_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "azureinput"
+		},
+		"Offices_Output_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "Src_Employee.txt"
+		},
+		"Offices_Output_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "azureinput"
+		},
+		"Offices_input_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "Src_Employee.txt"
+		},
+		"Offices_input_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "azureinput"
+		},
+		"Trial_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "Src_Employee.txt"
+		},
+		"Trial_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "azureinput"
+		},
+		"BlobTrigger_properties_Load JSON Blob To SQLDB - With Trigger_parameters_Filename": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"BlobTrigger_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/c799623a-3f04-4e86-b158-d98a2abd8139/resourceGroups/IDWIngestion/providers/Microsoft.Storage/storageAccounts/idwlake"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Load JSON Blob To SQLDB - With Trigger')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Use this pipeline to load data from JSON files in Blob Storage to Azure SQL database without using a blob based trigger.",
+				"activities": [
+					{
+						"name": "LoadStagingTable",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set Filename",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlSource",
+								"sqlReaderQuery": {
+									"value": "@concat(variables('QueryPart1'),string(pipeline().parameters.Filename),variables('QueryPart2'))",
+									"type": "Expression"
+								}
+							},
+							"dataset": {
+								"referenceName": "StagingTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "Set Filename",
+						"description": "Set Filename from blob trigger parameter.",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "FullQuery",
+							"value": {
+								"value": "@concat(variables('QueryPart1'),string(pipeline().parameters.Filename),variables('QueryPart2'))",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"parameters": {
+					"Filename": {
+						"type": "String",
+						"defaultValue": "String.Empty"
+					}
+				},
+				"variables": {
+					"QueryPart1": {
+						"type": "String",
+						"defaultValue": "DECLARE @query VARCHAR(1000) DECLARE @filename VARCHAR(20) SET @filename = '"
+					},
+					"QueryPart2": {
+						"type": "String",
+						"defaultValue": "' SET @query ='With CTE AS (SELECT CAST(BulkColumn as NVarchar(Max)) as JSONData  FROM OPENROWSET (BULK '''+@filename+''', DATA_SOURCE = ''EDSrawzone'', SINGLE_CLOB) AS AzureBlob) INSERT INTO StagingTable SELECT Id, [Name], [Address], Phone, Qualification FROM CTE CROSS APPLY OPENJSON(CTE.JSONData) WITH (     Id VARCHAR(30),     [Name] VARCHAR(30),     [Address] VARCHAR(200),     Phone VARCHAR(30),     Qualification VARCHAR(100) )' Exec(@query)  SELECT 'OK'"
+					},
+					"FullQuery": {
+						"type": "String",
+						"defaultValue": "''"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/StagingTable')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Stop SSIS IR with Custom Business Logic')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Use this pipeline to stop the SSIS integration runtime based on organization specific criteria. ",
+				"activities": [
+					{
+						"name": "CheckLoadCompletion",
+						"description": "Use this lookup activity to implement organization specific criteria to determine whether the SSIS integration runtime is no longer needed for running any further SSIS packages. You may query a control table in your organization database to determine whether all data loads for the day have completed.",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlSource",
+								"sqlReaderQuery": "SELECT COUNT(1) AS RecordCount\nFROM [dbo].[PipelineControl]\nWHERE BatchStartTime = CONVERT(DATE, GETDATE())\nAND BatchName = 'LastBatchOfTheDay'\nAND RunStatus = 'COMPLETED'\n"
+							},
+							"dataset": {
+								"referenceName": "AzureSqlTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "SetLoadCompletionIndex",
+						"description": "Use this variable to hold a pre-determined value that will indicate whether the data load jobs for the day have completed.",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "CheckLoadCompletion",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "LoadCompletionIndex",
+							"value": {
+								"value": "@string(activity('CheckLoadCompletion').output.firstRow.RecordCount)",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "UntilLoadCompleted",
+						"description": "The pipeline control will keep looping here until the pre-determined value in the 'LoadCompletionIndex' variable meets the criteria that determines that all the data load jobs for the day have completed.",
+						"type": "Until",
+						"dependsOn": [
+							{
+								"activity": "SetLoadCompletionIndex",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(variables('LoadCompletionIndex'), variables('LoadCompletionCriteria'))",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "WaitBeforeCheckingAgain",
+									"description": "Use this task to set the wait interval before checking again whether all data loads for the day have been completed. By default the wait duration is set to 900 seconds (i.e. 15 minutes). Set this in the 'Settings' tab as per your organization requirements.",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 900
+									}
+								},
+								{
+									"name": "CheckLoadCompletionInner",
+									"description": "Use this lookup activity to implement organization specific criteria to determine whether the SSIS integration runtime is no longer needed for running any further SSIS packages. You may query a control table in your organization database to determine whether all data loads for the day have completed.",
+									"type": "Lookup",
+									"dependsOn": [
+										{
+											"activity": "WaitBeforeCheckingAgain",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "SqlSource",
+											"sqlReaderQuery": "SELECT COUNT(1) AS RecordCount\nFROM [dbo].[PipelineControl]\nWHERE BatchStartTime = CONVERT(DATE, GETDATE())\nAND BatchName = 'LastBatchOfTheDay'\nAND RunStatus = 'COMPLETED'\n"
+										},
+										"dataset": {
+											"referenceName": "AzureSqlTable",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									}
+								},
+								{
+									"name": "SetLoadCompletionIndexInner",
+									"description": "Use this variable to hold a pre-determined value that will indicate whether the data load jobs for the day have completed.",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "CheckLoadCompletionInner",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "LoadCompletionIndex",
+										"value": {
+											"value": "@string(activity('CheckLoadCompletionInner').output.firstRow.RecordCount)",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"timeout": "7.00:00:00"
+						}
+					},
+					{
+						"name": "IsLoadCompleted",
+						"description": "If the condition is satisfied then the SSIS integration runtime will be stopped.",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "UntilLoadCompleted",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(variables('LoadCompletionIndex'), variables('LoadCompletionCriteria'))",
+								"type": "Expression"
+							},
+							"ifTrueActivities": [
+								{
+									"name": "InvokeStopRESTAPI",
+									"description": "Use this activity to invoke the REST API for stopping the SSIS integration runtime.",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": {
+											"value": "@variables('StopURI')",
+											"type": "Expression"
+										},
+										"method": "POST",
+										"headers": {},
+										"body": {
+											"message": "Stop IR"
+										},
+										"authentication": {
+											"type": "MSI",
+											"resource": "https://management.azure.com"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"variables": {
+					"LoadCompletionIndex": {
+						"type": "String",
+						"defaultValue": "-1"
+					},
+					"LoadCompletionCriteria": {
+						"type": "String",
+						"defaultValue": "1"
+					},
+					"StopURI": {
+						"type": "String",
+						"defaultValue": "https://management.azure.com/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.DataFactory/factories/{data-factory-name}/integrationRuntimes/{adf-integration-runtime-name}/stop?api-version=2018-06-01"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dataflow3",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow3",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"computeType": "General",
+								"coreCount": 8
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "AzureSqlTable",
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBServer": "idwsqlsvr.database.windows.net",
+						"DBName": "IDWSqlDB",
+						"DBUserId": "idwadmin",
+						"DBPassword": "abcd1234$"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[concat('[', 'dbo].[PipelineControl]')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBServer": "idwsqlsvr.database.windows.net",
+						"DBName": "IDWSqlDB",
+						"DBUserId": "idwadmin",
+						"DBPassword": "abcd1234$"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Id",
+						"type": "varchar"
+					},
+					{
+						"name": "Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Address",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone",
+						"type": "varchar"
+					},
+					{
+						"name": "Qualification",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[concat('[', 'dbo].[StagingTable]')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage4",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"columnDelimiter": ",",
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"treatEmptyAsNull": "true",
+						"skipLineCount": 0,
+						"firstRowAsHeader": "true"
+					},
+					"fileName": "[parameters('Dataset_properties_typeProperties_fileName')]",
+					"folderPath": "[parameters('Dataset_properties_typeProperties_folderPath')]"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage4')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "load_bnk_ref.csv",
+						"container": "diw"
+					},
+					"columnDelimiter": ",",
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "state_name",
+						"type": "String"
+					},
+					{
+						"name": "state_code",
+						"type": "String"
+					},
+					{
+						"name": "country",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "",
+						"container": "diw"
+					},
+					"columnDelimiter": ",",
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "bnk_name",
+						"type": "String"
+					},
+					{
+						"name": "state_name",
+						"type": "String"
+					},
+					{
+						"name": "city",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Offices_Output')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage4",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"columnDelimiter": ",",
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"treatEmptyAsNull": "true",
+						"skipLineCount": 0,
+						"firstRowAsHeader": "true"
+					},
+					"fileName": "[parameters('Offices_Output_properties_typeProperties_fileName')]",
+					"folderPath": "[parameters('Offices_Output_properties_typeProperties_folderPath')]"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage4')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Offices_input')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage4",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"columnDelimiter": ",",
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"treatEmptyAsNull": "true",
+						"skipLineCount": 0,
+						"firstRowAsHeader": "true"
+					},
+					"fileName": "[parameters('Offices_input_properties_typeProperties_fileName')]",
+					"folderPath": "[parameters('Offices_input_properties_typeProperties_folderPath')]"
+				},
+				"schema": [],
+				"structure": [
+					{
+						"name": "Currency_Code",
+						"type": "String"
+					},
+					{
+						"name": "Active",
+						"type": "Integer"
+					},
+					{
+						"name": "Address",
+						"type": "String"
+					},
+					{
+						"name": "State",
+						"type": "String"
+					},
+					{
+						"name": "Zip_Code",
+						"type": "String"
+					},
+					{
+						"name": "Time_Zone_Code",
+						"type": "Integer"
+					},
+					{
+						"name": "City",
+						"type": "String"
+					},
+					{
+						"name": "Code",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage4')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StagingTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBServer": "idwsqlsvr.database.windows.net",
+						"DBName": "IDWSqlDB",
+						"DBUserId": "idwadmin",
+						"DBPassword": "abcd1234$"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "Id",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Address",
+						"type": "String"
+					},
+					{
+						"name": "Phone",
+						"type": "String"
+					},
+					{
+						"name": "Qualification",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[concat('[', 'dbo].[StagingTable]')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StagingTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBServer": "idwsqlsvr.database.windows.net",
+						"DBName": "IDWSqlDB",
+						"DBUserId": "idwadmin",
+						"DBPassword": "abcd1234$"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[concat('[', 'dbo].[StagingTable]')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Trial')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage4",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"columnDelimiter": ",",
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"treatEmptyAsNull": "true",
+						"skipLineCount": 0,
+						"firstRowAsHeader": "true"
+					},
+					"fileName": "[parameters('Trial_properties_typeProperties_fileName')]",
+					"folderPath": "[parameters('Trial_properties_typeProperties_folderPath')]"
+				},
+				"schema": [],
+				"structure": [
+					{
+						"name": "Code",
+						"type": "String"
+					},
+					{
+						"name": "ACTIVE",
+						"type": "Integer"
+					},
+					{
+						"name": "TimeZoneCode",
+						"type": "Integer"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "CurrencyCode",
+						"type": "String"
+					},
+					{
+						"name": "Address",
+						"type": "String"
+					},
+					{
+						"name": "City",
+						"type": "String"
+					},
+					{
+						"name": "State",
+						"type": "String"
+					},
+					{
+						"name": "ZipCode",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage4')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage3')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage3_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage4')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage4_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "AzureSqlDatabase",
+				"parameters": {
+					"DBServer": {
+						"type": "String",
+						"defaultValue": "idwsqlsvr.database.windows.net"
+					},
+					"DBName": {
+						"type": "String",
+						"defaultValue": "IDWSqlDB"
+					},
+					"DBUserId": {
+						"type": "String",
+						"defaultValue": "idwadmin"
+					},
+					"DBPassword": {
+						"type": "String",
+						"defaultValue": "abcd1234$"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BlobTrigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Load JSON Blob To SQLDB - With Trigger",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"Filename": "[parameters('BlobTrigger_properties_Load JSON Blob To SQLDB - With Trigger_parameters_Filename')]"
+						}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/rawzone/",
+					"scope": "[parameters('BlobTrigger_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Load JSON Blob To SQLDB - With Trigger')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow3')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference"
+							},
+							"name": "source1",
+							"script": "source(output(\n\t\tstate_name as string,\n\t\tstate_code as string,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1",
+							"typeProperties": {}
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText2",
+								"type": "DatasetReference"
+							},
+							"name": "sink1",
+							"script": "source1 sink(input(\n\t\tbnk_name as string,\n\t\tstate_name as string,\n\t\tcity as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> sink1"
+						}
+					],
+					"transformations": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]"
+			]
+		}
+	]
+}

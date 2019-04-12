@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "idwadfinstance"
+		},
+		"AzureBlobStorage3_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage4_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase_connectionString": {
+			"value": ""
+		},
+		"Dataset_properties_typeProperties_fileName": {
+			"value": "Src_Employee.txt"
+		},
+		"Dataset_properties_typeProperties_folderPath": {
+			"value": "azureinput"
+		},
+		"Offices_Output_properties_typeProperties_fileName": {
+			"value": "Src_Employee.txt"
+		},
+		"Offices_Output_properties_typeProperties_folderPath": {
+			"value": "azureinput"
+		},
+		"Offices_input_properties_typeProperties_fileName": {
+			"value": "Src_Employee.txt"
+		},
+		"Offices_input_properties_typeProperties_folderPath": {
+			"value": "azureinput"
+		},
+		"Trial_properties_typeProperties_fileName": {
+			"value": "Src_Employee.txt"
+		},
+		"Trial_properties_typeProperties_folderPath": {
+			"value": "azureinput"
+		},
+		"BlobTrigger_properties_Load JSON Blob To SQLDB - With Trigger_parameters_Filename": {
+			"value": "@triggerBody().fileName"
+		},
+		"BlobTrigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/c799623a-3f04-4e86-b158-d98a2abd8139/resourceGroups/IDWIngestion/providers/Microsoft.Storage/storageAccounts/idwlake"
+		}
+	}
+}
