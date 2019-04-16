@@ -10,7 +10,7 @@
 						"type": "DatasetReference"
 					},
 					"name": "SequentialFile0",
-					"script": "source(output(\n\t\tbnk_id as integer,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as integer,\n\t\tstate_code as string,\n\t\tcontact_no as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile0"
+					"script": "source(output(\n\t\tbnk_id as integer,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as string,\n\t\tcontact_no as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile0"
 				},
 				{
 					"dataset": {
