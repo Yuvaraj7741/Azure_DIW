@@ -1,0 +1,45 @@
+{
+	"name": "DelimitedTextSrc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "load_bnk_src1.csv",
+				"container": "diw"
+			},
+			"columnDelimiter": ",",
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "bnk_id",
+				"type": "String"
+			},
+			{
+				"name": "bnk_name",
+				"type": "String"
+			},
+			{
+				"name": "address",
+				"type": "String"
+			},
+			{
+				"name": "city",
+				"type": "String"
+			},
+			{
+				"name": "state_code",
+				"type": "String"
+			},
+			{
+				"name": "contact_no",
+				"type": "String"
+			}
+		]
+	}
+}

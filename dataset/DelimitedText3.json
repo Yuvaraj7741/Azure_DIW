@@ -1,0 +1,56 @@
+{
+	"name": "DelimitedText3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "tgtdiw"
+			},
+			"columnDelimiter": ",",
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "DKB",
+				"type": "String"
+			},
+			{
+				"name": "1",
+				"type": "String"
+			},
+			{
+				"name": "035",
+				"type": "String"
+			},
+			{
+				"name": "CANTON -MA",
+				"type": "String"
+			},
+			{
+				"name": "USD",
+				"type": "String"
+			},
+			{
+				"name": "DKB Address",
+				"type": "String"
+			},
+			{
+				"name": "DKB City",
+				"type": "String"
+			},
+			{
+				"name": "DKB State  Testing  part flow change UAT US   State character length in office file via admin portal",
+				"type": "String"
+			},
+			{
+				"name": "DKB Zipcode Testing",
+				"type": "String"
+			}
+		]
+	}
+}
