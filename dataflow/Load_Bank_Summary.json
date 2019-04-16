@@ -5,10 +5,18 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
 					"name": "SequentialFile0",
-					"script": "source(output(\n\t\tbnk_id as string,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as string,\n\t\tcontact_no as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile0"
+					"script": "source(output(\n\t\tstate_name as string,\n\t\tstate_code as string,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile0"
 				},
 				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
 					"name": "SequentialFile1",
 					"script": "source(output(\n\t\tstate_name as string,\n\t\tstate_code as string,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile1"
 				}
@@ -34,7 +42,7 @@
 				},
 				{
 					"name": "Aggregator9",
-					"script": "Lookup6 aggregate(groupBy(bnk_name,\n\t\tstate_name),\n\tcity = count(city)) ~> Aggregator9"
+					"script": "Lookup6 aggregate(groupBy(bnk_name,\n\t\tstate_name = state_name),\n\tcity = count(city)) ~> Aggregator9"
 				}
 			]
 		}
