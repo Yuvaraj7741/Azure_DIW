@@ -1,44 +1,42 @@
 {
-   "name" : "Load_Bank_Summary",
-   "properties" : {
-      "type" : "MappingDataFlow",
-      "typeProperties" : {
-         "sources" : [ {
-            "dataset" : {
-               "referenceName" : "Sequential_File_0",
-               "type" : "DatasetReference"
-            },
-            "name" : "Sequential_File_0",
-            "script" : "source(output(\n\t\tbnk_id as string,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as string,\n\t\tcontact_no as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Sequential_File_0"
-         }, {
-            "dataset" : {
-               "referenceName" : "Sequential_File_1",
-               "type" : "DatasetReference"
-            },
-            "name" : "Sequential_File_1",
-            "script" : "source(output(\n\t\tstate_name as string,\n\t\tstate_code as string,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Sequential_File_1"
-         } ],
-         "sinks" : [ {
-            "dataset" : {
-               "referenceName" : "Sequential_File_11",
-               "type" : "DatasetReference"
-            },
-            "name" : "Sequential_File_11",
-            "script" : "Aggregator_9 sink(saveMode:'overwrite' ) ~> Sequential_File_11"
-         } ],
-         "transformations" : [ {
-            "name" : "Transformer_2",
-            "script" : "Sequential_File_0 derive(bnk_name = upper(bnk_name)) ~> Transformer_2"
-         }, {
-            "name" : "Filter_4",
-            "script" : "Transformer_2 filter(bnk_id > 2) ~> Filter_4"
-         }, {
-            "name" : "Lookup_6",
-            "script" : "Filter_4, Sequential_File_1 lookup(Sequential_File_0@state_code == Sequential_File_1@state_code,\n\tbroadcast: 'none') ~> Lookup_6"
-         }, {
-            "name" : "Aggregator_9",
-            "script" : "Lookup_6 aggregate(\n\tgroupBy(bnk_name = bnk_name),\n\tgroupBy(state_name = state_name),\n\t\tcity = count(city)) ~> Aggregator_9"
-         } ]
-      }
-   }
+	"name": "Load_Bank_Summary",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "SequentialFile0",
+					"script": "source(output(\n\t\tbnk_id as string,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as string,\n\t\tcontact_no as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile0"
+				},
+				{
+					"name": "Sequential_File_1",
+					"script": "source(output(\n\t\tstate_name as string,\n\t\tstate_code as string,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Sequential_File_1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "SequentialFile11",
+					"script": "Aggregator9 sink() ~> SequentialFile11"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Transformer2",
+					"script": "SequentialFile0 derive(bnk_name = upper(bnk_name)) ~> Transformer2"
+				},
+				{
+					"name": "Filter4",
+					"script": "Transformer2 filter(bnk_id > 2) ~> Filter4"
+				},
+				{
+					"name": "Lookup6",
+					"script": "Filter4, Sequential_File_1 lookup(SequentialFile0@state_code == Sequential_File_1@state_code,\n\tbroadcast: 'none')~> Lookup6"
+				},
+				{
+					"name": "Aggregator9",
+					"script": "Lookup6 aggregate(groupBy(bnk_name,\n\t\tstate_name),\n\tcity = count(city)) ~> Aggregator9"
+				}
+			]
+		}
+	}
 }
