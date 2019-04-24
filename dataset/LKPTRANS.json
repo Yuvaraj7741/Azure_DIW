@@ -1,0 +1,43 @@
+{
+   "name" : "LKPTRANS",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage4",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "DelimitedText",
+      "typeProperties" : {
+         "format" : {
+            "type" : "TextFormat",
+            "columnDelimiter" : ",",
+            "treatEmptyAsNull" : "true",
+            "skipLineCount" : 0,
+            "firstRowAsHeader" : "true"
+         },
+         "fileName" : "Src_Employee.txt",
+         "folderPath" : "azureinput"
+      },
+      "structure" : [ {
+         "name" : "bnk_id",
+         "type" : ""
+      }, {
+         "name" : "bnk_name",
+         "type" : ""
+      }, {
+         "name" : "address",
+         "type" : ""
+      }, {
+         "name" : "city",
+         "type" : ""
+      }, {
+         "name" : "state_code",
+         "type" : ""
+      }, {
+         "name" : "contact_no",
+         "type" : ""
+      }, {
+         "name" : "no_of_branches",
+         "type" : ""
+      } ]
+   }
+}
