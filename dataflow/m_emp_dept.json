@@ -42,7 +42,7 @@
 				},
 				{
 					"name": "AGGTRANS",
-					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tsal)) ~> AGGTRANS"
+					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tsal),\n\tsal = sum(sal)) ~> AGGTRANS"
 				},
 				{
 					"name": "FILTRANS",
