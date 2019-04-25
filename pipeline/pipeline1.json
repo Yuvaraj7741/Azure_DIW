@@ -29,6 +29,12 @@
 				"type": "string",
 				"defaultValue": "concat(dept_no)"
 			}
+		},
+		"variables": {
+			"dept_v": {
+				"type": "String",
+				"defaultValue": "concat(29)"
+			}
 		}
 	}
 }
