@@ -1,0 +1,34 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "EMP_complex1",
+					"script": "source(output(\n\t\tempno as string,\n\t\tename as string,\n\t\tjob as string,\n\t\tmgr as string,\n\t\thiredate as string,\n\t\tsal as string,\n\t\tcomm as string,\n\t\tdeptno as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP_complex1"
+				},
+				{
+					"name": "EMP_complex",
+					"script": "source(output(\n\t\tempno as string,\n\t\tename as string,\n\t\tjob as string,\n\t\tmgr as string,\n\t\thiredate as string,\n\t\tsal as string,\n\t\tcomm as string,\n\t\tdeptno as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP_complex"
+				}
+			],
+			"sinks": [
+				{
+					"name": "EMP_complex__Target1",
+					"script": "EMP_complex1 sink() ~> EMP_complex__Target1"
+				},
+				{
+					"name": "EMP_complex__Target",
+					"script": "EXPTRANS sink() ~> EMP_complex__Target"
+				}
+			],
+			"transformations": [
+				{
+					"name": "EXPTRANS",
+					"script": "EMP_complex derive(deptno_v = 'to_char(EMP_complex.deptno)',\n\t\tdeptno_out = 'concat(\"no_of_emp=\",deptno_v)') ~> EXPTRANS"
+				}
+			]
+		}
+	}
+}
