@@ -12,7 +12,8 @@
 				"fileName": "STG_ACCT.txt",
 				"container": "diw"
 			},
-			"columnDelimiter": ","
+			"columnDelimiter": ",",
+			"firstRowAsHeader": true
 		},
 		"schema": [
 			{
