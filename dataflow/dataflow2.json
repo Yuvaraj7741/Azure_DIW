@@ -26,7 +26,7 @@
 			"transformations": [
 				{
 					"name": "EXPTRANS",
-					"script": "STGACCT2 derive(CASH = CASH) ~> EXPTRANS"
+					"script": "STGACCT2 derive(CASH = CASH,\n\t\tACCT_ID = ACCT_ID,\n\t\tACCT_DESC = ACCT_DESC,\n\t\t{ ACCT_TYP} = { ACCT_TYP}) ~> EXPTRANS"
 				}
 			]
 		}
