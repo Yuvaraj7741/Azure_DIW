@@ -17,19 +17,19 @@
 		},
 		"schema": [
 			{
-				"name": "Prop_0",
+				"name": "ACCT_ID",
 				"type": "String"
 			},
 			{
-				"name": "Prop_1",
+				"name": " ACCT_TYP",
 				"type": "String"
 			},
 			{
-				"name": "Prop_2",
+				"name": "ACCT_DESC",
 				"type": "String"
 			},
 			{
-				"name": "Prop_3",
+				"name": "CASH",
 				"type": "String"
 			}
 		]
