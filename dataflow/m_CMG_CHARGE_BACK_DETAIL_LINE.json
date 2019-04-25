@@ -1,0 +1,28 @@
+{
+   "name" : "m_CMG_CHARGE_BACK_DETAIL_LINE",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "CHARGE_BACK_DETAIL_LINE",
+               "type" : "DatasetReference"
+            },
+            "name" : "SRC_CHARGE_BACK_DETAIL_LINE",
+            "script" : "source(output(\n\t\tCHARGE_BACK_ID as string,\n\t\tCHARGE_BACK_DETAIL_LINE_ID as string,\n\t\tVERSION_NUMBER as string,\n\t\tCURRENT_LINE_FLAG as string,\n\t\tCONTRACT_NUMBER as string,\n\t\tMEMBER_IDENTIFIER as string,\n\t\tMEMBER_IDENTIFIER_CODE as string,\n\t\tMEMBER_COMPANY_ID as string,\n\t\tPRODUCT_NDC as string,\n\t\tDETAIL_STATUS_CODE as string,\n\t\tCHARGE_BACK_AMOUNT as string,\n\t\tREJECTION_REASON_CODE as string,\n\t\tWHOLESALER_INVOICE_NUMBER as string,\n\t\tWHOLESALER_ACQUISITION_COST as string,\n\t\tQUANTITY_PURCHASED as string,\n\t\tINVOICE_DATE as string,\n\t\tCONTRACT_PRICE as string,\n\t\tNDC_FORMAT as string,\n\t\tWHOLESALER_CONTRACT_ID as string,\n\t\tSUBMITTED_UNIT_OF_MEASURE as string,\n\t\tSUBMITTED_QUANTITY as string,\n\t\tSUBMITTED_WHOLESALER_COST as string,\n\t\tSUBMITTED_CONTRACT_PRICE as string,\n\t\tSPECIALIST_ID as string,\n\t\tDATE_UPDATED as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SRC_CHARGE_BACK_DETAIL_LINE"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "STG_CMG_CHARGE_BACK_DETAIL_LINE",
+               "type" : "DatasetReference"
+            },
+            "name" : "TGT_STG_CMG_CHARGE_BACK_DETAIL_LINE",
+            "script" : "EXP_CHARGE_BACK_DETAIL_LINE sink(saveMode:'overwrite' ) ~> TGT_STG_CMG_CHARGE_BACK_DETAIL_LINE"
+         } ],
+         "transformations" : [ {
+            "name" : "EXP_CHARGE_BACK_DETAIL_LINE",
+            "script" : "SRC_CHARGE_BACK_DETAIL_LINE derive(o_INS_PRCS_ID = '$$PROCESS_ID',\n\t\to_INS_RUN_ID = '$$PROCESS_RUN_ID',\n\t\tv_DELTA_COL_VAL = 'SETMAXVARIABLE($$DELTA_COL_VAL,SESSSTARTTIME)',\n\t\to_INS_DT = 'SYSTIMESTAMP()') ~> EXP_CHARGE_BACK_DETAIL_LINE"
+         } ]
+      }
+   }
+}
