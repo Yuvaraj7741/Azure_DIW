@@ -1,34 +1,42 @@
 {
-   "name" : "STG_ACCT2",
-   "properties" : {
-      "linkedServiceName" : {
-         "referenceName" : "AzureBlobStorage4",
-         "type" : "LinkedServiceReference"
-      },
-      "type" : "DelimitedText",
-      "typeProperties" : {
-         "format" : {
-            "type" : "TextFormat",
-            "columnDelimiter" : ",",
-            "treatEmptyAsNull" : "true",
-            "skipLineCount" : 0,
-            "firstRowAsHeader" : "true"
-         },
-         "fileName" : "Src_Employee.txt",
-         "folderPath" : "azureinput"
-      },
-      "structure" : [ {
-         "name" : "ACCT_ID",
-         "type" : "Integer"
-      }, {
-         "name" : "ACCT_TYP",
-         "type" : "String"
-      }, {
-         "name" : "ACCT_DESC",
-         "type" : "String"
-      }, {
-         "name" : "CASH",
-         "type" : "String"
-      } ]
-   }
+	"name": "STG_ACCT2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage4",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"columnDelimiter": ",",
+			"firstRowAsHeader": true,
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"treatEmptyAsNull": "true",
+				"skipLineCount": 0,
+				"firstRowAsHeader": "true"
+			},
+			"fileName": "Src_Employee.txt",
+			"folderPath": "azureinput"
+		},
+		"schema": [],
+		"structure": [
+			{
+				"name": "ACCT_ID",
+				"type": "Integer"
+			},
+			{
+				"name": "ACCT_TYP",
+				"type": "String"
+			},
+			{
+				"name": "ACCT_DESC",
+				"type": "String"
+			},
+			{
+				"name": "CASH",
+				"type": "String"
+			}
+		]
+	}
 }
