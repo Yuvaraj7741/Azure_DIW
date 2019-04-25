@@ -1,0 +1,34 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "STG_ACCT2",
+						"type": "DatasetReference"
+					},
+					"name": "STGACCT2",
+					"script": "source(output(\n\t\tACCT_ID as string,\n\t\tACCT_TYP as string,\n\t\tACCT_DESC as string,\n\t\tCASH as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> STGACCT2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "CUST_DTL_SUMRY",
+						"type": "DatasetReference"
+					},
+					"name": "CUSTDTLSUMRY1",
+					"script": "EXPTRANS sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> CUSTDTLSUMRY1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "EXPTRANS",
+					"script": "STGACCT2 derive(CASH = CASH) ~> EXPTRANS"
+				}
+			]
+		}
+	}
+}
