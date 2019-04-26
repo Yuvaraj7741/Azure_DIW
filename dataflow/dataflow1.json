@@ -18,7 +18,7 @@
 						"type": "DatasetReference"
 					},
 					"name": "EMP",
-					"script": "source(output(\n\t\tempno as string,\n\t\tename as string,\n\t\tdeptno as string,\n\t\tsal as integer,\n\t\tcomm as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP"
+					"script": "source(output(\n\t\tempno as string,\n\t\tename as string,\n\t\tdeptno as string,\n\t\tsal as string,\n\t\tcomm as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP"
 				}
 			],
 			"sinks": [
@@ -34,7 +34,7 @@
 			"transformations": [
 				{
 					"name": "JNRTRANS",
-					"script": "DeptLKP, EMP join(Deptno == deptno,\n\tjoinType:'',\n\tbroadcast: 'none')~> JNRTRANS"
+					"script": "DeptLKP, EMP join(DeptLKP@Deptno == EMP@deptno,\n\tjoinType:'',\n\tbroadcast: 'none')~> JNRTRANS"
 				},
 				{
 					"name": "EXPTRANS",
@@ -42,7 +42,7 @@
 				},
 				{
 					"name": "AGGTRANS",
-					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tdeptno = ERROR_FUNCTION(''),\n\t\tcomm,\n\t\t{ deptname},\n\t\t{ Loc}),\n\tmax_sal = max(sal)) ~> AGGTRANS"
+					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tEMP@deptno,\n\t\tcomm,\n\t\t{ deptname},\n\t\t{ Loc}),\n\tmax_sal = max(sal)) ~> AGGTRANS"
 				},
 				{
 					"name": "FILTRANS",
