@@ -42,7 +42,7 @@
 				},
 				{
 					"name": "AGGTRANS",
-					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tdeptno = deptno,\n\t\tcomm,\n\t\t{ deptname},\n\t\t{ Loc}),\n\tmax_sal = max(sal)) ~> AGGTRANS"
+					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tdeptno = ERROR_FUNCTION(''),\n\t\tcomm,\n\t\t{ deptname},\n\t\t{ Loc}),\n\tmax_sal = max(sal)) ~> AGGTRANS"
 				},
 				{
 					"name": "FILTRANS",
