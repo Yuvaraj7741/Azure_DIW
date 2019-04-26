@@ -9,8 +9,8 @@
 						"referenceName": "Dept_LKP",
 						"type": "DatasetReference"
 					},
-					"name": "Dept_LKP",
-					"script": "source(output(\n\t\tDeptno as string,\n\t\tdeptname as string,\n\t\tLoc as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Dept_LKP"
+					"name": "DeptLKP",
+					"script": "source(output(\n\t\tDeptno as string,\n\t\tdeptname as string,\n\t\tLoc as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> DeptLKP"
 				},
 				{
 					"dataset": {
@@ -34,7 +34,7 @@
 			"transformations": [
 				{
 					"name": "JNRTRANS",
-					"script": "EMP, Dept_LKP join(EMP@deptno == Dept_LKP@Deptno,\n\tjoinType:'',\n\tbroadcast: 'none')~> JNRTRANS"
+					"script": "EMP, DeptLKP join(EMP@deptno == DeptLKP@Deptno,\n\tjoinType:'',\n\tbroadcast: 'none')~> JNRTRANS"
 				},
 				{
 					"name": "EXPTRANS",
