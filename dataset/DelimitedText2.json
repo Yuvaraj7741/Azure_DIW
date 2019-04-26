@@ -11,21 +11,23 @@
 				"type": "AzureBlobStorageLocation",
 				"container": "diw"
 			},
-			"columnDelimiter": ","
+			"columnDelimiter": ",",
+			"firstRowAsHeader": true
 		},
 		"schema": [
 			{
-				"name": "Prop_0",
+				"name": "state_name",
 				"type": "String"
 			},
 			{
-				"name": "Prop_1",
+				"name": "state_code",
 				"type": "String"
 			},
 			{
-				"name": "Prop_2",
+				"name": "country",
 				"type": "String"
 			}
 		]
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }
