@@ -5,28 +5,48 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"name": "EMP_complex1",
-					"script": "source(output(\n\t\tempno as string,\n\t\tename as string,\n\t\tjob as string,\n\t\tmgr as string,\n\t\thiredate as string,\n\t\tsal as string,\n\t\tcomm as string,\n\t\tdeptno as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP_complex1"
+					"dataset": {
+						"referenceName": "Dept_LKP",
+						"type": "DatasetReference"
+					},
+					"name": "DeptLKP",
+					"script": "source(output(\n\t\tDeptno as string,\n\t\tdeptname as string,\n\t\tLoc as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> DeptLKP"
 				},
 				{
-					"name": "EMP_complex",
-					"script": "source(output(\n\t\tempno as string,\n\t\tename as string,\n\t\tjob as string,\n\t\tmgr as string,\n\t\thiredate as string,\n\t\tsal as string,\n\t\tcomm as string,\n\t\tdeptno as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP_complex"
+					"dataset": {
+						"referenceName": "EMP",
+						"type": "DatasetReference"
+					},
+					"name": "EMP",
+					"script": "source(output(\n\t\tempno as string,\n\t\tename as string,\n\t\tdeptno as string,\n\t\tsal as integer,\n\t\tcomm as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP"
 				}
 			],
 			"sinks": [
 				{
-					"name": "EMP_complex__Target1",
-					"script": "EMP_complex1 sink() ~> EMP_complex__Target1"
-				},
-				{
-					"name": "EMP_complex__Target",
-					"script": "EXPTRANS sink() ~> EMP_complex__Target"
+					"dataset": {
+						"referenceName": "Tgt_1",
+						"type": "DatasetReference"
+					},
+					"name": "Tgt_1",
+					"script": "FILTRANS sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> Tgt_1"
 				}
 			],
 			"transformations": [
 				{
+					"name": "JNRTRANS",
+					"script": "DeptLKP, EMP join(Deptno == deptno,\n\tjoinType:'',\n\tbroadcast: 'none')~> JNRTRANS"
+				},
+				{
 					"name": "EXPTRANS",
-					"script": "EMP_complex derive(deptno_v = 'to_char(EMP_complex.deptno)',\n\t\tdeptno_out = 'concat(\"no_of_emp=\",deptno_v)') ~> EXPTRANS"
+					"script": "JNRTRANS derive(Upper_ename = upper(ename)) ~> EXPTRANS"
+				},
+				{
+					"name": "AGGTRANS",
+					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tdeptno = deptno,\n\t\tcomm,\n\t\tdeptname,\n\t\tLoc),\n\tmax_sal = (sal)) ~> AGGTRANS"
+				},
+				{
+					"name": "FILTRANS",
+					"script": "AGGTRANS filter(max_sal > 45000) ~> FILTRANS"
 				}
 			]
 		}
