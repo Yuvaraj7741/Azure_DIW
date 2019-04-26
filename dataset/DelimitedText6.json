@@ -17,23 +17,23 @@
 		},
 		"schema": [
 			{
-				"name": "Prop_0",
+				"name": "empno",
 				"type": "String"
 			},
 			{
-				"name": "Prop_1",
+				"name": "ename",
 				"type": "String"
 			},
 			{
-				"name": "Prop_2",
+				"name": "deptno",
 				"type": "String"
 			},
 			{
-				"name": "Prop_3",
+				"name": "sal",
 				"type": "String"
 			},
 			{
-				"name": "Prop_4",
+				"name": "comm",
 				"type": "String"
 			}
 		]

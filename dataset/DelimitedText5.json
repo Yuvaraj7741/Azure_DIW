@@ -17,15 +17,15 @@
 		},
 		"schema": [
 			{
-				"name": "Prop_0",
+				"name": "Deptno",
 				"type": "String"
 			},
 			{
-				"name": "Prop_1",
+				"name": " deptname",
 				"type": "String"
 			},
 			{
-				"name": "Prop_2",
+				"name": " Loc",
 				"type": "String"
 			}
 		]
