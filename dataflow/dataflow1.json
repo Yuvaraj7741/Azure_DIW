@@ -6,29 +6,21 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText3",
+						"referenceName": "DelimitedText5",
 						"type": "DatasetReference"
 					},
 					"name": "DeptLKP",
-					"script": "source(output(\n\t\tACCT_ID as string,\n\t\t{ ACCT_TYP} as string,\n\t\tACCT_DESC as string,\n\t\tCASH as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> DeptLKP"
+					"script": "source(output(\n\t\tProp_0 as string,\n\t\tProp_1 as string,\n\t\tProp_2 as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> DeptLKP"
 				},
 				{
-					"dataset": {
-						"referenceName": "DelimitedText2",
-						"type": "DatasetReference"
-					},
 					"name": "EMP",
-					"script": "source(output(\n\t\tProp_0 as string,\n\t\tProp_1 as string,\n\t\tProp_2 as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP"
+					"script": "source(output(\n\t\tempno as string,\n\t\tename as string,\n\t\tdeptno as string,\n\t\tsal as integer,\n\t\tcomm as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP"
 				}
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "Tgt_1",
-						"type": "DatasetReference"
-					},
-					"name": "Tgt1",
-					"script": "FILTRANS sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> Tgt1"
+					"name": "Tgt_1",
+					"script": "FILTRANS sink() ~> Tgt_1"
 				}
 			],
 			"transformations": [
@@ -42,7 +34,7 @@
 				},
 				{
 					"name": "AGGTRANS",
-					"script": "EXPTRANS aggregate(groupBy(empno = empno,\n\t\tUpper_ename,\n\t\tdeptno = EMP@deptno,\n\t\tcomm = comm,\n\t\tdeptname = deptname,\n\t\tLoc = Loc),\n\tmax_sal = max(sal)) ~> AGGTRANS"
+					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tEMP@deptno,\n\t\tcomm,\n\t\tdeptname = deptname,\n\t\tLoc = Loc),\n\tmax_sal = max(sal)) ~> AGGTRANS"
 				},
 				{
 					"name": "FILTRANS",
