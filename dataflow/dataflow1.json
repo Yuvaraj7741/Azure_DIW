@@ -34,7 +34,7 @@
 			"transformations": [
 				{
 					"name": "JNRTRANS",
-					"script": "DeptLKP, EMP join(Deptno == EMP@deptno,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> JNRTRANS"
+					"script": "DeptLKP, EMP join(Deptno == deptno,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> JNRTRANS"
 				},
 				{
 					"name": "EXPTRANS",
@@ -42,7 +42,7 @@
 				},
 				{
 					"name": "AGGTRANS",
-					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tdeptno = deptno,\n\t\tcomm,\n\t\t{ deptname},\n\t\t{ Loc}),\n\tmax_sal = max(sal)) ~> AGGTRANS"
+					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tEMP@deptno,\n\t\tcomm,\n\t\t{ deptname},\n\t\t{ Loc}),\n\tmax_sal = max(sal)) ~> AGGTRANS"
 				},
 				{
 					"name": "FILTRANS",
