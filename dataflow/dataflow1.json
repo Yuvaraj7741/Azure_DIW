@@ -18,7 +18,7 @@
 						"type": "DatasetReference"
 					},
 					"name": "EMP",
-					"script": "source(output(\n\t\tempno as string,\n\t\tename as string,\n\t\tdeptno as string,\n\t\tsal as integer,\n\t\tcomm as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP"
+					"script": "source(output(\n\t\tempno as string,\n\t\tename as string,\n\t\tdeptno as string,\n\t\tsal as string,\n\t\tcomm as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP"
 				}
 			],
 			"sinks": [
