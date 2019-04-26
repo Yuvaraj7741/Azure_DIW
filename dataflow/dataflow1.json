@@ -34,7 +34,7 @@
 			"transformations": [
 				{
 					"name": "JNRTRANS",
-					"script": "DeptLKP, EMP join(Deptno == deptno,\n\tjoinType:'',\n\tbroadcast: 'none')~> JNRTRANS"
+					"script": "DeptLKP, EMP join(DeptLKP@Deptno == EMP@deptno,\n\tjoinType:'right',\n\tbroadcast: 'none')~> JNRTRANS"
 				},
 				{
 					"name": "EXPTRANS",
