@@ -6,27 +6,47 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText3",
+						"referenceName": "Dept_LKP",
 						"type": "DatasetReference"
 					},
-					"name": "STGACCT2",
-					"script": "source(output(\n\t\tACCT_ID as string,\n\t\t{ ACCT_TYP} as string,\n\t\tACCT_DESC as string,\n\t\tCASH as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> STGACCT2"
+					"name": "Dept_LKP",
+					"script": "source(output(\n\t\tDeptno as string,\n\t\tdeptname as string,\n\t\tLoc as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Dept_LKP"
+				},
+				{
+					"dataset": {
+						"referenceName": "EMP",
+						"type": "DatasetReference"
+					},
+					"name": "EMP",
+					"script": "source(output(\n\t\tempno as string,\n\t\tename as string,\n\t\tdeptno as string,\n\t\tsal as integer,\n\t\tcomm as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP"
 				}
 			],
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText4",
+						"referenceName": "Tgt_1",
 						"type": "DatasetReference"
 					},
-					"name": "CUSTDTLSUMRY1",
-					"script": "EXPTRANS sink(input(\n\t\tProp_0 as string,\n\t\tProp_1 as string,\n\t\tProp_2 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> CUSTDTLSUMRY1"
+					"name": "Tgt_1",
+					"script": "FILTRANS sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> Tgt_1"
 				}
 			],
 			"transformations": [
 				{
+					"name": "JNRTRANS",
+					"script": "EMP, Dept_LKP join(Deptno == deptno,\n\tjoinType:'',\n\tbroadcast: 'none')~> JNRTRANS"
+				},
+				{
 					"name": "EXPTRANS",
-					"script": "STGACCT2 derive(CASH = CASH,\n\t\tACCT_ID = ACCT_ID,\n\t\tACCT_DESC = ACCT_DESC,\n\t\t{ ACCT_TYP} = { ACCT_TYP}) ~> EXPTRANS"
+					"script": "JNRTRANS derive(Upper_ename = upper(ename)) ~> EXPTRANS"
+				},
+				{
+					"name": "AGGTRANS",
+					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tdeptno = deptno,\n\t\tcomm,\n\t\tdeptname,\n\t\tLoc),\n\tmax_sal = (sal)) ~> AGGTRANS"
+				},
+				{
+					"name": "FILTRANS",
+					"script": "AGGTRANS filter(max_sal > 45000) ~> FILTRANS"
 				}
 			]
 		}
