@@ -34,7 +34,7 @@
 			"transformations": [
 				{
 					"name": "JNRTRANS",
-					"script": "DeptLKP, EMP join(Deptno == deptno,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> JNRTRANS"
+					"script": "DeptLKP, EMP join(Deptno == deptno,\n\tjoinType:'outer',\n\tbroadcast: 'none')~> JNRTRANS"
 				},
 				{
 					"name": "EXPTRANS",
@@ -42,11 +42,11 @@
 				},
 				{
 					"name": "AGGTRANS",
-					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tdeptno = deptno,\n\t\tcomm,\n\t\t{ deptname},\n\t\t{ Loc}),\n\tsal = max(sal)) ~> AGGTRANS"
+					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tdeptno = deptno,\n\t\tcomm,\n\t\t{ deptname},\n\t\t{ Loc}),\n\tmax_sal = max(sal)) ~> AGGTRANS"
 				},
 				{
 					"name": "FILTRANS",
-					"script": "AGGTRANS filter(sal > 45000) ~> FILTRANS"
+					"script": "AGGTRANS filter({} > 45000) ~> FILTRANS"
 				}
 			]
 		}
