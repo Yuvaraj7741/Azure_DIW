@@ -46,7 +46,7 @@
 				},
 				{
 					"name": "FILTRANS",
-					"script": "AGGTRANS filter(max_sal > 45000) ~> FILTRANS"
+					"script": "AGGTRANS filter(max_sal > 4500) ~> FILTRANS"
 				}
 			]
 		}
