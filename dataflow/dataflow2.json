@@ -27,8 +27,8 @@
 						"referenceName": "Tgt_1",
 						"type": "DatasetReference"
 					},
-					"name": "Tgt_1",
-					"script": "FILTRANS sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> Tgt_1"
+					"name": "Tgt1",
+					"script": "FILTRANS sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> Tgt1"
 				}
 			],
 			"transformations": [
