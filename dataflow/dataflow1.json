@@ -34,7 +34,7 @@
 			"transformations": [
 				{
 					"name": "JNRTRANS",
-					"script": "DeptLKP, EMP join(Deptno == deptno,\n\tjoinType:'outer',\n\tbroadcast: 'none')~> JNRTRANS"
+					"script": "DeptLKP, EMP join(Deptno == EMP@deptno,\n\tjoinType:'outer',\n\tbroadcast: 'none')~> JNRTRANS"
 				},
 				{
 					"name": "EXPTRANS",
@@ -46,7 +46,7 @@
 				},
 				{
 					"name": "FILTRANS",
-					"script": "AGGTRANS filter({} > 45000) ~> FILTRANS"
+					"script": "AGGTRANS filter(max_sal > 45000) ~> FILTRANS"
 				}
 			]
 		}
