@@ -1,43 +1,49 @@
 {
-   "name" : "m_emp_dept",
+   "name" : "m_load_bank_details",
    "properties" : {
       "type" : "MappingDataFlow",
       "typeProperties" : {
          "sources" : [ {
             "dataset" : {
-               "referenceName" : "Dept_LKP",
+               "referenceName" : "LKPTRANS",
                "type" : "DatasetReference"
             },
-            "name" : "Dept_LKP",
-            "script" : "source(output(\n\t\tDeptno as decimal,\n\t\tdeptname as string,\n\t\tLoc as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Dept_LKP"
+            "name" : "LKPTRANS_1",
+            "script" : "source(output(\n\t\tbnk_id as string,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as string,\n\t\tcontact_no as string,\n\t\tno_of_branches as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> LKPTRANS_1"
          }, {
             "dataset" : {
-               "referenceName" : "EMP",
+               "referenceName" : "load_bnk_src",
                "type" : "DatasetReference"
             },
-            "name" : "EMP",
-            "script" : "source(output(\n\t\tempno as decimal,\n\t\tename as string,\n\t\tdeptno as decimal,\n\t\tsal as decimal,\n\t\tcomm as decimal\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP"
+            "name" : "load_bnk_src",
+            "script" : "source(output(\n\t\tbnk_id as decimal(10,0),\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as decimal(10,0),\n\t\tcontact_no as decimal(10,0),\n\t\tno_of_branches as decimal(10,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> load_bnk_src"
          } ],
          "sinks" : [ {
             "dataset" : {
-               "referenceName" : "Tgt_1",
+               "referenceName" : "load_bnk_src1",
                "type" : "DatasetReference"
             },
-            "name" : "Tgt_1",
-            "script" : "FILTRANS sink(saveMode:'overwrite' ) ~> Tgt_1"
+            "name" : "load_bnk_src1",
+            "script" : "SEQTRANS sink(saveMode:'overwrite' ) ~> load_bnk_src1"
          } ],
          "transformations" : [ {
-            "name" : "JNRTRANS",
-            "script" : "EMP, Dept_LKP join(Dept_LKP@Deptno == EMP@deptno,\n joinType:'outer',\n\tbroadcast: 'none')~> JNRTRANS"
-         }, {
             "name" : "EXPTRANS",
-            "script" : "JNRTRANS derive(Upper_ename = upper(ename)) ~> EXPTRANS"
+            "script" : "load_bnk_src derive(upper_bnk_name = upper(bnk_name)) ~> EXPTRANS"
+         }, {
+            "name" : "EXPTRANS1",
+            "script" : "EXPTRANS, LKPTRANS derive(bnk_id = bnk_id,\n\t\taddress = address,\n\t\tcity = city,\n\t\tcontact_no = contact_no,\n\t\tno_of_branches = no_of_branches,\n\t\tupper_bnk_name = upper_bnk_name) ~> EXPTRANS1"
+         }, {
+            "name" : "SRTTRANS",
+            "script" : "EXPTRANS1 sort(asc(upper_bnk_name,true),\n\tasc(address,true),\n\tasc(city,true),\n\tasc(contact_no,true),\n\tasc(no_of_branches,true)) ~> SRTTRANS"
          }, {
             "name" : "AGGTRANS",
-            "script" : "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tdeptno,\n\t\tcomm,\n\t\tdeptname,\n\t\tLoc),\n\tmax_sal = (sal)) ~> AGGTRANS"
+            "script" : "SRTTRANS aggregate(groupBy(upper_bnk_name,\n\t\taddress,\n\t\tcity,\n\t\tcontact_no,\n\t\tbnk_id),\n\tavg_branches = average(no_of_branches)) ~> AGGTRANS"
          }, {
-            "name" : "FILTRANS",
-            "script" : "AGGTRANS filter(max_sal > 45000) ~> FILTRANS"
+            "name" : "SEQTRANS",
+            "script" : "AGGTRANS keyGenerate(output(s_no as long),\n\tstartAt: 1L) ~> SEQTRANS"
+         }, {
+            "name" : "LKPTRANS",
+            "script" : "EXPTRANS, LKPTRANS_1 lookup(load_bnk_src@bnk_id == LKPTRANS_1@bnk_id,\n\tbroadcast: 'none') ~> LKPTRANS"
          } ]
       }
    }
