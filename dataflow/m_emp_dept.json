@@ -1,0 +1,44 @@
+{
+   "name" : "m_emp_dept",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "Dept_LKP",
+               "type" : "DatasetReference"
+            },
+            "name" : "Dept_LKP",
+            "script" : "source(output(\n\t\tDeptno as decimal,\n\t\tdeptname as string,\n\t\tLoc as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Dept_LKP"
+         }, {
+            "dataset" : {
+               "referenceName" : "EMP",
+               "type" : "DatasetReference"
+            },
+            "name" : "EMP",
+            "script" : "source(output(\n\t\tempno as decimal,\n\t\tename as string,\n\t\tdeptno as decimal,\n\t\tsal as decimal,\n\t\tcomm as decimal\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "Tgt_1",
+               "type" : "DatasetReference"
+            },
+            "name" : "Tgt_1",
+            "script" : "FILTRANS sink(saveMode:'overwrite' ) ~> Tgt_1"
+         } ],
+         "transformations" : [ {
+            "name" : "JNRTRANS",
+            "script" : "EMP, Dept_LKP join(Dept_LKP@Deptno == EMP@deptno,\n joinType:'outer',\n\tbroadcast: 'none')~> JNRTRANS"
+         }, {
+            "name" : "EXPTRANS",
+            "script" : "JNRTRANS derive(Upper_ename = upper(ename)) ~> EXPTRANS"
+         }, {
+            "name" : "AGGTRANS",
+            "script" : "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tdeptno,\n\t\tcomm,\n\t\tdeptname,\n\t\tLoc),\n\tmax_sal = (sal)) ~> AGGTRANS"
+         }, {
+            "name" : "FILTRANS",
+            "script" : "AGGTRANS filter(max_sal > 45000) ~> FILTRANS"
+         } ]
+      }
+   }
+}
