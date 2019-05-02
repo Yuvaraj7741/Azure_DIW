@@ -1,37 +1,42 @@
 {
-   "name" : "EMP",
-   "properties" : {
-      "linkedServiceName" : {
-         "referenceName" : "AzureBlobStorage3",
-         "type" : "LinkedServiceReference"
-      },
-      "type" : "DelimitedText",
-      "typeProperties" : {
-         "location" : {
-            "type" : "AzureBlobStorageLocation",
-            "fileName" : "Src_Employee.txt",
-            "container" : "azureinput"
-         },
-         "columnDelimiter" : ",",
-         "escapeChar" : "\\",
-         "firstRowAsHeader" : true,
-         "quoteChar" : "\""
-      },
-      "schema" : [ {
-         "name" : "empno",
-         "type" : "Decimal"
-      }, {
-         "name" : "ename",
-         "type" : "String"
-      }, {
-         "name" : "deptno",
-         "type" : "Decimal"
-      }, {
-         "name" : "sal",
-         "type" : "Decimal"
-      }, {
-         "name" : "comm",
-         "type" : "Decimal"
-      } ]
-   }
+	"name": "EMP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "azureinput"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "empno",
+				"type": "Decimal"
+			},
+			{
+				"name": "ename",
+				"type": "String"
+			},
+			{
+				"name": "deptno",
+				"type": "Decimal"
+			},
+			{
+				"name": "sal",
+				"type": "Decimal"
+			},
+			{
+				"name": "comm",
+				"type": "Decimal"
+			}
+		]
+	}
 }
