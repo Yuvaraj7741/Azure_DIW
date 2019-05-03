@@ -1,5 +1,5 @@
 {
-   "name" : "LKPTRANS",
+   "name" : "load_bnk_src",
    "properties" : {
       "linkedServiceName" : {
          "referenceName" : "AzureBlobStorage3",
