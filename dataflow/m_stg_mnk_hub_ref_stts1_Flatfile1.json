@@ -26,7 +26,7 @@
 			"transformations": [
 				{
 					"name": "EXPTRANS",
-					"script": "HUBST1 derive(trim_sub_typ = trim(SUB_TYP)) ~> EXPTRANS"
+					"script": "HUBST1 derive() ~> EXPTRANS"
 				}
 			]
 		}
