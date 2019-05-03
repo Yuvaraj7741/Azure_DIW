@@ -1,34 +1,31 @@
 {
-	"name": "Dept_LKP",
-	"properties": {
-		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage3",
-			"type": "LinkedServiceReference"
-		},
-		"type": "DelimitedText",
-		"typeProperties": {
-			"location": {
-				"type": "AzureBlobStorageLocation",
-				"container": "azureinput"
-			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"firstRowAsHeader": true,
-			"quoteChar": "\""
-		},
-		"schema": [
-			{
-				"name": "Deptno",
-				"type": "Decimal"
-			},
-			{
-				"name": "deptname",
-				"type": "String"
-			},
-			{
-				"name": "Loc",
-				"type": "String"
-			}
-		]
-	}
+   "name" : "Dept_LKP",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "DelimitedText",
+      "typeProperties" : {
+         "location" : {
+            "type" : "AzureBlobStorageLocation",
+            "fileName" : "Src_Employee.txt",
+            "container" : "azureinput"
+         },
+         "columnDelimiter" : ",",
+         "escapeChar" : "\\",
+         "firstRowAsHeader" : true,
+         "quoteChar" : "\""
+      },
+      "schema" : [ {
+         "name" : "Deptno",
+         "type" : "Decimal"
+      }, {
+         "name" : "deptname",
+         "type" : "String"
+      }, {
+         "name" : "Loc",
+         "type" : "String"
+      } ]
+   }
 }
