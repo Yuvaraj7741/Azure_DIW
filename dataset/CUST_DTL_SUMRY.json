@@ -1,5 +1,5 @@
 {
-   "name" : "STG_ACCT2",
+   "name" : "CUST_DTL_SUMRY",
    "properties" : {
       "linkedServiceName" : {
          "referenceName" : "AzureBlobStorage3",
@@ -16,19 +16,6 @@
          "escapeChar" : "\\",
          "firstRowAsHeader" : true,
          "quoteChar" : "\""
-      },
-      "schema" : [ {
-         "name" : "ACCT_ID",
-         "type" : "Decimal"
-      }, {
-         "name" : "ACCT_TYP",
-         "type" : "String"
-      }, {
-         "name" : "ACCT_DESC",
-         "type" : "String"
-      }, {
-         "name" : "CASH",
-         "type" : "String"
-      } ]
+      }
    }
 }
