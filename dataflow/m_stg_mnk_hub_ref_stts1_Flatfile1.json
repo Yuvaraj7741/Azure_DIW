@@ -1,28 +1,34 @@
 {
-   "name" : "m_stg_mnk_hub_ref_stts1_Flatfile1",
-   "properties" : {
-      "type" : "MappingDataFlow",
-      "typeProperties" : {
-         "sources" : [ {
-            "dataset" : {
-               "referenceName" : "HUBST1",
-               "type" : "DatasetReference"
-            },
-            "name" : "HUBST1",
-            "script" : "source(output(\n\t\tLH_HUB_STATUS_KEY as decimal(10,0),\n\t\tSR_NO as string,\n\t\tLH_PATID as decimal(10,0),\n\t\tHUB_PAT_ID as decimal(10,0),\n\t\tSUB_TYP as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> HUBST1"
-         } ],
-         "sinks" : [ {
-            "dataset" : {
-               "referenceName" : "stg_mnk_hub_ref_stts1",
-               "type" : "DatasetReference"
-            },
-            "name" : "stg_mnk_hub_ref_stts1",
-            "script" : "EXPTRANS sink(saveMode:'overwrite' ) ~> stg_mnk_hub_ref_stts1"
-         } ],
-         "transformations" : [ {
-            "name" : "EXPTRANS",
-            "script" : "HUBST1 derive(trim_sub_typ = ltrim(SUB_TYP)) ~> EXPTRANS"
-         } ]
-      }
-   }
+	"name": "m_stg_mnk_hub_ref_stts1_Flatfile1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "HUBST1",
+						"type": "DatasetReference"
+					},
+					"name": "HUBST1",
+					"script": "source(output(\n\t\tLH_HUB_STATUS_KEY as decimal(10,0),\n\t\tSR_NO as string,\n\t\tLH_PATID as decimal(10,0),\n\t\tHUB_PAT_ID as decimal(10,0),\n\t\tSUB_TYP as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> HUBST1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "stg_mnk_hub_ref_stts1",
+						"type": "DatasetReference"
+					},
+					"name": "stgmnkhubrefstts1",
+					"script": "EXPTRANS sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> stgmnkhubrefstts1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "EXPTRANS",
+					"script": "HUBST1 derive(trim_sub_typ = trim(SUB_TYP)) ~> EXPTRANS"
+				}
+			]
+		}
+	}
 }

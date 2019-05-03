@@ -1,37 +1,43 @@
 {
-   "name" : "HUBST1",
-   "properties" : {
-      "linkedServiceName" : {
-         "referenceName" : "AzureBlobStorage3",
-         "type" : "LinkedServiceReference"
-      },
-      "type" : "DelimitedText",
-      "typeProperties" : {
-         "location" : {
-            "type" : "AzureBlobStorageLocation",
-            "fileName" : "Src_Employee.txt",
-            "container" : "azureinput"
-         },
-         "columnDelimiter" : ",",
-         "escapeChar" : "\\",
-         "firstRowAsHeader" : true,
-         "quoteChar" : "\""
-      },
-      "schema" : [ {
-         "name" : "LH_HUB_STATUS_KEY",
-         "type" : "Decimal"
-      }, {
-         "name" : "SR_NO",
-         "type" : "String"
-      }, {
-         "name" : "LH_PATID",
-         "type" : "Decimal"
-      }, {
-         "name" : "HUB_PAT_ID",
-         "type" : "Decimal"
-      }, {
-         "name" : "SUB_TYP",
-         "type" : "String"
-      } ]
-   }
+	"name": "HUBST1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "m_stg_mnk_hub_ref_stts1_Flatfile1 - data.txt",
+				"container": "diw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "LH_HUB_STATUS_KEY",
+				"type": "Decimal"
+			},
+			{
+				"name": "SR_NO",
+				"type": "String"
+			},
+			{
+				"name": "LH_PATID",
+				"type": "Decimal"
+			},
+			{
+				"name": "HUB_PAT_ID",
+				"type": "Decimal"
+			},
+			{
+				"name": "SUB_TYP",
+				"type": "String"
+			}
+		]
+	}
 }
