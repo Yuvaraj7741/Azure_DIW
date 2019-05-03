@@ -1,0 +1,28 @@
+{
+   "name" : "m_load_cust_crdt_sumry_flatfile",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "STG_ACCT2",
+               "type" : "DatasetReference"
+            },
+            "name" : "STG_ACCT2",
+            "script" : "source(output(\n\t\tACCT_ID as decimal(10,0),\n\t\tACCT_TYP as string,\n\t\tACCT_DESC as string,\n\t\tCASH as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> STG_ACCT2"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "CUST_DTL_SUMRY",
+               "type" : "DatasetReference"
+            },
+            "name" : "CUST_DTL_SUMRY1",
+            "script" : "EXPTRANS sink(saveMode:'overwrite' ) ~> CUST_DTL_SUMRY1"
+         } ],
+         "transformations" : [ {
+            "name" : "EXPTRANS",
+            "script" : "STG_ACCT2 derive(ACCT_ID = ACCT_ID,\n\t\tACCT_TYP = ACCT_TYP,\n\t\tACCT_DESC = ACCT_DESC,\n\t\tCASH = CASH) ~> EXPTRANS"
+         } ]
+      }
+   }
+}
