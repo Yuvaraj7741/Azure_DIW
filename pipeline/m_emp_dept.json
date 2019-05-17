@@ -13,8 +13,8 @@
 				},
 				"userProperties": [
 					{
-						"name": "prop",
-						"value": "0"
+						"name": "",
+						"value": ""
 					}
 				],
 				"typeProperties": {
@@ -30,12 +30,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"o_new1": {
-				"type": "string",
-				"defaultValue": "0"
-			}
-		},
 		"variables": {
 			"var_New": {
 				"type": "String",
