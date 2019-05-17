@@ -24,6 +24,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"o_new1": {
+				"type": "string",
+				"defaultValue": "0"
+			}
+		},
 		"variables": {
 			"var_New": {
 				"type": "String",
