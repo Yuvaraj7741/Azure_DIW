@@ -11,6 +11,12 @@
 					"retryIntervalInSeconds": 30,
 					"secureOutput": "false"
 				},
+				"userProperties": [
+					{
+						"name": "prop",
+						"value": "0"
+					}
+				],
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_emp_dept",
