@@ -16,7 +16,7 @@
 			"sinks": [
 				{
 					"name": "Sequential_File_11",
-					"script": "Aggregator_9 sink() ~> Sequential_File_11"
+					"script": "Aggregator_9 sink(mapColumn(\n\t\tbnk_name1 = bnk_name,\n\t\tstate_name,\n\t\tcity\n\t)) ~> Sequential_File_11"
 				}
 			],
 			"transformations": [
