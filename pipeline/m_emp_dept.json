@@ -3,30 +3,26 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "m_emp_dept",
+				"name": "Load_Bank_Summary",
 				"type": "ExecuteDataFlow",
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
-					"secureOutput": "false"
+					"secureOutput": false,
+					"secureInput": false
 				},
 				"userProperties": [
 					{
-						"name": "",
-						"value": ""
+						"name": "andorid",
+						"value": "\"1\""
 					}
 				],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_emp_dept",
+						"referenceName": "Load_Bank_Summary",
 						"type": "DataFlowReference"
-					},
-					"linkedService": {
-						"type": "LinkedServiceReference",
-						"referenceName": "AzureBlobStorage3"
-					},
-					"dataIntegrationUnits": 0
+					}
 				}
 			}
 		],
