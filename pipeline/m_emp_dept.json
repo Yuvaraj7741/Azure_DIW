@@ -30,6 +30,10 @@
 			"para_New": {
 				"type": "string",
 				"defaultValue": "0"
+			},
+			"param": {
+				"type": "string",
+				"defaultValue": "\"shi\""
 			}
 		},
 		"variables": {
