@@ -18,7 +18,7 @@
 						"type": "DatasetReference"
 					},
 					"name": "loadbnksrc",
-					"script": "source(output(\n\t\tbnk_id as decimal(10,0),\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as decimal(10,0),\n\t\tcontact_no as decimal(10,0),\n\t\tno_of_branches as decimal(10,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> loadbnksrc"
+					"script": "source(output(\n\t\tbnk_id as decimal(10,0),\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as integer,\n\t\tstate_code as decimal(10,0),\n\t\tcontact_no as decimal(10,0),\n\t\tno_of_branches as decimal(10,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> loadbnksrc"
 				}
 			],
 			"sinks": [
