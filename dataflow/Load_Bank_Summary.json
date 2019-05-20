@@ -22,7 +22,7 @@
 			"transformations": [
 				{
 					"name": "Transformer_2",
-					"script": "Sequential_File_0 derive(bnk_name = upper(bnk_name),\n\t\t{} = upper(bnk_name)) ~> Transformer_2"
+					"script": "Sequential_File_0 derive(bnk_name = upper(bnk_name),\n\t\taddress1 = upper(bnk_name)) ~> Transformer_2"
 				},
 				{
 					"name": "Filter_4",
