@@ -20,13 +20,17 @@
 						"type": "DatasetReference"
 					},
 					"name": "CUSTDTLSUMRY1",
-					"script": "EXPTRANS sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> CUSTDTLSUMRY1"
+					"script": "Filter1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> CUSTDTLSUMRY1"
 				}
 			],
 			"transformations": [
 				{
 					"name": "EXPTRANS",
 					"script": "STGACCT2 derive(ACCT_ID = ACCT_ID,\n\t\tACCT_TYP = ACCT_TYP,\n\t\tACCT_DESC = ACCT_DESC,\n\t\tCASH = CASH) ~> EXPTRANS"
+				},
+				{
+					"name": "Filter1",
+					"script": "EXPTRANS filter(ACCT_ID == 'Y') ~> Filter1"
 				}
 			]
 		}
