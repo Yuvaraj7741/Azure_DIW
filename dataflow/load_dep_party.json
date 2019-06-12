@@ -1,0 +1,24 @@
+{
+   "name" : "load_dep_party",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "Dependent",
+               "type" : "DatasetReference"
+            },
+            "name" : "Dependent",
+            "script" : "source(output(\n\t\tTitle as string,\n\t\tFirst_Name as string,\n\t\tMiddle_Name as string,\n\t\tLast_Name as string,\n\t\tMember_ID as decimal(10,0),\n\t\tMember_Suffix as string,\n\t\tBirth_Date as date,\n\t\tGender_Code as string,\n\t\tMember_Record_Number as decimal(10,0),\n\t\tSocial_Security_Number as decimal(10,0),\n\t\tMember_Type_Code as decimal(10,0),\n\t\tOriginal_Effective_Date as date,\n\t\tRelationship_to_Subscriber_Code as decimal(10,0),\n\t\tRelationship_to_Subscriber_Code_Label as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Dependent"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "Party",
+               "type" : "DatasetReference"
+            },
+            "name" : "Party",
+            "script" : "Dependent sink(mapColumn(\n\t\tTitle,\n\t\tGender = Gender_Code,\n\t\tFirst_Name,\n\t\tMiddle_Name,\n\t\tLast_Name,\n\t\tMember_Identifier = Member_ID,\n\t\tMember_Suffix,\n\t\tDate_of_Birth = Birth_Date,\n\t\tMember_Number = Member_Record_Number,\n\t\tSoc_Number = Social_Security_Number,\n\t\tType_Code = Member_Type_Code,\n\t\tRelationship_to_Subscriber_Code,\n\t\tRelationship_to_Subscriber_Code_Label,\n\t\tEffective_Date = Original_Effective_Date\n\t)) ~> Party"
+         } ]
+      }
+   }
+}
