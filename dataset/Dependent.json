@@ -1,0 +1,64 @@
+{
+   "name" : "Dependent",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "DelimitedText",
+      "typeProperties" : {
+         "location" : {
+            "type" : "AzureBlobStorageLocation",
+            "fileName" : "Src_Employee.txt",
+            "container" : "azureinput"
+         },
+         "columnDelimiter" : ",",
+         "escapeChar" : "\\",
+         "firstRowAsHeader" : true,
+         "quoteChar" : "\""
+      },
+      "schema" : [ {
+         "name" : "Title",
+         "type" : "String"
+      }, {
+         "name" : "First_Name",
+         "type" : "String"
+      }, {
+         "name" : "Middle_Name",
+         "type" : "String"
+      }, {
+         "name" : "Last_Name",
+         "type" : "String"
+      }, {
+         "name" : "Member_ID",
+         "type" : "Decimal"
+      }, {
+         "name" : "Member_Suffix",
+         "type" : "String"
+      }, {
+         "name" : "Birth_Date",
+         "type" : "DateTime"
+      }, {
+         "name" : "Gender_Code",
+         "type" : "String"
+      }, {
+         "name" : "Member_Record_Number",
+         "type" : "Decimal"
+      }, {
+         "name" : "Social_Security_Number",
+         "type" : "Decimal"
+      }, {
+         "name" : "Member_Type_Code",
+         "type" : "Decimal"
+      }, {
+         "name" : "Original_Effective_Date",
+         "type" : "DateTime"
+      }, {
+         "name" : "Relationship_to_Subscriber_Code",
+         "type" : "Decimal"
+      }, {
+         "name" : "Relationship_to_Subscriber_Code_Label",
+         "type" : "String"
+      } ]
+   }
+}
