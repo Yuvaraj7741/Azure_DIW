@@ -1,0 +1,14 @@
+{
+   "name" : "Load Hold Date.EDW_Inv_Fact_VPCCapacity",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureSqlTable",
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Load Hold Date.EDW_Inv_Fact_VPCCapacity"
+      }
+   }
+}

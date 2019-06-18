@@ -1,0 +1,513 @@
+{
+   "name" : "Load Hold.ADO NET Source",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureSqlTable",
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Load Hold.ADO NET Source"
+      },
+      "schema" : [ {
+         "name" : "Inv_LinkFlag",
+         "type" : "String"
+      }, {
+         "name" : "Dashboard",
+         "type" : "String"
+      }, {
+         "name" : "HLD_CARGOID",
+         "type" : "String"
+      }, {
+         "name" : "HLD_VPC",
+         "type" : "String"
+      }, {
+         "name" : "VPC",
+         "type" : "String"
+      }, {
+         "name" : "Org_ID",
+         "type" : "String"
+      }, {
+         "name" : "CUST_ID",
+         "type" : "String"
+      }, {
+         "name" : "Dealer Code",
+         "type" : "String"
+      }, {
+         "name" : "VPC_ID",
+         "type" : "String"
+      }, {
+         "name" : "F_ACTIVE",
+         "type" : "String"
+      }, {
+         "name" : "CURR_DATETIME",
+         "type" : "String"
+      }, {
+         "name" : "DLR_ID",
+         "type" : "String"
+      }, {
+         "name" : "HLD_DEALERETA",
+         "type" : "String"
+      }, {
+         "name" : "Hold",
+         "type" : "String"
+      }, {
+         "name" : "Assignment Status",
+         "type" : "String"
+      }, {
+         "name" : "Hold Group Code",
+         "type" : "String"
+      }, {
+         "name" : "Hold Group Description",
+         "type" : "String"
+      }, {
+         "name" : "Hold Code",
+         "type" : "String"
+      }, {
+         "name" : "HLD_HD_DESCRIPTION",
+         "type" : "String"
+      }, {
+         "name" : "Hold Severity",
+         "type" : "String"
+      }, {
+         "name" : "Hold Start Date",
+         "type" : "String"
+      }, {
+         "name" : "Hold End Date",
+         "type" : "String"
+      }, {
+         "name" : "Model Line",
+         "type" : "String"
+      }, {
+         "name" : "Brand",
+         "type" : "String"
+      }, {
+         "name" : "HLD_MODEL",
+         "type" : "String"
+      }, {
+         "name" : "HD_LOCATION",
+         "type" : "String"
+      }, {
+         "name" : "Order Type",
+         "type" : "String"
+      }, {
+         "name" : "Customer",
+         "type" : "String"
+      }, {
+         "name" : "LOCATION_ID",
+         "type" : "String"
+      }, {
+         "name" : "ORDER_ASSIGNMENT_DATE",
+         "type" : "String"
+      }, {
+         "name" : "HLD_CURRDATE",
+         "type" : "String"
+      }, {
+         "name" : "Hold Age",
+         "type" : "Int32"
+      }, {
+         "name" : "Holiday_Cnt",
+         "type" : "String"
+      }, {
+         "name" : "RailHead Description",
+         "type" : "String"
+      }, {
+         "name" : "Rail Head",
+         "type" : "String"
+      }, {
+         "name" : "Truck_key",
+         "type" : "String"
+      }, {
+         "name" : "Rail Head Code Description",
+         "type" : "String"
+      }, {
+         "name" : "Inv_LinkDate",
+         "type" : "String"
+      }, {
+         "name" : "LOC_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "Customer Sold",
+         "type" : "String"
+      }, {
+         "name" : "Upfit",
+         "type" : "String"
+      }, {
+         "name" : "Wholesaled",
+         "type" : "String"
+      }, {
+         "name" : "Vessel Name",
+         "type" : "String"
+      }, {
+         "name" : "Market",
+         "type" : "String"
+      }, {
+         "name" : "DESTINATION",
+         "type" : "String"
+      }, {
+         "name" : "Location Type",
+         "type" : "String"
+      }, {
+         "name" : "Status",
+         "type" : "String"
+      }, {
+         "name" : "Dealer Name",
+         "type" : "String"
+      }, {
+         "name" : "Customer Reference Number",
+         "type" : "String"
+      }, {
+         "name" : "Serial Number",
+         "type" : "String"
+      }, {
+         "name" : "Order Number",
+         "type" : "String"
+      }, {
+         "name" : "Priority",
+         "type" : "String"
+      }, {
+         "name" : "Model Year",
+         "type" : "String"
+      }, {
+         "name" : "Trim Code",
+         "type" : "String"
+      }, {
+         "name" : "Color Code",
+         "type" : "String"
+      }, {
+         "name" : "Manifest",
+         "type" : "String"
+      }, {
+         "name" : "Current Status",
+         "type" : "String"
+      }, {
+         "name" : "Returned Flag",
+         "type" : "String"
+      }, {
+         "name" : "Assigned Flag",
+         "type" : "String"
+      }, {
+         "name" : "Accessory",
+         "type" : "String"
+      }, {
+         "name" : "Customer Number",
+         "type" : "String"
+      }, {
+         "name" : "Dealer Address",
+         "type" : "String"
+      }, {
+         "name" : "Dealer City",
+         "type" : "String"
+      }, {
+         "name" : "Dealer State",
+         "type" : "String"
+      }, {
+         "name" : "Dealer Zip Code",
+         "type" : "String"
+      }, {
+         "name" : "Dealer Country Code",
+         "type" : "String"
+      }, {
+         "name" : "Dealer Country Name",
+         "type" : "String"
+      }, {
+         "name" : "MODEL_ID",
+         "type" : "String"
+      }, {
+         "name" : "Model Code",
+         "type" : "String"
+      }, {
+         "name" : "Model Description",
+         "type" : "String"
+      }, {
+         "name" : "Model Group",
+         "type" : "String"
+      }, {
+         "name" : "Load Number",
+         "type" : "String"
+      }, {
+         "name" : "CARRIER TYPE",
+         "type" : "String"
+      }, {
+         "name" : "CARRIER",
+         "type" : "String"
+      }, {
+         "name" : "Route Code",
+         "type" : "String"
+      }, {
+         "name" : "Lot Code",
+         "type" : "String"
+      }, {
+         "name" : "ETA Date",
+         "type" : "String"
+      }, {
+         "name" : "NMC Receipt Date",
+         "type" : "String"
+      }, {
+         "name" : "Tender Date",
+         "type" : "String"
+      }, {
+         "name" : "Received Date",
+         "type" : "String"
+      }, {
+         "name" : "Hold Qualifier",
+         "type" : "String"
+      }, {
+         "name" : "HOLDCMMNT",
+         "type" : "String"
+      }, {
+         "name" : "Inv_LinkFlag",
+         "type" : "String"
+      }, {
+         "name" : "Dashboard",
+         "type" : "String"
+      }, {
+         "name" : "HLD_CARGOID",
+         "type" : "String"
+      }, {
+         "name" : "HLD_VPC",
+         "type" : "String"
+      }, {
+         "name" : "VPC",
+         "type" : "String"
+      }, {
+         "name" : "Org_ID",
+         "type" : "String"
+      }, {
+         "name" : "CUST_ID",
+         "type" : "String"
+      }, {
+         "name" : "Dealer Code",
+         "type" : "String"
+      }, {
+         "name" : "VPC_ID",
+         "type" : "String"
+      }, {
+         "name" : "F_ACTIVE",
+         "type" : "String"
+      }, {
+         "name" : "CURR_DATETIME",
+         "type" : "String"
+      }, {
+         "name" : "DLR_ID",
+         "type" : "String"
+      }, {
+         "name" : "HLD_DEALERETA",
+         "type" : "String"
+      }, {
+         "name" : "Hold",
+         "type" : "String"
+      }, {
+         "name" : "Assignment Status",
+         "type" : "String"
+      }, {
+         "name" : "Hold Group Code",
+         "type" : "String"
+      }, {
+         "name" : "Hold Group Description",
+         "type" : "String"
+      }, {
+         "name" : "Hold Code",
+         "type" : "String"
+      }, {
+         "name" : "HLD_HD_DESCRIPTION",
+         "type" : "String"
+      }, {
+         "name" : "Hold Severity",
+         "type" : "String"
+      }, {
+         "name" : "Hold Start Date",
+         "type" : "String"
+      }, {
+         "name" : "Hold End Date",
+         "type" : "String"
+      }, {
+         "name" : "Model Line",
+         "type" : "String"
+      }, {
+         "name" : "Brand",
+         "type" : "String"
+      }, {
+         "name" : "HLD_MODEL",
+         "type" : "String"
+      }, {
+         "name" : "HD_LOCATION",
+         "type" : "String"
+      }, {
+         "name" : "Order Type",
+         "type" : "String"
+      }, {
+         "name" : "Customer",
+         "type" : "String"
+      }, {
+         "name" : "LOCATION_ID",
+         "type" : "String"
+      }, {
+         "name" : "ORDER_ASSIGNMENT_DATE",
+         "type" : "String"
+      }, {
+         "name" : "HLD_CURRDATE",
+         "type" : "String"
+      }, {
+         "name" : "Hold Age",
+         "type" : "Int32"
+      }, {
+         "name" : "Holiday_Cnt",
+         "type" : "String"
+      }, {
+         "name" : "RailHead Description",
+         "type" : "String"
+      }, {
+         "name" : "Rail Head",
+         "type" : "String"
+      }, {
+         "name" : "Truck_key",
+         "type" : "String"
+      }, {
+         "name" : "Rail Head Code Description",
+         "type" : "String"
+      }, {
+         "name" : "Inv_LinkDate",
+         "type" : "String"
+      }, {
+         "name" : "LOC_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "Customer Sold",
+         "type" : "String"
+      }, {
+         "name" : "Upfit",
+         "type" : "String"
+      }, {
+         "name" : "Wholesaled",
+         "type" : "String"
+      }, {
+         "name" : "Vessel Name",
+         "type" : "String"
+      }, {
+         "name" : "Market",
+         "type" : "String"
+      }, {
+         "name" : "DESTINATION",
+         "type" : "String"
+      }, {
+         "name" : "Location Type",
+         "type" : "String"
+      }, {
+         "name" : "Status",
+         "type" : "String"
+      }, {
+         "name" : "Dealer Name",
+         "type" : "String"
+      }, {
+         "name" : "Customer Reference Number",
+         "type" : "String"
+      }, {
+         "name" : "Serial Number",
+         "type" : "String"
+      }, {
+         "name" : "Order Number",
+         "type" : "String"
+      }, {
+         "name" : "Priority",
+         "type" : "String"
+      }, {
+         "name" : "Model Year",
+         "type" : "String"
+      }, {
+         "name" : "Trim Code",
+         "type" : "String"
+      }, {
+         "name" : "Color Code",
+         "type" : "String"
+      }, {
+         "name" : "Manifest",
+         "type" : "String"
+      }, {
+         "name" : "Current Status",
+         "type" : "String"
+      }, {
+         "name" : "Returned Flag",
+         "type" : "String"
+      }, {
+         "name" : "Assigned Flag",
+         "type" : "String"
+      }, {
+         "name" : "Accessory",
+         "type" : "String"
+      }, {
+         "name" : "Customer Number",
+         "type" : "String"
+      }, {
+         "name" : "Dealer Address",
+         "type" : "String"
+      }, {
+         "name" : "Dealer City",
+         "type" : "String"
+      }, {
+         "name" : "Dealer State",
+         "type" : "String"
+      }, {
+         "name" : "Dealer Zip Code",
+         "type" : "String"
+      }, {
+         "name" : "Dealer Country Code",
+         "type" : "String"
+      }, {
+         "name" : "Dealer Country Name",
+         "type" : "String"
+      }, {
+         "name" : "MODEL_ID",
+         "type" : "String"
+      }, {
+         "name" : "Model Code",
+         "type" : "String"
+      }, {
+         "name" : "Model Description",
+         "type" : "String"
+      }, {
+         "name" : "Model Group",
+         "type" : "String"
+      }, {
+         "name" : "Load Number",
+         "type" : "String"
+      }, {
+         "name" : "CARRIER TYPE",
+         "type" : "String"
+      }, {
+         "name" : "CARRIER",
+         "type" : "String"
+      }, {
+         "name" : "Route Code",
+         "type" : "String"
+      }, {
+         "name" : "Lot Code",
+         "type" : "String"
+      }, {
+         "name" : "ETA Date",
+         "type" : "String"
+      }, {
+         "name" : "NMC Receipt Date",
+         "type" : "String"
+      }, {
+         "name" : "Tender Date",
+         "type" : "String"
+      }, {
+         "name" : "Received Date",
+         "type" : "String"
+      }, {
+         "name" : "Hold Qualifier",
+         "type" : "String"
+      }, {
+         "name" : "HOLDCMMNT",
+         "type" : "String"
+      }, {
+         "name" : "ErrorCode",
+         "type" : "Int32"
+      }, {
+         "name" : "ErrorColumn",
+         "type" : "Int32"
+      } ]
+   }
+}

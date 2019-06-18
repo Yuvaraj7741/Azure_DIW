@@ -1,0 +1,14 @@
+{
+   "name" : "Load Comments.EDW_Inv_Fact_VPCCapacity",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureSqlTable",
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Load Comments.EDW_Inv_Fact_VPCCapacity"
+      }
+   }
+}

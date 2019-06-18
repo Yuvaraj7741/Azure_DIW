@@ -1,0 +1,69 @@
+{
+   "name" : "Load Truck Capacity.ADO NET Source",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureSqlTable",
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Load Truck Capacity.ADO NET Source"
+      },
+      "schema" : [ {
+         "name" : "RAIL_HEAD_NUMBER",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_MON",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_TUE",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_WED",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_THU",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_FRI",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_SAT",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_SUN",
+         "type" : "String"
+      }, {
+         "name" : "RAIL_HEAD_NUMBER",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_MON",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_TUE",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_WED",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_THU",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_FRI",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_SAT",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY_SUN",
+         "type" : "String"
+      }, {
+         "name" : "ErrorCode",
+         "type" : "Int32"
+      }, {
+         "name" : "ErrorColumn",
+         "type" : "Int32"
+      } ]
+   }
+}

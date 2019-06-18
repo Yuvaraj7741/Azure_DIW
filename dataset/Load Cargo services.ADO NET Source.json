@@ -1,0 +1,159 @@
+{
+   "name" : "Load Cargo services.ADO NET Source",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureSqlTable",
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Load Cargo services.ADO NET Source"
+      },
+      "schema" : [ {
+         "name" : "CARGO_SERVICE_SEQ_NO",
+         "type" : "String"
+      }, {
+         "name" : "CARGO_SEQ_NO",
+         "type" : "String"
+      }, {
+         "name" : "WORK_ORDERNUMBER",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_LOCATION",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_CODE",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_DESCRIPTION",
+         "type" : "String"
+      }, {
+         "name" : "SERIVCE_REQUEST_DATE",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_COMPLETION_DATE",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_COMPLETION_CODE",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_START_DATE",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_END_DATE",
+         "type" : "String"
+      }, {
+         "name" : "F_SHOW_INT",
+         "type" : "String"
+      }, {
+         "name" : "F_SHOW_EXT",
+         "type" : "String"
+      }, {
+         "name" : "F_DELETE",
+         "type" : "String"
+      }, {
+         "name" : "F_ACTIVE",
+         "type" : "String"
+      }, {
+         "name" : "CREATED_DATE",
+         "type" : "String"
+      }, {
+         "name" : "CREATED_BY",
+         "type" : "String"
+      }, {
+         "name" : "MODIFIED_DATE",
+         "type" : "String"
+      }, {
+         "name" : "MODIFIED_BY",
+         "type" : "String"
+      }, {
+         "name" : "ACCESSORY_CANCEL_REASON",
+         "type" : "String"
+      }, {
+         "name" : "ACCESSORY_COMMENT",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_CODE_GRP",
+         "type" : "String"
+      }, {
+         "name" : "CARGO_ID",
+         "type" : "String"
+      }, {
+         "name" : "CARGO_SERVICE_SEQ_NO",
+         "type" : "String"
+      }, {
+         "name" : "CARGO_SEQ_NO",
+         "type" : "String"
+      }, {
+         "name" : "WORK_ORDERNUMBER",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_LOCATION",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_CODE",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_DESCRIPTION",
+         "type" : "String"
+      }, {
+         "name" : "SERIVCE_REQUEST_DATE",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_COMPLETION_DATE",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_COMPLETION_CODE",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_START_DATE",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_END_DATE",
+         "type" : "String"
+      }, {
+         "name" : "F_SHOW_INT",
+         "type" : "String"
+      }, {
+         "name" : "F_SHOW_EXT",
+         "type" : "String"
+      }, {
+         "name" : "F_DELETE",
+         "type" : "String"
+      }, {
+         "name" : "F_ACTIVE",
+         "type" : "String"
+      }, {
+         "name" : "CREATED_DATE",
+         "type" : "String"
+      }, {
+         "name" : "CREATED_BY",
+         "type" : "String"
+      }, {
+         "name" : "MODIFIED_DATE",
+         "type" : "String"
+      }, {
+         "name" : "MODIFIED_BY",
+         "type" : "String"
+      }, {
+         "name" : "ACCESSORY_CANCEL_REASON",
+         "type" : "String"
+      }, {
+         "name" : "ACCESSORY_COMMENT",
+         "type" : "String"
+      }, {
+         "name" : "SERVICE_CODE_GRP",
+         "type" : "String"
+      }, {
+         "name" : "CARGO_ID",
+         "type" : "String"
+      }, {
+         "name" : "ErrorCode",
+         "type" : "Int32"
+      }, {
+         "name" : "ErrorColumn",
+         "type" : "Int32"
+      } ]
+   }
+}

@@ -1,0 +1,57 @@
+{
+   "name" : "Load Hold Days.ADO NET Source",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureSqlTable",
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Load Hold Days.ADO NET Source"
+      },
+      "schema" : [ {
+         "name" : "curinv_cargo_id",
+         "type" : "String"
+      }, {
+         "name" : "Age_start",
+         "type" : "String"
+      }, {
+         "name" : "Age_Stop",
+         "type" : "String"
+      }, {
+         "name" : "hold_start",
+         "type" : "String"
+      }, {
+         "name" : "hold_stop",
+         "type" : "String"
+      }, {
+         "name" : "Hold_date",
+         "type" : "String"
+      }, {
+         "name" : "curinv_cargo_id",
+         "type" : "String"
+      }, {
+         "name" : "Age_start",
+         "type" : "String"
+      }, {
+         "name" : "Age_Stop",
+         "type" : "String"
+      }, {
+         "name" : "hold_start",
+         "type" : "String"
+      }, {
+         "name" : "hold_stop",
+         "type" : "String"
+      }, {
+         "name" : "Hold_date",
+         "type" : "String"
+      }, {
+         "name" : "ErrorCode",
+         "type" : "Int32"
+      }, {
+         "name" : "ErrorColumn",
+         "type" : "Int32"
+      } ]
+   }
+}

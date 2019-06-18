@@ -1,0 +1,261 @@
+{
+   "name" : "Load Variance Capacity.ADO NET Source",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureSqlTable",
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Load Variance Capacity.ADO NET Source"
+      },
+      "schema" : [ {
+         "name" : "Var_LinkFlag",
+         "type" : "String"
+      }, {
+         "name" : "CAPACITY VARIANCE",
+         "type" : "String"
+      }, {
+         "name" : "Org_ID",
+         "type" : "String"
+      }, {
+         "name" : "CUST_ID",
+         "type" : "String"
+      }, {
+         "name" : "VPC_ID",
+         "type" : "String"
+      }, {
+         "name" : "PLANT",
+         "type" : "String"
+      }, {
+         "name" : "CUSTOMER_ID",
+         "type" : "String"
+      }, {
+         "name" : "INTRANSIT_UNASSIGNED",
+         "type" : "String"
+      }, {
+         "name" : "INTRANSIT_ASSIGNED",
+         "type" : "String"
+      }, {
+         "name" : "INTRANSIT_PAST_UNASSIGNED",
+         "type" : "String"
+      }, {
+         "name" : "INTRANSIT_PAST_ASSIGNED",
+         "type" : "String"
+      }, {
+         "name" : "GROUND_UNASSIGNED",
+         "type" : "String"
+      }, {
+         "name" : "GROUND_ASSIGNED_ON_HOLD",
+         "type" : "String"
+      }, {
+         "name" : "GROUND_ASSIGNED",
+         "type" : "String"
+      }, {
+         "name" : "TRANSPORT_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "CREATED_DATE",
+         "type" : "String"
+      }, {
+         "name" : "CREATED_BY",
+         "type" : "String"
+      }, {
+         "name" : "MODIFIED_DATE",
+         "type" : "String"
+      }, {
+         "name" : "MODIFIED_BY",
+         "type" : "String"
+      }, {
+         "name" : "UNASSIGNED_TOTAL",
+         "type" : "String"
+      }, {
+         "name" : "UNASSIGNED_TOTAL_TRANS_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "ASSIGNED_SHIPPABLE",
+         "type" : "String"
+      }, {
+         "name" : "UNSHIPPABLE_TOTAL",
+         "type" : "String"
+      }, {
+         "name" : "CAPACITY_VARIANCE",
+         "type" : "String"
+      }, {
+         "name" : "SIT_ON_GROUND",
+         "type" : "String"
+      }, {
+         "name" : "INVENTORY_TOTAL_TRANS_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "UNSHIPPABLE_CAPACITY",
+         "type" : "String"
+      }, {
+         "name" : "PCT_UNSHIPPABLE_CAPACITY",
+         "type" : "String"
+      }, {
+         "name" : "AIRPORT_INVENTORY",
+         "type" : "String"
+      }, {
+         "name" : "MAKE_ID",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY",
+         "type" : "String"
+      }, {
+         "name" : "RAIL_CAPACITY",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_ASSIGN_REQD_TO_SHIP",
+         "type" : "String"
+      }, {
+         "name" : "RAIL_ASSIGN_REQD_TO_SHIP",
+         "type" : "String"
+      }, {
+         "name" : "OCEAN_ASSIGN_REQD_TO_SHIP",
+         "type" : "String"
+      }, {
+         "name" : "CUSTOMER",
+         "type" : "String"
+      }, {
+         "name" : "LOCATION_ID",
+         "type" : "String"
+      }, {
+         "name" : "VPC",
+         "type" : "String"
+      }, {
+         "name" : "Brand",
+         "type" : "String"
+      }, {
+         "name" : "Var_LinkDate",
+         "type" : "String"
+      }, {
+         "name" : "Var_LinkFlag",
+         "type" : "String"
+      }, {
+         "name" : "CAPACITY VARIANCE",
+         "type" : "String"
+      }, {
+         "name" : "Org_ID",
+         "type" : "String"
+      }, {
+         "name" : "CUST_ID",
+         "type" : "String"
+      }, {
+         "name" : "VPC_ID",
+         "type" : "String"
+      }, {
+         "name" : "PLANT",
+         "type" : "String"
+      }, {
+         "name" : "CUSTOMER_ID",
+         "type" : "String"
+      }, {
+         "name" : "INTRANSIT_UNASSIGNED",
+         "type" : "String"
+      }, {
+         "name" : "INTRANSIT_ASSIGNED",
+         "type" : "String"
+      }, {
+         "name" : "INTRANSIT_PAST_UNASSIGNED",
+         "type" : "String"
+      }, {
+         "name" : "INTRANSIT_PAST_ASSIGNED",
+         "type" : "String"
+      }, {
+         "name" : "GROUND_UNASSIGNED",
+         "type" : "String"
+      }, {
+         "name" : "GROUND_ASSIGNED_ON_HOLD",
+         "type" : "String"
+      }, {
+         "name" : "GROUND_ASSIGNED",
+         "type" : "String"
+      }, {
+         "name" : "TRANSPORT_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "CREATED_DATE",
+         "type" : "String"
+      }, {
+         "name" : "CREATED_BY",
+         "type" : "String"
+      }, {
+         "name" : "MODIFIED_DATE",
+         "type" : "String"
+      }, {
+         "name" : "MODIFIED_BY",
+         "type" : "String"
+      }, {
+         "name" : "UNASSIGNED_TOTAL",
+         "type" : "String"
+      }, {
+         "name" : "UNASSIGNED_TOTAL_TRANS_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "ASSIGNED_SHIPPABLE",
+         "type" : "String"
+      }, {
+         "name" : "UNSHIPPABLE_TOTAL",
+         "type" : "String"
+      }, {
+         "name" : "CAPACITY_VARIANCE",
+         "type" : "String"
+      }, {
+         "name" : "SIT_ON_GROUND",
+         "type" : "String"
+      }, {
+         "name" : "INVENTORY_TOTAL_TRANS_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "UNSHIPPABLE_CAPACITY",
+         "type" : "String"
+      }, {
+         "name" : "PCT_UNSHIPPABLE_CAPACITY",
+         "type" : "String"
+      }, {
+         "name" : "AIRPORT_INVENTORY",
+         "type" : "String"
+      }, {
+         "name" : "MAKE_ID",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_CAPACITY",
+         "type" : "String"
+      }, {
+         "name" : "RAIL_CAPACITY",
+         "type" : "String"
+      }, {
+         "name" : "TRUCK_ASSIGN_REQD_TO_SHIP",
+         "type" : "String"
+      }, {
+         "name" : "RAIL_ASSIGN_REQD_TO_SHIP",
+         "type" : "String"
+      }, {
+         "name" : "OCEAN_ASSIGN_REQD_TO_SHIP",
+         "type" : "String"
+      }, {
+         "name" : "CUSTOMER",
+         "type" : "String"
+      }, {
+         "name" : "LOCATION_ID",
+         "type" : "String"
+      }, {
+         "name" : "VPC",
+         "type" : "String"
+      }, {
+         "name" : "Brand",
+         "type" : "String"
+      }, {
+         "name" : "Var_LinkDate",
+         "type" : "String"
+      }, {
+         "name" : "ErrorCode",
+         "type" : "Int32"
+      }, {
+         "name" : "ErrorColumn",
+         "type" : "Int32"
+      } ]
+   }
+}

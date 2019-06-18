@@ -1,0 +1,51 @@
+{
+   "name" : "Load Hold Date.ADO NET Source",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureSqlTable",
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Load Hold Date.ADO NET Source"
+      },
+      "schema" : [ {
+         "name" : "CARGO_ID",
+         "type" : "String"
+      }, {
+         "name" : "HD_START_DATETIME",
+         "type" : "String"
+      }, {
+         "name" : "HD_END_DATETIME",
+         "type" : "String"
+      }, {
+         "name" : "Hold_start",
+         "type" : "String"
+      }, {
+         "name" : "Hold_stop",
+         "type" : "String"
+      }, {
+         "name" : "CARGO_ID",
+         "type" : "String"
+      }, {
+         "name" : "HD_START_DATETIME",
+         "type" : "String"
+      }, {
+         "name" : "HD_END_DATETIME",
+         "type" : "String"
+      }, {
+         "name" : "Hold_start",
+         "type" : "String"
+      }, {
+         "name" : "Hold_stop",
+         "type" : "String"
+      }, {
+         "name" : "ErrorCode",
+         "type" : "Int32"
+      }, {
+         "name" : "ErrorColumn",
+         "type" : "Int32"
+      } ]
+   }
+}
