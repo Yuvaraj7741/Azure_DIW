@@ -1,0 +1,24 @@
+{
+   "name" : "Load Cargo services",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "Load Cargo services.ADO NET Source",
+               "type" : "DatasetReference"
+            },
+            "name" : "ADONETSource",
+            "script" : "source(output(\n\t\tCARGO_SERVICE_SEQ_NO as string,\n\t\tCARGO_SEQ_NO as string,\n\t\tWORK_ORDERNUMBER as string,\n\t\tSERVICE_LOCATION as string,\n\t\tSERVICE_CODE as string,\n\t\tSERVICE_DESCRIPTION as string,\n\t\tSERIVCE_REQUEST_DATE as string,\n\t\tSERVICE_COMPLETION_DATE as string,\n\t\tSERVICE_COMPLETION_CODE as string,\n\t\tSERVICE_START_DATE as string,\n\t\tSERVICE_END_DATE as string,\n\t\tF_SHOW_INT as string,\n\t\tF_SHOW_EXT as string,\n\t\tF_DELETE as string,\n\t\tF_ACTIVE as string,\n\t\tCREATED_DATE as string,\n\t\tCREATED_BY as string,\n\t\tMODIFIED_DATE as string,\n\t\tMODIFIED_BY as string,\n\t\tACCESSORY_CANCEL_REASON as string,\n\t\tACCESSORY_COMMENT as string,\n\t\tSERVICE_CODE_GRP as string,\n\t\tCARGO_ID as string,\n\t\tCARGO_SERVICE_SEQ_NO as string,\n\t\tCARGO_SEQ_NO as string,\n\t\tWORK_ORDERNUMBER as string,\n\t\tSERVICE_LOCATION as string,\n\t\tSERVICE_CODE as string,\n\t\tSERVICE_DESCRIPTION as string,\n\t\tSERIVCE_REQUEST_DATE as string,\n\t\tSERVICE_COMPLETION_DATE as string,\n\t\tSERVICE_COMPLETION_CODE as string,\n\t\tSERVICE_START_DATE as string,\n\t\tSERVICE_END_DATE as string,\n\t\tF_SHOW_INT as string,\n\t\tF_SHOW_EXT as string,\n\t\tF_DELETE as string,\n\t\tF_ACTIVE as string,\n\t\tCREATED_DATE as string,\n\t\tCREATED_BY as string,\n\t\tMODIFIED_DATE as string,\n\t\tMODIFIED_BY as string,\n\t\tACCESSORY_CANCEL_REASON as string,\n\t\tACCESSORY_COMMENT as string,\n\t\tSERVICE_CODE_GRP as string,\n\t\tCARGO_ID as string,\n\t\tErrorCode as integer,\n\t\tErrorColumn as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> ADONETSource"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "Load Cargo services.EDW_Inv_Fact_VPCCapacity",
+               "type" : "DatasetReference"
+            },
+            "name" : "ADONETDestination",
+            "script" : "ADONETSource sink(mapColumn(\n\t\tCARGO_SERVICE_SEQ_NO,\n\t\tCARGO_SEQ_NO,\n\t\tWORK_ORDERNUMBER,\n\t\tSERVICE_LOCATION,\n\t\tSERVICE_CODE,\n\t\tSERVICE_DESCRIPTION,\n\t\tSERIVCE_REQUEST_DATE,\n\t\tSERVICE_COMPLETION_DATE,\n\t\tSERVICE_COMPLETION_CODE,\n\t\tSERVICE_START_DATE,\n\t\tSERVICE_END_DATE,\n\t\tF_SHOW_INT,\n\t\tF_SHOW_EXT,\n\t\tF_DELETE,\n\t\tF_ACTIVE,\n\t\tCREATED_DATE,\n\t\tCREATED_BY,\n\t\tMODIFIED_DATE,\n\t\tMODIFIED_BY,\n\t\tACCESSORY_CANCEL_REASON,\n\t\tACCESSORY_COMMENT,\n\t\tSERVICE_CODE_GRP,\n\t\tCARGO_ID\n\t)) ~> ADONETDestination"
+         } ]
+      }
+   }
+}

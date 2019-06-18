@@ -1,0 +1,24 @@
+{
+   "name" : "Load VPC Capacity",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "Load VPC Capacity.ADO NET Source",
+               "type" : "DatasetReference"
+            },
+            "name" : "ADONETSource",
+            "script" : "source(output(\n\t\tCpty_LinkFlag as string,\n\t\tVPC as string,\n\t\tOrg_ID as string,\n\t\tCUST_ID as string,\n\t\tVPC_ID as string,\n\t\tLOCATION_ID as string,\n\t\tCREATED_DATE as string,\n\t\tMAKE_ID as string,\n\t\tOnHold as string,\n\t\tTRANSPORT_TYPE as string,\n\t\tTRANSPORT as string,\n\t\tAIRPORTINVENTORY as string,\n\t\tCapacityVariance as string,\n\t\tSIT as string,\n\t\tUNSHIPPABLECAPACITY as string,\n\t\tPCTUNSHIPPABLECAPACITY as string,\n\t\tUnassignedTotal as string,\n\t\tAssignedShippable as string,\n\t\tOceanCapacity as string,\n\t\tRailCapacity as string,\n\t\tTruckCapacity as string,\n\t\tEOM as string,\n\t\tOCEANASSIGNREQDTOSHIP as string,\n\t\tTRUCKASSIGNREQDTOSHIP as string,\n\t\tRAILASSIGNREQDTOSHIP as string,\n\t\tBRAND as string,\n\t\tCUSTOMER as string,\n\t\tUNASSIGNED_PERCENT_OCEAN as string,\n\t\tUNASSIGNED_PERCENT_RAIL as string,\n\t\tUNASSIGNED_PERCENT_TRUCK as string,\n\t\tCapacityConstant as string,\n\t\tCpty_LinkDate as string,\n\t\tInTransitAssignedVPCProj as string,\n\t\tInTransitPastAssignedVPCProj as string,\n\t\tCpty_LinkFlag as string,\n\t\tVPC as string,\n\t\tOrg_ID as string,\n\t\tCUST_ID as string,\n\t\tVPC_ID as string,\n\t\tLOCATION_ID as string,\n\t\tCREATED_DATE as string,\n\t\tMAKE_ID as string,\n\t\tOnHold as string,\n\t\tTRANSPORT_TYPE as string,\n\t\tTRANSPORT as string,\n\t\tAIRPORTINVENTORY as string,\n\t\tCapacityVariance as string,\n\t\tSIT as string,\n\t\tUNSHIPPABLECAPACITY as string,\n\t\tPCTUNSHIPPABLECAPACITY as string,\n\t\tUnassignedTotal as string,\n\t\tAssignedShippable as string,\n\t\tOceanCapacity as string,\n\t\tRailCapacity as string,\n\t\tTruckCapacity as string,\n\t\tEOM as string,\n\t\tOCEANASSIGNREQDTOSHIP as string,\n\t\tTRUCKASSIGNREQDTOSHIP as string,\n\t\tRAILASSIGNREQDTOSHIP as string,\n\t\tBRAND as string,\n\t\tCUSTOMER as string,\n\t\tUNASSIGNED_PERCENT_OCEAN as string,\n\t\tUNASSIGNED_PERCENT_RAIL as string,\n\t\tUNASSIGNED_PERCENT_TRUCK as string,\n\t\tCapacityConstant as string,\n\t\tCpty_LinkDate as string,\n\t\tInTransitAssignedVPCProj as string,\n\t\tInTransitPastAssignedVPCProj as string,\n\t\tErrorCode as integer,\n\t\tErrorColumn as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> ADONETSource"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "Load VPC Capacity.EDW_Inv_Fact_VPCCapacity",
+               "type" : "DatasetReference"
+            },
+            "name" : "ADONETDestination",
+            "script" : "ADONETSource sink(mapColumn(\n\t\tCpty_LinkFlag,\n\t\tVPC,\n\t\tOrg_ID,\n\t\tCUST_ID,\n\t\tVPC_ID,\n\t\tLOCATION_ID,\n\t\tCREATED_DATE,\n\t\tMAKE_ID,\n\t\tOnHold,\n\t\tTRANSPORT_TYPE,\n\t\tTRANSPORT,\n\t\tAIRPORTINVENTORY,\n\t\tCapacityVariance,\n\t\tSIT,\n\t\tUNSHIPPABLECAPACITY,\n\t\tPCTUNSHIPPABLECAPACITY,\n\t\tUnassignedTotal,\n\t\tAssignedShippable,\n\t\tOceanCapacity,\n\t\tRailCapacity,\n\t\tTruckCapacity,\n\t\tEOM,\n\t\tOCEANASSIGNREQDTOSHIP,\n\t\tTRUCKASSIGNREQDTOSHIP,\n\t\tRAILASSIGNREQDTOSHIP,\n\t\tBRAND,\n\t\tCUSTOMER,\n\t\tUNASSIGNED_PERCENT_OCEAN,\n\t\tUNASSIGNED_PERCENT_RAIL,\n\t\tUNASSIGNED_PERCENT_TRUCK,\n\t\tCapacityConstant,\n\t\tCpty_LinkDate,\n\t\tInTransitAssignedVPCProj,\n\t\tInTransitPastAssignedVPCProj\n\t)) ~> ADONETDestination"
+         } ]
+      }
+   }
+}

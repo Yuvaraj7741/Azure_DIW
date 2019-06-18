@@ -1,0 +1,24 @@
+{
+   "name" : "Load Hold Damage",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "Load Hold Damage.ADO NET Source",
+               "type" : "DatasetReference"
+            },
+            "name" : "ADONETSource",
+            "script" : "source(output(\n\t\tCARGO_ID as string,\n\t\tF_HOLD_DAMAGE as string,\n\t\tHD_CODE as string,\n\t\tHD_GROUP_CODE as string,\n\t\tHD_START_DATETIME as string,\n\t\tHD_END_DATETIME as string,\n\t\tIS_OPEN_HOLD as string,\n\t\tIS_CLOSED_HOLD as string,\n\t\tCARGO_ID as string,\n\t\tF_HOLD_DAMAGE as string,\n\t\tHD_CODE as string,\n\t\tHD_GROUP_CODE as string,\n\t\tHD_START_DATETIME as string,\n\t\tHD_END_DATETIME as string,\n\t\tIS_OPEN_HOLD as string,\n\t\tIS_CLOSED_HOLD as string,\n\t\tErrorCode as integer,\n\t\tErrorColumn as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> ADONETSource"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "Load Hold Damage.EDW_Inv_Fact_VPCCapacity",
+               "type" : "DatasetReference"
+            },
+            "name" : "ADONETDestination",
+            "script" : "ADONETSource sink(mapColumn(\n\t\tCARGO_ID,\n\t\tF_HOLD_DAMAGE,\n\t\tHD_CODE,\n\t\tHD_GROUP_CODE,\n\t\tHD_START_DATETIME,\n\t\tHD_END_DATETIME,\n\t\tIS_OPEN_HOLD,\n\t\tIS_CLOSED_HOLD\n\t)) ~> ADONETDestination"
+         } ]
+      }
+   }
+}

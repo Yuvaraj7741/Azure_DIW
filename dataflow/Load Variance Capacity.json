@@ -1,0 +1,24 @@
+{
+   "name" : "Load Variance Capacity",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "Load Variance Capacity.ADO NET Source",
+               "type" : "DatasetReference"
+            },
+            "name" : "ADONETSource",
+            "script" : "source(output(\n\t\tVar_LinkFlag as string,\n\t\tCAPACITYVARIANCE as string,\n\t\tOrg_ID as string,\n\t\tCUST_ID as string,\n\t\tVPC_ID as string,\n\t\tPLANT as string,\n\t\tCUSTOMER_ID as string,\n\t\tINTRANSIT_UNASSIGNED as string,\n\t\tINTRANSIT_ASSIGNED as string,\n\t\tINTRANSIT_PAST_UNASSIGNED as string,\n\t\tINTRANSIT_PAST_ASSIGNED as string,\n\t\tGROUND_UNASSIGNED as string,\n\t\tGROUND_ASSIGNED_ON_HOLD as string,\n\t\tGROUND_ASSIGNED as string,\n\t\tTRANSPORT_TYPE as string,\n\t\tCREATED_DATE as string,\n\t\tCREATED_BY as string,\n\t\tMODIFIED_DATE as string,\n\t\tMODIFIED_BY as string,\n\t\tUNASSIGNED_TOTAL as string,\n\t\tUNASSIGNED_TOTAL_TRANS_TYPE as string,\n\t\tASSIGNED_SHIPPABLE as string,\n\t\tUNSHIPPABLE_TOTAL as string,\n\t\tCAPACITY_VARIANCE as string,\n\t\tSIT_ON_GROUND as string,\n\t\tINVENTORY_TOTAL_TRANS_TYPE as string,\n\t\tUNSHIPPABLE_CAPACITY as string,\n\t\tPCT_UNSHIPPABLE_CAPACITY as string,\n\t\tAIRPORT_INVENTORY as string,\n\t\tMAKE_ID as string,\n\t\tTRUCK_CAPACITY as string,\n\t\tRAIL_CAPACITY as string,\n\t\tTRUCK_ASSIGN_REQD_TO_SHIP as string,\n\t\tRAIL_ASSIGN_REQD_TO_SHIP as string,\n\t\tOCEAN_ASSIGN_REQD_TO_SHIP as string,\n\t\tCUSTOMER as string,\n\t\tLOCATION_ID as string,\n\t\tVPC as string,\n\t\tBrand as string,\n\t\tVar_LinkDate as string,\n\t\tVar_LinkFlag as string,\n\t\tCAPACITYVARIANCE as string,\n\t\tOrg_ID as string,\n\t\tCUST_ID as string,\n\t\tVPC_ID as string,\n\t\tPLANT as string,\n\t\tCUSTOMER_ID as string,\n\t\tINTRANSIT_UNASSIGNED as string,\n\t\tINTRANSIT_ASSIGNED as string,\n\t\tINTRANSIT_PAST_UNASSIGNED as string,\n\t\tINTRANSIT_PAST_ASSIGNED as string,\n\t\tGROUND_UNASSIGNED as string,\n\t\tGROUND_ASSIGNED_ON_HOLD as string,\n\t\tGROUND_ASSIGNED as string,\n\t\tTRANSPORT_TYPE as string,\n\t\tCREATED_DATE as string,\n\t\tCREATED_BY as string,\n\t\tMODIFIED_DATE as string,\n\t\tMODIFIED_BY as string,\n\t\tUNASSIGNED_TOTAL as string,\n\t\tUNASSIGNED_TOTAL_TRANS_TYPE as string,\n\t\tASSIGNED_SHIPPABLE as string,\n\t\tUNSHIPPABLE_TOTAL as string,\n\t\tCAPACITY_VARIANCE as string,\n\t\tSIT_ON_GROUND as string,\n\t\tINVENTORY_TOTAL_TRANS_TYPE as string,\n\t\tUNSHIPPABLE_CAPACITY as string,\n\t\tPCT_UNSHIPPABLE_CAPACITY as string,\n\t\tAIRPORT_INVENTORY as string,\n\t\tMAKE_ID as string,\n\t\tTRUCK_CAPACITY as string,\n\t\tRAIL_CAPACITY as string,\n\t\tTRUCK_ASSIGN_REQD_TO_SHIP as string,\n\t\tRAIL_ASSIGN_REQD_TO_SHIP as string,\n\t\tOCEAN_ASSIGN_REQD_TO_SHIP as string,\n\t\tCUSTOMER as string,\n\t\tLOCATION_ID as string,\n\t\tVPC as string,\n\t\tBrand as string,\n\t\tVar_LinkDate as string,\n\t\tErrorCode as integer,\n\t\tErrorColumn as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> ADONETSource"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "Load Variance Capacity.EDW_Inv_Fact_VPCCapacity",
+               "type" : "DatasetReference"
+            },
+            "name" : "ADONETDestination",
+            "script" : "ADONETSource sink(mapColumn(\n\t\tVar_LinkFlag,\n\t\tCAPACITYVARIANCE,\n\t\tOrg_ID,\n\t\tCUST_ID,\n\t\tVPC_ID,\n\t\tPLANT,\n\t\tCUSTOMER_ID,\n\t\tINTRANSIT_UNASSIGNED,\n\t\tINTRANSIT_ASSIGNED,\n\t\tINTRANSIT_PAST_UNASSIGNED,\n\t\tINTRANSIT_PAST_ASSIGNED,\n\t\tGROUND_UNASSIGNED,\n\t\tGROUND_ASSIGNED_ON_HOLD,\n\t\tGROUND_ASSIGNED,\n\t\tTRANSPORT_TYPE,\n\t\tCREATED_DATE,\n\t\tCREATED_BY,\n\t\tMODIFIED_DATE,\n\t\tMODIFIED_BY,\n\t\tUNASSIGNED_TOTAL,\n\t\tUNASSIGNED_TOTAL_TRANS_TYPE,\n\t\tASSIGNED_SHIPPABLE,\n\t\tUNSHIPPABLE_TOTAL,\n\t\tCAPACITY_VARIANCE,\n\t\tSIT_ON_GROUND,\n\t\tINVENTORY_TOTAL_TRANS_TYPE,\n\t\tUNSHIPPABLE_CAPACITY,\n\t\tPCT_UNSHIPPABLE_CAPACITY,\n\t\tAIRPORT_INVENTORY,\n\t\tMAKE_ID,\n\t\tTRUCK_CAPACITY,\n\t\tRAIL_CAPACITY,\n\t\tTRUCK_ASSIGN_REQD_TO_SHIP,\n\t\tRAIL_ASSIGN_REQD_TO_SHIP,\n\t\tOCEAN_ASSIGN_REQD_TO_SHIP,\n\t\tCUSTOMER,\n\t\tLOCATION_ID,\n\t\tVPC,\n\t\tBrand,\n\t\tVar_LinkDate\n\t)) ~> ADONETDestination"
+         } ]
+      }
+   }
+}

@@ -1,0 +1,24 @@
+{
+   "name" : "Load Truck Capacity",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "Load Truck Capacity.ADO NET Source",
+               "type" : "DatasetReference"
+            },
+            "name" : "ADONETSource",
+            "script" : "source(output(\n\t\tRAIL_HEAD_NUMBER as string,\n\t\tTRUCK_CAPACITY_MON as string,\n\t\tTRUCK_CAPACITY_TUE as string,\n\t\tTRUCK_CAPACITY_WED as string,\n\t\tTRUCK_CAPACITY_THU as string,\n\t\tTRUCK_CAPACITY_FRI as string,\n\t\tTRUCK_CAPACITY_SAT as string,\n\t\tTRUCK_CAPACITY_SUN as string,\n\t\tRAIL_HEAD_NUMBER as string,\n\t\tTRUCK_CAPACITY_MON as string,\n\t\tTRUCK_CAPACITY_TUE as string,\n\t\tTRUCK_CAPACITY_WED as string,\n\t\tTRUCK_CAPACITY_THU as string,\n\t\tTRUCK_CAPACITY_FRI as string,\n\t\tTRUCK_CAPACITY_SAT as string,\n\t\tTRUCK_CAPACITY_SUN as string,\n\t\tErrorCode as integer,\n\t\tErrorColumn as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> ADONETSource"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "Load Truck Capacity.EDW_Inv_Fact_VPCCapacity",
+               "type" : "DatasetReference"
+            },
+            "name" : "ADONETDestination",
+            "script" : "ADONETSource sink(mapColumn(\n\t\tRAIL_HEAD_NUMBER,\n\t\tTRUCK_CAPACITY_MON,\n\t\tTRUCK_CAPACITY_TUE,\n\t\tTRUCK_CAPACITY_WED,\n\t\tTRUCK_CAPACITY_THU,\n\t\tTRUCK_CAPACITY_FRI,\n\t\tTRUCK_CAPACITY_SAT,\n\t\tTRUCK_CAPACITY_SUN\n\t)) ~> ADONETDestination"
+         } ]
+      }
+   }
+}
