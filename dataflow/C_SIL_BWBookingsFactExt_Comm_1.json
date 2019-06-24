@@ -1,0 +1,121 @@
+{
+   "name" : "C_SIL_BWBookingsFactExt_Comm_1",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "WC_PRODUCT_MIX_D",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_PRODUCT_MIX_D_S9",
+            "script" : "source(output(\n\t\tROW_WID as double,\n\t\tPROD_MIX_B as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> WC_PRODUCT_MIX_D_S9"
+         }, {
+            "dataset" : {
+               "referenceName" : "WC_SAP_PROGRAMTYPES_D",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_SAP_PROGRAMTYPES_D",
+            "script" : "source(output(\n\t\tPROGRAM_TYPE_CD as string,\n\t\tPROGRAM_TYPE as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> WC_SAP_PROGRAMTYPES_D"
+         }, {
+            "dataset" : {
+               "referenceName" : "WC_BW_SO_HDR_D",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_BW_SO_HDR_D1",
+            "script" : "source(output(\n\t\tROW_WID as double,\n\t\tDATASOURCE_NUM_ID as double,\n\t\tETL_PROC_WID as double,\n\t\tINTEGRATION_ID as string,\n\t\tBILL_BLOCK_CODE as string,\n\t\tCURRENCY as string,\n\t\tDELIVERY_BLOCK_CODE as string,\n\t\tORDER_NUMBER as string,\n\t\tORDER_NUMBER_NUM as double,\n\t\tORDER_TYPE as string,\n\t\tORIGINAL_CONTRACT_NUMBER as string,\n\t\tPO_NUMBER as string,\n\t\tREASON_CODE as string,\n\t\tSALES_ORG_CODE as string,\n\t\tENTRY_DATE as string,\n\t\tORDER_DATE as string,\n\t\tDATA_SOURCE as string,\n\t\tRENEWAL_FLG as string,\n\t\tORDER_DATE_WID as double,\n\t\tORDER_DATE_YM as double,\n\t\tDOC_CURRENCY as string,\n\t\tORDER_LVL_DISCNT as double,\n\t\tTHRESHOLD_LVL as string,\n\t\tX_PGM_BENEFIT_COMMENTS as string,\n\t\tX_PGM_BENEFIT_REQUEST as string,\n\t\tX_PGM_BENEFIT_STATUS as string,\n\t\tCREATED_BY as string,\n\t\tX_DR_SRC_NUM as string,\n\t\tX_DR_DISTI_ORD_NUM as string,\n\t\tLEGACY_CAMP_ID as string,\n\t\tCID as string,\n\t\tCID_CATEGORY as string,\n\t\tSALES_REP_ID as string,\n\t\tSALES_REP_DR_ID as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> WC_BW_SO_HDR_D1"
+         }, {
+            "dataset" : {
+               "referenceName" : "WC_SAP_PROGRAMTYPES_D",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_SAP_PROGRAMTYPES_D11",
+            "script" : "source(output(\n\t\tROW_WID as double,\n\t\tETL_PROC_WID as double,\n\t\tPROGRAM_TYPE_CD as string,\n\t\tPROGRAM_TYPE as string,\n\t\tINACTIVE as string,\n\t\tNEW_PROG_TYPE_FLG1 as string,\n\t\tNEW_PROG_TYPE_FLG2 as string,\n\t\tRENEW_PROG_TYPE_FLG1 as string,\n\t\tRENEW_PROG_TYPE_FLG2 as string,\n\t\tPROGRAM_TYPE_CATEGORY as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> WC_SAP_PROGRAMTYPES_D11"
+         }, {
+            "dataset" : {
+               "referenceName" : "WC_PRODUCT_MIX_D",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_PRODUCT_MIX_D",
+            "script" : "source(output(\n\t\tROW_WID as double,\n\t\tPROD_MIX_A as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> WC_PRODUCT_MIX_D"
+         }, {
+            "dataset" : {
+               "referenceName" : "WC_COMM_FILESRC_D",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_COMM_FILESRC_D1",
+            "script" : "source(output(\n\t\tSOURCE as string,\n\t\tEMP_WID as double,\n\t\tPERIOD_END_WID as double,\n\t\tSAP_EMP_ID as string,\n\t\tEMP_NAME as string,\n\t\tPERIOD as double,\n\t\tYEAR as double,\n\t\tTEXT1 as string,\n\t\tTEXT2 as string,\n\t\tTEXT3 as string,\n\t\tTEXT4 as string,\n\t\tTEXT5 as string,\n\t\tTEXT6 as string,\n\t\tNUMBER1 as double,\n\t\tNUMBER2 as double,\n\t\tDATE1 as date,\n\t\tDATE2 as date\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> WC_COMM_FILESRC_D1"
+         }, {
+            "dataset" : {
+               "referenceName" : "WC_PRODUCT_DH",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_PRODUCT_DH_S14",
+            "script" : "source(output(\n\t\tROW_WID as double,\n\t\tPRODUCT_TYPE as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> WC_PRODUCT_DH_S14"
+         }, {
+            "dataset" : {
+               "referenceName" : "WC_BW_BOOK_F",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_BW_BOOK_F11",
+            "script" : "source(output(\n\t\tROW_WID as double,\n\t\tDATASOURCE_NUM_ID as double,\n\t\tETL_PROC_WID as double,\n\t\tINTEGRATION_ID as string,\n\t\tORDER_NUMBER as string,\n\t\tORDER_NUMBER_NUM as double,\n\t\tLINE_ITEM_NUMBER as string,\n\t\tLINE_ITEM_NUMBER_NUM as double,\n\t\tCO_ORDER_NUMBER as string,\n\t\tCO_ORDER_NUMBER_NUM as double,\n\t\tCO_LINE_ITEM_NUMBER as string,\n\t\tCO_LINE_ITEM_NUMBER_NUM as double,\n\t\tORDER_WID as double,\n\t\tENTRY_DATE_WID as double,\n\t\tBOOKINGS_DATE_WID as double,\n\t\tCHANNEL_WID as double,\n\t\tCOMMON_CHANNEL as string,\n\t\tAGGR_CHANNEL_WID as double,\n\t\tPRODUCT_WID as double,\n\t\tPRODUCTMIX_WID as double,\n\t\tGEO_WID as double,\n\t\tQUANTITY as double,\n\t\tSALES_ORG_CODE as string,\n\t\tACCOUNT_ASSIGNMENT_GROUP as string,\n\t\tBOOKINGS_FLAG as string,\n\t\tNET_AMT_BOOKINGS_USD as double,\n\t\tNET_AMT_BOOKINGS_USD_R3 as double,\n\t\tNET_AMT_BOOKINGS_LOCAL as double,\n\t\tNET_AMT_BOOKINGS_LOCAL_R3 as double,\n\t\tNET_AMT_BOOKINGS_CONST_USD as double,\n\t\tBUNDLED_LIST_PRICE_USD as double,\n\t\tBUNDLED_LIST_PRICE_USD_R3 as double,\n\t\tBUNDLED_LIST_PRICE_LOCAL as double,\n\t\tBUNDLED_LIST_PRICE_LOCAL_R3 as double,\n\t\tBUNDLED_LIST_PRICE_CONST_USD as double,\n\t\tUNBNDL_BOOKING_USD as double,\n\t\tUNBNDL_BOOKING_USD_R3 as double,\n\t\tUNBNDL_BOOKING_LOCAL as double,\n\t\tUNBNDL_BOOKING_LOCAL_R3 as double,\n\t\tUNBNDL_BOOKING_CONST_USD as double,\n\t\tGROSS_AMT_BOOKING_USD as double,\n\t\tGROSS_AMT_BOOKING_USD_R3 as double,\n\t\tGROSS_AMT_BOOKING_LOCAL as double,\n\t\tGROSS_AMT_BOOKING_LOCAL_R3 as double,\n\t\tGROSS_AMT_BOOKING_CONST_USD as double,\n\t\tBNDL_UNIT_DIR_LIST_USD as double,\n\t\tBNDL_UNIT_DIR_LIST_USD_R3 as double,\n\t\tBNDL_UNIT_DIR_LIST_LOCAL as double,\n\t\tBNDL_UNIT_DIR_LIST_LOCAL_R3 as double,\n\t\tBNDL_UNIT_DIR_LIST_CONST_USD as double,\n\t\tCHANNEL_DISCOUNT as double,\n\t\tENDUSER_FACTOR as double,\n\t\tUPLIFT_PERCENT as double,\n\t\tPERPETUAL_PERCENT as double,\n\t\tNODES as double,\n\t\tORDER_TYPE as string,\n\t\tBILL_BLOCK_CODE as string,\n\t\tBANDED_SKU as string,\n\t\tCREDIT_REBILL as string,\n\t\tDAF_NUMBER as string,\n\t\tITEM_CATEGORY_GROUP as string,\n\t\tORIGINAL_CONTRACT_LINE_NUM as string,\n\t\tPARENT_LINE_NUMBER as string,\n\t\tPARENT_SKU as string,\n\t\tPRICING_AGREEMENT as string,\n\t\tPROGRAM_TYPE as string,\n\t\tREJECTED_CODE as string,\n\t\tREASON_CODE as string,\n\t\tCONTRACT_START_DT_WID as double,\n\t\tCONTRACT_END_DT_WID as double,\n\t\tBILL_TO_MAX_ID as string,\n\t\tBILL_TO_SAP_ID as string,\n\t\tBILL_TO_WID as double,\n\t\tDISTRIBUTOR_MAX_ID as string,\n\t\tDISTRIBUTOR_SAP_ID as string,\n\t\tDISTRIBUTOR_WID as double,\n\t\tSTD_DIST_MAX_WID as double,\n\t\tENDUSER_MAX_ID as string,\n\t\tENDUSER_SAP_ID as string,\n\t\tENDUSER_WID as double,\n\t\tRESELLER_MAX_ID as string,\n\t\tRESELLER_SAP_ID as string,\n\t\tRESELLER_WID as double,\n\t\tSTD_RSLR_MAX_WID as double,\n\t\tSHIP_TO_MAX_ID as string,\n\t\tSHIP_TO_SAP_ID as string,\n\t\tSHIP_TO_WID as double,\n\t\tSHIP_TO_DATE_WID as double,\n\t\tPSTNG_DATE_WID as double,\n\t\tSTD_RSLR_WID as double,\n\t\tOPTY_WID as double,\n\t\tOPTY_CLOSE_DT_WID as double,\n\t\tSEGMENT_ACTUAL as string,\n\t\tSEGMENT_ADJ as string,\n\t\tINITIAL_SEGMENT_FLG as string,\n\t\tORDER_DATE_WID as double,\n\t\tCOPA_CREATE_DT_WID as double,\n\t\tBKGS_REASON_CODE as double,\n\t\tBKGS_REASON_CODE_DESC as string,\n\t\tMAN_UPD_COMMENT as string,\n\t\tINDIRECT_FACTOR as double,\n\t\tUNBNDL_BOOKING_DOCUMENT as double,\n\t\tDISTI_COST as double,\n\t\tNET_ENDUSER as double,\n\t\tINDIRECT_FACTOR_LOCAL as double,\n\t\tDISTI_COST_LOCAL as double,\n\t\tNET_ENDUSER_LOCAL as double,\n\t\tSIEBEL_ORDER_ID as string,\n\t\tVIS_PR_POS_ID as string,\n\t\tMANUAL_SEGMENT_FLG as string,\n\t\tUNBNDL_BOOKING_CY_CONST_USD as double,\n\t\tNET_AMT_BOOKINGS_CY_CONST_USD as double,\n\t\tMSRP_USD as double,\n\t\tMSRP_LOCAL as double,\n\t\tMSRP_HIST_USD as double,\n\t\tMSRP_CONST_USD as double,\n\t\tMSRP_DOC_AMT as double,\n\t\tNFR_QFR as double,\n\t\tFND_ON_PB as string,\n\t\tCUST_GRP as string,\n\t\tLIST_PRICE_LESS_PROM as double,\n\t\tNODE_RANG as string,\n\t\tPRICE_GRP as string,\n\t\tPRICE_BOOK_LOCAL_WID as double,\n\t\tPRICE_BOOK_USD_WID as double,\n\t\tUNBUNDLED_LIST_PRICE_LOCAL as double,\n\t\tUNBUNDLED_LIST_PRICE_USD as double,\n\t\tUNBUNDLED_LIST_PRICE_CONST_USD as double,\n\t\tUNBUNDLED_MSRP_LOCAL as double,\n\t\tUNBUNDLED_MSRP_USD as double,\n\t\tUNBUNDLED_MSRP_CONST_USD as double,\n\t\tUNBUNDLED_MSRP_DOC_AMT as double,\n\t\tPB_NODES as double,\n\t\tPB_QUANTITY as double,\n\t\tUNBUNDLED_DISCNT_PRCNT as double,\n\t\tSEG_LAST_UPD as string,\n\t\tPROGRAM_TYPE_ADJ as string,\n\t\tMANUAL_PROGTYP_FLG as string,\n\t\tUNBNDL_PROG_TYP_ADJ as string,\n\t\tDOC_CURRENCY as string,\n\t\tPERIOD_WID as double,\n\t\tBOOKING_SUB_REGION as string,\n\t\tMANUAL_REGION_FLG as string,\n\t\tTRENDING_DATE_WID as double,\n\t\tLOAD_DT as date,\n\t\tLIST_PRICE_PER_NODE as double,\n\t\tDIRECT_PRICE_PER_NODE as double,\n\t\tSAP_BILL_TO_WID as double,\n\t\tSAP_DISTRIBUTOR_WID as double,\n\t\tSAP_ENDUSER_WID as double,\n\t\tSAP_RESELLER_WID as double,\n\t\tSAP_SHIP_TO_WID as double,\n\t\tMANUAL_CUST_FLG as string,\n\t\tNAMED_PARTNER as string,\n\t\tDEAL_REG_FLAG as string,\n\t\tDEAL_REG_ELIGIBLE as string,\n\t\tNET_AMT_DOCUMENT_USD as double,\n\t\tORDER_LN_ITM_WID as double,\n\t\tDEAL_BAND as string,\n\t\tROUTE_TO_MARKET as string,\n\t\tX_PR_CNTCT_WID as double,\n\t\tX_PARENT_ENDUSER_WW as string,\n\t\tPRG_TYPE_ADJ_UNBUNDLED as string,\n\t\tSEGMENT_GTM_ROLLUP as string,\n\t\tX_RTL_PRTNR_WID as double,\n\t\tSAP_RTL_PRTNR_WID as double,\n\t\tZZTP as string,\n\t\tX_ORDER_WID as double,\n\t\tX_CLEANUP_RESELLER_WID as double,\n\t\tBOOKING_REGION as string,\n\t\tCO_ORDER_REP_WID as double,\n\t\tORDER_NUM_REP_WID as double,\n\t\tCOPA_ORDER_NUM_REP_WID as double,\n\t\tCID_CATEGORY_REFUND as string,\n\t\tLEGACY_BOOKINGS_FLAG as string,\n\t\tDISCNT_INELGBLE_DESC as string,\n\t\tDISCNT_ELGBLE_FLAG as string,\n\t\tFINAL_QUANTITY as double\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> WC_BW_BOOK_F11"
+         }, {
+            "dataset" : {
+               "referenceName" : "WC_PRODUCT_DH",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_PRODUCT_DH",
+            "script" : "source(output(\n\t\tROW_WID as double,\n\t\tLOB as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> WC_PRODUCT_DH"
+         }, {
+            "dataset" : {
+               "referenceName" : "WC_GEO_D",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_GEO_D",
+            "script" : "source(output(\n\t\tROW_WID as double,\n\t\tMSRP_PCT as decimal(10,0),\n\t\tISR_LOW_CAP as decimal(10,0),\n\t\tISR_HIGH_CAP as decimal(10,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> WC_GEO_D"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "WC_BW_BOOK_FSX",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_BW_BOOK_FSX",
+            "script" : "AGG_NewRenew_Amount sink(saveMode:'overwrite' ) ~> WC_BW_BOOK_FSX"
+         } ],
+         "transformations" : [ {
+            "name" : "EXP_WC_GEO_D1",
+            "script" : "WC_BW_BOOK_F11, WC_SAP_PROGRAMTYPES_D11, WC_BW_SO_HDR_D1, WC_COMM_FILESRC_D1 derive(in_GEO_WID = 'IIF(  ISNULL(WC_BW_BOOK_F11@GEO_WID),  --then  0,  --else  WC_BW_BOOK_F11@GEO_WID  )  ') ~> EXP_WC_GEO_D1"
+         }, {
+            "name" : "LKP_WC_GEO_D1",
+            "script" : "EXP_WC_GEO_D1, WC_GEO_D lookup(EXP_WC_GEO_D1@in_GEO_WID == WC_GEO_D@ROW_WID,\n\tbroadcast: 'none') ~> LKP_WC_GEO_D1"
+         }, {
+            "name" : "EXP_Initial1",
+            "script" : "EXP_Initial1_e1, LKP_WC_PRODUCT_MIX_D, LKP_WC_PRODUCTMIX_D, LKP_WC_PRODUCT_DH1, LKP_WC_SAP_PROGRAMTYPES_D derive(var_INTEL_EXCLUSION_FLAG = 'IIF(WC_BW_BOOK_F11@BOOKINGS_FLAG=\"Y\" AND WC_COMM_FILESRC_D1@TEXT2 = \"Intel Resell\",   IIF(NOT(IS_SPACES( WC_BW_BOOK_F11@MAN_UPD_COMMENT)) AND (NOT(ISNULL(WC_BW_BOOK_F11@MAN_UPD_COMMENT))), \"Y\", \"N\"),\"N\")',\n\t\tvar_Product_Mix_B = 'WC_PRODUCT_MIX_D_S9@PROD_MIX_B',\n\t\tvar_Support_Days = 'IIF(WC_BW_BOOK_F11@CONTRACT_START_DT_WID = 0  OR WC_BW_BOOK_F11@BOOKINGS_DATE_WID = 0 OR WC_BW_BOOK_F11@BOOKINGS_DATE_WID > WC_BW_BOOK_F11@CONTRACT_START_DT_WID OR WC_BW_BOOK_F11@BOOKINGS_DATE_WID = 99991231 , 0, (DATE_DIFF(  TO_DATE(TO_CHAR(WC_BW_BOOK_F11@CONTRACT_START_DT_WID), \"YYYYMMDD\"),  TO_DATE(TO_CHAR(WC_BW_BOOK_F11@BOOKINGS_DATE_WID), \"YYYYMMDD\"), \"DD\")))',\n\t\tvar_PROD_MIX_A = 'WC_PRODUCT_MIX_D@PROD_MIX_A',\n\t\tvar_LOB = 'WC_PRODUCT_DH@LOB',\n\t\tvar_New_Amt = 'IIF(  -- If (Prog Type = ???New??? AND NOT (LOB = Services AND Prod Mix A = ???Consulting???)) OR (LOB = Services AND Prod Mix A = ???Training???)  (WC_SAP_PROGRAMTYPES_D11@NEW_PROG_TYPE_FLG1 = \"Y\"  AND WC_SAP_PROGRAMTYPES_D11@NEW_PROG_TYPE_FLG2 != \"Y\"   AND (var_LOB != \"Services\" AND var_PROD_MIX_A  != \"Consulting\"))  OR (var_LOB = \"Services\" AND var_PROD_MIX_A  = \"Training\")  ,  --Then New Net Booking Amount  WC_BW_BOOK_F11@NET_AMT_BOOKINGS_USD,  --Else check for Upgrade/Cross grade and New Flag is False  IIF(WC_SAP_PROGRAMTYPES_D11@NEW_PROG_TYPE_FLG2 = \"Y\" AND WC_SAP_PROGRAMTYPES_D11@NEW_PROG_TYPE_FLG1 != \"Y\" ,  -- Then MSRP Check  IIF(  --then check MSRP/Discount Amount < WC_BW_BOOK_F11@NET_AMT_BOOKINGS_USD  ABS((WC_BW_BOOK_F11@MSRP_USD * (WC_GEO_D@MSRP_PCT/100))) < ABS(WC_BW_BOOK_F11@NET_AMT_BOOKINGS_USD),  --then  WC_BW_BOOK_F11@NET_AMT_BOOKINGS_USD - (WC_BW_BOOK_F11@MSRP_USD * (WC_GEO_D@MSRP_PCT/100)),  --Else  0 --WC_BW_BOOK_F11@NET_AMT_BOOKINGS_USD --> Commented based on discussion with Mike  ),  -- Else   0  ))    ',\n\t\tvar_Renew_Amt = 'IIF(  --IF  (Prog Type = ???ReNew??? AND NOT (LOB = Services AND Prod Mix A = ???Training???)) OR (LOB = Services AND Prod Mix A = ???Consulting???)  (WC_SAP_PROGRAMTYPES_D11@RENEW_PROG_TYPE_FLG1 = \"Y\"  AND WC_SAP_PROGRAMTYPES_D11@RENEW_PROG_TYPE_FLG2 != \"Y\"   AND  (var_LOB != \"Services\" AND var_PROD_MIX_A  != \"Training\"))  OR   (var_LOB = \"Services\" AND var_PROD_MIX_A  = \"Consulting\"),  --THEN Net Booking Amount  WC_BW_BOOK_F11@NET_AMT_BOOKINGS_USD,  --Else check for Upgrade / Cross grade and not Renew flag is False  IIF(WC_SAP_PROGRAMTYPES_D11@RENEW_PROG_TYPE_FLG2 = \"Y\" AND WC_SAP_PROGRAMTYPES_D11@RENEW_PROG_TYPE_FLG1 != \"Y\" ,   -- Then MSRP Check  IIF(  --then check MSRP/Discount Amount < WC_BW_BOOK_F11@NET_AMT_BOOKINGS_USD  ABS((WC_BW_BOOK_F11@MSRP_USD * (WC_GEO_D@MSRP_PCT/100))) < ABS(WC_BW_BOOK_F11@NET_AMT_BOOKINGS_USD),  --then  (WC_BW_BOOK_F11@MSRP_USD * (WC_GEO_D@MSRP_PCT/100)),  --Else  WC_BW_BOOK_F11@NET_AMT_BOOKINGS_USD  ),  -- Else   0  ))',\n\t\tvar_PROGRAM_TYPE_ADJ = 'WC_SAP_PROGRAMTYPES_D@PROGRAM_TYPE',\n\t\tvar_NET_AMT_BOOKINGS_CONST_USD = iif(WC_BW_SO_HDR_D1.REASON_CODE == '945'  || var_INTEL_EXCLUSION_FLAG  ==  'Y',0,WC_BW_BOOK_F11.NET_AMT_BOOKINGS_CONST_USD),\n\t\tvar_New_CONST_Amt = '-- SKU Type = \"RSAM\" OR \"Downgrade\", PROD_MIX_A =\"Subscription\"AND [LOB] <> Network Security OR Security Management Platform ,  [Net New Amount Constant USD] = 0  IIF(var_INTEL_EXCLUSION_FLAG = \"Y\"  OR WC_COMM_FILESRC_D1@TEXT2 = \"RSAM\" OR WC_COMM_FILESRC_D1@TEXT2 = \"Downgrade\", 0,  -- If [Program Type Adjusted] = New OR Blank OR Null OR Spaces AND [LOB] <> Services, [Net New Amount Constant USD] = [Net Amount Constant USD]  IIF((var_PROGRAM_TYPE_ADJ = \"New\" OR WC_BW_BOOK_F11@PROGRAM_TYPE = \"\" OR IS_SPACES(WC_BW_BOOK_F11@PROGRAM_TYPE) OR ISNULL(WC_BW_BOOK_F11@PROGRAM_TYPE)) AND var_LOB != \"Services and Premium Support\" AND var_LOB != \"Services & Premium Support\" ,var_NET_AMT_BOOKINGS_CONST_USD,  -- If [Program Type Adjusted] = Upgrade AND [LOB] <> Services, [Net New Amount Constant  USD] = [Net Amt Constant USD] ???  ([MSRP] * 0@3) ???> (If  [Net New Amount Constant USD] is negative will be changed to 0) -- Avoid going into negative for Deep discounted orders  IIF((var_PROGRAM_TYPE_ADJ = \"Upgrade/Crossgrade\"  AND var_LOB != \"Services and Premium Support\" AND var_LOB != \"Services & Premium Support\"),  IIF(  ABS((WC_BW_BOOK_F11@MSRP_CONST_USD * (WC_GEO_D@MSRP_PCT/100))) < ABS(var_NET_AMT_BOOKINGS_CONST_USD),  var_NET_AMT_BOOKINGS_CONST_USD - (WC_BW_BOOK_F11@MSRP_CONST_USD * (WC_GEO_D@MSRP_PCT/100)),  0),  -- If [LOB] = Services AND [Product Mix A] = Training , [Net New Amount Constant USD] = [Net Amount Constant USD]  IIF(  (var_LOB = \"Services & Premium Support\" AND var_PROD_MIX_A = \"Training\" ),  var_NET_AMT_BOOKINGS_CONST_USD,  0)  )))',\n\t\tvar_Renew_CONST_Amt = 'IIF(((var_LOB = \"Services and Premium Support\" OR var_LOB = \"Services & Premium Support\") AND var_PROD_MIX_A!=\"Training\") OR WC_COMM_FILESRC_D1@TEXT2 = \"RSAM\",  0,  -- SKU Type = \"RSAM\" OR \"Downgrade\" OR [Product Mix A] = Subscription AND [LOB] <> Network Security OR Security Management Platform ,  [Net New Amount Constant USD] = [Net Amount Constant USD]  IIF(var_INTEL_EXCLUSION_FLAG = \"Y\"   OR WC_COMM_FILESRC_D1@TEXT2 = \"Downgrade\" ,   var_NET_AMT_BOOKINGS_CONST_USD,  -- If [Program Type Adjusted] = Renewal AND [LOB] <> Services, [Net Renewal Amount Constant USD] = [Net Amount Constant USD]  IIF((var_PROGRAM_TYPE_ADJ = \"Support Renewal\" OR var_PROGRAM_TYPE_ADJ = \"Renewal\")  AND var_LOB != \"Services and Premium Support\" AND var_LOB != \"Services & Premium Support\",  var_NET_AMT_BOOKINGS_CONST_USD,  -- If [Program Type Adjusted] = Upgrade AND [LOB] <> Services, [Net Renewal Amount Constant USD] = [MSRP] * 0@3 ???> (If  [Net Renewal Amount Constant USD] > [Net Amount Constant USD] will be changed to [Net Amount Constant USD]) -- Avoid calculating renewal more than net bookings for Deep discounted orders  IIF((var_PROGRAM_TYPE_ADJ = \"Upgrade/Crossgrade\"  AND var_LOB != \"Services and Premium Support\" AND var_LOB != \"Services & Premium Support\"),  IIF(  ABS((WC_BW_BOOK_F11@MSRP_CONST_USD * (WC_GEO_D@MSRP_PCT/100))) < ABS(var_NET_AMT_BOOKINGS_CONST_USD),  (WC_BW_BOOK_F11@MSRP_CONST_USD * (WC_GEO_D@MSRP_PCT/100)),  var_NET_AMT_BOOKINGS_CONST_USD  ),0  ))))',\n\t\tout_Renew_Amt = 'var_Renew_Amt',\n\t\tout_Renew_CONST_Amt = iif(var_LOB  ==  'Services' && var_PROD_MIX_A  ==  'Consulting',0,var_Renew_CONST_Amt),\n\t\tout_New_Amt = 'var_New_Amt',\n\t\tout_New_CONST_Amt = 'var_New_CONST_Amt',\n\t\tout_Net_Renew_CONST_Amt = 'var_Renew_CONST_Amt',\n\t\tMulti_Year_Flg = iif(var_Product_Mix_B  ==  'Support' && var_Support_Days > 1095,'Y','N')) ~> EXP_Initial1"
+         }, {
+            "name" : "LKP_WC_PRODUCT_MIX_D",
+            "script" : "EXP_Initial1_e1, WC_PRODUCT_MIX_D lookup(WC_BW_BOOK_F11@PRODUCTMIX_WID == WC_PRODUCT_MIX_D@ROW_WID,\n\tbroadcast: 'none') ~> LKP_WC_PRODUCT_MIX_D"
+         }, {
+            "name" : "AGG_NewRenew_Amount",
+            "script" : "EXP_Exclude_Multi_Yr aggregate(groupBy(ORDER_NUMBER,\n\t\tORDER_NUMBER_NUMORDER_NUMBER,\n\t\tORDER_NUMBER_NUMORDER_NUMBER,\n\t\tORDER_NUMBER_NUMORDER_NUMBER,\n\t\tORDER_NUMBER_NUMORDER_NUMBER,\n\t\tORDER_NUMBER_NUM),\n\tsum_Renew_Amt = sum(Renew_Amt),,\n\tsum_Renew_CONST_Amt = sum(Renew_CONST_Amt),,\n\tsum_New_CONST_Amt = sum(New_CONST_Amt),,\n\tsum_New_Amt = sum(New_Amt),,\n\tsum_Renewal_A_CONST_Amt = sum(A_SUM_Amt)) ~> AGG_NewRenew_Amount"
+         }, {
+            "name" : "LKP_WC_PRODUCTMIX_D",
+            "script" : "EXP_Initial1_e1, WC_PRODUCT_MIX_D_S9 lookup(WC_BW_BOOK_F11@PRODUCTMIX_WID == WC_PRODUCT_MIX_D_S9@ROW_WID,\n\tbroadcast: 'none') ~> LKP_WC_PRODUCTMIX_D"
+         }, {
+            "name" : "EXP_Exclude_Multi_Yr",
+            "script" : "EXP_Initial1 derive(A_SUM_Amt = iif(EXP_Initial1.Multi_Year_Flg  ==  'Y',0,EXP_Initial1.out_Net_Renew_CONST_Amt),\n\t\tNew_CONST_Amt = iif(EXP_Initial1.Multi_Year_Flg  ==  'Y',0,EXP_Initial1.out_New_CONST_Amt),\n\t\tNew_Amt = iif(EXP_Initial1.Multi_Year_Flg  ==  'Y',0,EXP_Initial1.out_New_Amt),\n\t\tRenew_CONST_Amt = iif(EXP_Initial1.Multi_Year_Flg  ==  'Y',0,EXP_Initial1.out_Renew_CONST_Amt),\n\t\tRenew_Amt = iif(EXP_Initial1.Multi_Year_Flg  ==  'Y',0,EXP_Initial1.out_Renew_Amt)) ~> EXP_Exclude_Multi_Yr"
+         }, {
+            "name" : "LKP_WC_PRODUCT_DH1",
+            "script" : "EXP_Initial1_e1, WC_PRODUCT_DH lookup(WC_BW_BOOK_F11@PRODUCT_WID == WC_PRODUCT_DH@ROW_WID,\n\tbroadcast: 'none') ~> LKP_WC_PRODUCT_DH1"
+         }, {
+            "name" : "LKP_WC_SAP_PROGRAMTYPES_D",
+            "script" : "EXP_Initial1_e1, WC_SAP_PROGRAMTYPES_D lookup(WC_BW_BOOK_F11@PROGRAM_TYPE == WC_SAP_PROGRAMTYPES_D@PROGRAM_TYPE_CD,\n\tbroadcast: 'none') ~> LKP_WC_SAP_PROGRAMTYPES_D"
+         }, {
+            "name" : "LKPTRANS",
+            "script" : "WC_BW_BOOK_F11, WC_SAP_PROGRAMTYPES_D11, WC_BW_SO_HDR_D1, WC_COMM_FILESRC_D1, WC_PRODUCT_DH_S14 lookup(WC_BW_BOOK_F11@PRODUCT_WID == WC_PRODUCT_DH_S14@ROW_WID,\n\tbroadcast: 'none') ~> LKPTRANS"
+         }, {
+            "name" : "EXP_Initial1_e1",
+            "script" : "WC_BW_BOOK_F11, WC_SAP_PROGRAMTYPES_D11, WC_BW_SO_HDR_D1, WC_COMM_FILESRC_D1, LKPTRANS, LKP_WC_GEO_D1 derive(BOOKINGS_FLAG = BOOKINGS_FLAG,\n\t\tMAN_UPD_COMMENT = MAN_UPD_COMMENT,\n\t\tBOOKINGS_DATE_WID = BOOKINGS_DATE_WID,\n\t\tCONTRACT_START_DT_WID = CONTRACT_START_DT_WID,\n\t\tNET_AMT_BOOKINGS_USD = NET_AMT_BOOKINGS_USD,\n\t\tMSRP_USD = MSRP_USD,\n\t\tNET_AMT_BOOKINGS_CONST_USD = NET_AMT_BOOKINGS_CONST_USD,\n\t\tPROGRAM_TYPE = PROGRAM_TYPE,\n\t\tMSRP_CONST_USD = MSRP_CONST_USD,\n\t\tORDER_NUMBER = ORDER_NUMBER,\n\t\tORDER_NUMBER_NUM = ORDER_NUMBER_NUM,\n\t\tTEXT2 = TEXT2,\n\t\tNEW_PROG_TYPE_FLG1 = NEW_PROG_TYPE_FLG1,\n\t\tNEW_PROG_TYPE_FLG2 = NEW_PROG_TYPE_FLG2,\n\t\tRENEW_PROG_TYPE_FLG1 = RENEW_PROG_TYPE_FLG1,\n\t\tRENEW_PROG_TYPE_FLG2 = RENEW_PROG_TYPE_FLG2,\n\t\tMSRP_PCT = MSRP_PCT,\n\t\tREASON_CODE = REASON_CODE,\n\t\tPRODUCTMIX_WID = PRODUCTMIX_WID,\n\t\tPRODUCTMIX_WID = PRODUCTMIX_WID,\n\t\tPRODUCT_WID = PRODUCT_WID,\n\t\tPROGRAM_TYPE = PROGRAM_TYPE) ~> EXP_Initial1_e1"
+         } ]
+      }
+   }
+}
