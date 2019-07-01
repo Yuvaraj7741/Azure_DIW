@@ -1,0 +1,41 @@
+{
+   "name" : "Sample_Jnr",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "dbo.Src_Jn",
+               "type" : "DatasetReference"
+            },
+            "name" : "Src_Mstr",
+            "script" : "source(output(\n\t\tID as integer,\n\t\tName as string,\n\t\tSalary as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Src_Mstr"
+         }, {
+            "dataset" : {
+               "referenceName" : "dbo.Dtl_Jn",
+               "type" : "DatasetReference"
+            },
+            "name" : "Src_Dtl",
+            "script" : "source(output(\n\t\tID as integer,\n\t\tDesignation as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Src_Dtl"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "dbo.Tgt_Jnr",
+               "type" : "DatasetReference"
+            },
+            "name" : "OLEDBDestination",
+            "script" : "MergeJoin sink(mapColumn(\n\t\tDesignation,\n\t\tID,\n\t\tName,\n\t\tSalary\n\t)) ~> OLEDBDestination"
+         } ],
+         "transformations" : [ {
+            "name" : "Dtl_Sort",
+            "script" : "Src_Dtl sort(asc(ID,true)) ~> Dtl_Sort"
+         }, {
+            "name" : "MergeJoin",
+            "script" : "Src_Sort,Dtl_Sort join(Src_Mstr@ID == Src_Dtl@ID,\n joinType:'inner',\n\tbroadcast: 'none')~> MergeJoin"
+         }, {
+            "name" : "Src_Sort",
+            "script" : "Src_Mstr sort(asc(ID,true)) ~> Src_Sort"
+         } ]
+      }
+   }
+}
