@@ -1,0 +1,14 @@
+{
+   "name" : "Load AR_EDW_Inv_Fact_AR",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureSqlTable",
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Load AR.EDW_Inv_Fact_AR"
+      }
+   }
+}

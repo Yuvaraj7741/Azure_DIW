@@ -1,0 +1,84 @@
+{
+   "name" : "Load AR_Ramp inventory",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "AzureSqlTable",
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Load AR.Ramp inventory"
+      },
+      "schema" : [ {
+         "name" : "Inv_LinkFlag",
+         "type" : "String"
+      }, {
+         "name" : "Org_ID",
+         "type" : "String"
+      }, {
+         "name" : "CUST_ID",
+         "type" : "String"
+      }, {
+         "name" : "VPC_ID",
+         "type" : "String"
+      }, {
+         "name" : "Customer",
+         "type" : "String"
+      }, {
+         "name" : "LOCATION_ID",
+         "type" : "String"
+      }, {
+         "name" : "VPC",
+         "type" : "String"
+      }, {
+         "name" : "RAILHEAD_ID",
+         "type" : "String"
+      }, {
+         "name" : "RAIL_HEAD_NUMBER",
+         "type" : "String"
+      }, {
+         "name" : "Rail Head",
+         "type" : "String"
+      }, {
+         "name" : "Truck_key",
+         "type" : "String"
+      }, {
+         "name" : "RailHead Description",
+         "type" : "String"
+      }, {
+         "name" : "Rail Head Code Description",
+         "type" : "String"
+      }, {
+         "name" : "MAKE",
+         "type" : "String"
+      }, {
+         "name" : "Brand",
+         "type" : "String"
+      }, {
+         "name" : "REFDATE",
+         "type" : "String"
+      }, {
+         "name" : "CAPACITY",
+         "type" : "String"
+      }, {
+         "name" : "CARGO_COUNT_INVENTORY",
+         "type" : "String"
+      }, {
+         "name" : "CARGO_COUNT_HOLD",
+         "type" : "String"
+      }, {
+         "name" : "ACTUAL_SHIPMENT",
+         "type" : "Int32"
+      }, {
+         "name" : "CNT",
+         "type" : "Int32"
+      }, {
+         "name" : "Actual Receipts",
+         "type" : "Int32"
+      }, {
+         "name" : "Inv_LinkDate",
+         "type" : "String"
+      } ]
+   }
+}
