@@ -5,37 +5,25 @@
       "typeProperties" : {
          "sources" : [ {
             "dataset" : {
-               "referenceName" : "dbo.Src_Jn",
+               "referenceName" : "dbo_Src_Jn",
                "type" : "DatasetReference"
             },
-            "name" : "Src_Mstr",
-            "script" : "source(output(\n\t\tID as integer,\n\t\tName as string,\n\t\tSalary as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Src_Mstr"
+            "name" : "Src_Mstr"
          }, {
             "dataset" : {
-               "referenceName" : "dbo.Dtl_Jn",
+               "referenceName" : "dbo_Dtl_Jnr",
                "type" : "DatasetReference"
             },
-            "name" : "Src_Dtl",
-            "script" : "source(output(\n\t\tID as integer,\n\t\tDesignation as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Src_Dtl"
+            "name" : "Src_Dtl"
          } ],
          "sinks" : [ {
             "dataset" : {
-               "referenceName" : "dbo.Tgt_Jnr",
+               "referenceName" : "dbo_Tgt_jnr1",
                "type" : "DatasetReference"
             },
-            "name" : "OLEDBDestination",
-            "script" : "MergeJoin sink(mapColumn(\n\t\tDesignation,\n\t\tID,\n\t\tName,\n\t\tSalary\n\t)) ~> OLEDBDestination"
+            "name" : "OLEDBDestination"
          } ],
-         "transformations" : [ {
-            "name" : "Dtl_Sort",
-            "script" : "Src_Dtl sort(asc(ID,true)) ~> Dtl_Sort"
-         }, {
-            "name" : "MergeJoin",
-            "script" : "Src_Sort,Dtl_Sort join(Src_Mstr@ID == Src_Dtl@ID,\n joinType:'inner',\n\tbroadcast: 'none')~> MergeJoin"
-         }, {
-            "name" : "Src_Sort",
-            "script" : "Src_Mstr sort(asc(ID,true)) ~> Src_Sort"
-         } ]
+         "script" : "\n\nsource(output(\n\t\tID as integer,\n\t\tName as string,\n\t\tSalary as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Src_Mstr\nsource(output(\n\t\tDesignation as string,\n\t\tId as integer,\n\t\tName as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Src_Dtl\nMergeJoin sink(mapColumn(\n\t\tDesignation,\n\t\tID,\n\t\tName,\n\t\tSalary\n\t)) ~> OLEDBDestination\nSrc_Dtl sort(asc(Id,true),\n\tasc(Name,true)) ~> Dtl_Sort\nSrc_Sort,Dtl_Sort join(Src_Mstr@ID == Src_Dtl@Id && \nSrc_Mstr@Name == Src_Dtl@Name,\n joinType:'inner',\n\tbroadcast: 'none')~> MergeJoin\nSrc_Mstr sort(asc(ID,true),\n\tasc(Name,true)) ~> Src_Sort"
       }
    }
 }
