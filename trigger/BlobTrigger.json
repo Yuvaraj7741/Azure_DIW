@@ -1,7 +1,8 @@
 {
 	"name": "BlobTrigger",
 	"properties": {
-		"runtimeState": "Started",
+		"annotations": [],
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
