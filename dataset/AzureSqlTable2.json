@@ -9,7 +9,7 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"tableName": "tgt.IDWTgt"
+			"tableName": "dbo.IDWTgt"
 		}
 	}
 }
