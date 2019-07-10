@@ -1,5 +1,5 @@
 {
-   "name" : "Load_Bank_Summary1",
+   "name" : "Load_Bank_Summary",
    "properties" : {
       "type" : "MappingDataFlow",
       "typeProperties" : {
