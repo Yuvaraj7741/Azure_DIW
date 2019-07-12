@@ -21,6 +21,7 @@
 				"defaultValue": "abcd1234$"
 			}
 		},
+		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
 			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=@{linkedService().DBServer};Initial Catalog=@{linkedService().DBName};User ID=@{linkedService().DBUserId};Password=@{linkedService().DBPassword}"

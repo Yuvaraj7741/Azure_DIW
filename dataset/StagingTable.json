@@ -11,6 +11,7 @@
 				"DBPassword": "abcd1234$"
 			}
 		},
+		"annotations": [],
 		"type": "AzureSqlTable",
 		"structure": [
 			{
