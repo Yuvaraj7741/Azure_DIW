@@ -5,6 +5,7 @@
 			{
 				"name": "Load_Bank_Summary",
 				"type": "ExecuteDataFlow",
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -41,6 +42,7 @@
 				"type": "String",
 				"defaultValue": "0"
 			}
-		}
+		},
+		"annotations": []
 	}
 }
