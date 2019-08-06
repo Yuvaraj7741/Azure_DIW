@@ -1,0 +1,118 @@
+{
+   "name" : "ds_gnet_prof_prv_dly_extrt_ld1",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "DelimitedText",
+      "typeProperties" : {
+         "location" : {
+            "type" : "AzureBlobStorageLocation",
+            "fileName" : "Src_Employee.txt",
+            "container" : "azureinput"
+         },
+         "columnDelimiter" : ",",
+         "escapeChar" : "\\",
+         "firstRowAsHeader" : true,
+         "quoteChar" : "\""
+      },
+      "schema" : [ {
+         "name" : "SITE_ID",
+         "type" : "String"
+      }, {
+         "name" : "PROVNUM",
+         "type" : "String"
+      }, {
+         "name" : "PROVLOC",
+         "type" : "String"
+      }, {
+         "name" : "ADDRESSTYPE",
+         "type" : "String"
+      }, {
+         "name" : "LOCTYPE",
+         "type" : "String"
+      }, {
+         "name" : "LOCLAST",
+         "type" : "String"
+      }, {
+         "name" : "LOCFIRST",
+         "type" : "String"
+      }, {
+         "name" : "LOCMI",
+         "type" : "String"
+      }, {
+         "name" : "ATTN",
+         "type" : "String"
+      }, {
+         "name" : "ADDRESS1",
+         "type" : "String"
+      }, {
+         "name" : "ADDRESS2",
+         "type" : "String"
+      }, {
+         "name" : "CITY",
+         "type" : "String"
+      }, {
+         "name" : "STATE",
+         "type" : "String"
+      }, {
+         "name" : "COUNTRY",
+         "type" : "String"
+      }, {
+         "name" : "ZIP",
+         "type" : "String"
+      }, {
+         "name" : "COUNTY",
+         "type" : "String"
+      }, {
+         "name" : "EMAIL",
+         "type" : "String"
+      }, {
+         "name" : "PHONE",
+         "type" : "String"
+      }, {
+         "name" : "OUTOFAREA",
+         "type" : "String"
+      }, {
+         "name" : "COUNTYSVCAREA",
+         "type" : "String"
+      }, {
+         "name" : "PRISNUM",
+         "type" : "String"
+      }, {
+         "name" : "WHEELCHAIR",
+         "type" : "String"
+      }, {
+         "name" : "STATUS",
+         "type" : "String"
+      }, {
+         "name" : "PCP",
+         "type" : "String"
+      }, {
+         "name" : "PROVTYPE",
+         "type" : "String"
+      }, {
+         "name" : "ELIGSTATUS",
+         "type" : "String"
+      }, {
+         "name" : "RECTYPE",
+         "type" : "String"
+      }, {
+         "name" : "SETUP",
+         "type" : "String"
+      }, {
+         "name" : "PROVKEY",
+         "type" : "Int32"
+      }, {
+         "name" : "NPI_ID",
+         "type" : "String"
+      }, {
+         "name" : "PRV_LIC_NO",
+         "type" : "String"
+      }, {
+         "name" : "MCD_LIC_NO",
+         "type" : "String"
+      } ]
+   }
+}

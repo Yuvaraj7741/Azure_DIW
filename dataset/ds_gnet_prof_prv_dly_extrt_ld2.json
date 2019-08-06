@@ -1,0 +1,21 @@
+{
+   "name" : "ds_gnet_prof_prv_dly_extrt_ld2",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "DelimitedText",
+      "typeProperties" : {
+         "location" : {
+            "type" : "AzureBlobStorageLocation",
+            "fileName" : "Src_Employee.txt",
+            "container" : "azureinput"
+         },
+         "columnDelimiter" : ",",
+         "escapeChar" : "\\",
+         "firstRowAsHeader" : true,
+         "quoteChar" : "\""
+      }
+   }
+}
