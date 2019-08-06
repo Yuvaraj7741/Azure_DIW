@@ -1,0 +1,41 @@
+{
+   "name" : "m_C_SDE_BWOrderCOPA",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "Z_TCONSUMERRTMKT",
+               "type" : "DatasetReference"
+            },
+            "name" : "Z_TCONSUMERRTMKT"
+         }, {
+            "dataset" : {
+               "referenceName" : "Z_OHZCPIK002",
+               "type" : "DatasetReference"
+            },
+            "name" : "Z_OHZCPIK002"
+         }, {
+            "dataset" : {
+               "referenceName" : "Z_OHZSDIK002",
+               "type" : "DatasetReference"
+            },
+            "name" : "Z_OHZSDIK002"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "WC_OHZCPIK002_DS",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_OHZCPIK002_DS"
+         }, {
+            "dataset" : {
+               "referenceName" : "WC_OHZCPIK002_DS_BKUP",
+               "type" : "DatasetReference"
+            },
+            "name" : "WC_OHZCPIK002_DS_BKUP"
+         } ],
+         "script" : "\n\nsource(output(\n\t\tTXTSH as string,\n\t\tCONSUMER_RTM as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Z_TCONSUMERRTMKT\nsource(output(\n\t\tCOMP_CODE as string,\n\t\tREC_TYPE as string,\n\t\tCURTYPE as string,\n\t\tVTYPE as string,\n\t\tVERSION as string,\n\t\tCO_DOC_NO as string,\n\t\tREFER_DOC as string,\n\t\tREFER_ITM as string,\n\t\tCO_ITEM_NO as string,\n\t\tRECORDMODE as string,\n\t\tFISCPER as string,\n\t\tFISCVARNT as string,\n\t\tBUS_AREA as string,\n\t\tCO_AREA as string,\n\t\tFUNC_AREA as string,\n\t\tDISTR_CHAN as string,\n\t\tDIVISION as string,\n\t\t_BIC_ZCPAACASS as string,\n\t\tCUSTOMER as string,\n\t\t_BIC_ZEBZRESEL as string,\n\t\t_BIC_ZEBZREVPA as string,\n\t\t_BIC_ZCPAENDUS as string,\n\t\t_BIC_ZCPAFAREA as string,\n\t\tMATL_GROUP as string,\n\t\t_BIC_ZDRWWNOD as string,\n\t\tPLANT as string,\n\t\tPROD_HIER as string,\n\t\tMATERIAL as string,\n\t\tMAT_SALES as string,\n\t\tPROFIT_CTR as string,\n\t\tSALESORG as string,\n\t\tBILL_TYPE as string,\n\t\t_BIC_ZCPACADOC as string,\n\t\t_BIC_ZCPACAITM as string,\n\t\tCOSTELMNT as string,\n\t\tCHRT_ACCTS as string,\n\t\tCOSTOBJ as string,\n\t\tGI_DATE as string,\n\t\tDOC_DATE as string,\n\t\t_BIC_ZCPAORDNO as string,\n\t\tPART_PRCTR as string,\n\t\tPSTNG_DATE as string,\n\t\tS_ORD_ITEM as string,\n\t\tDOC_NUMBER as string,\n\t\tABCPROCESS as string,\n\t\tCOSTCENTER as string,\n\t\tWBS_ELEMT as string,\n\t\t_BIC_ZCPACLTV as string,\n\t\tCOUNTRY as string,\n\t\t_BIC_ZCPAPLACI as string,\n\t\tLOGSYS as string,\n\t\t_BIC_ZLOADDATE as string,\n\t\t_BIC_ZDRWWGMC as string,\n\t\t_BIC_ZDRPAPH1 as string,\n\t\t_BIC_ZCPAFREIG as double,\n\t\t_BIC_ZCPALISPR as double,\n\t\t_BIC_ZCPAINVOA as double,\n\t\tQUANTITY as double,\n\t\tCOPAREVEN as double,\n\t\tCUST_DSCNT as double,\n\t\tPROD_DSCNT as double,\n\t\tQTY_DSCNT as double,\n\t\tCOPASPROM as double,\n\t\tCASH_DSCNT as double,\n\t\tVOL_REBATE as double,\n\t\tCOPAODSCNT as double,\n\t\tCOPADISCT as double,\n\t\tCOPANETSL as double,\n\t\tSALES_CMSN as double,\n\t\tSPCDSLS_CS as double,\n\t\tACCRDFR_CS as double,\n\t\tCOPADIRSL as double,\n\t\tCOPANETRV as double,\n\t\tDIRMAT_CS as double,\n\t\tVARPROD_CS as double,\n\t\tCOPACOGSV as double,\n\t\tCOPAMRGN1 as double,\n\t\tMATOVHD as double,\n\t\tFIXPROD_CS as double,\n\t\tCOPACOGSF as double,\n\t\tCOPAMRGN2 as double,\n\t\tCOPAVRNCS as double,\n\t\tCOPAMRGN3 as double,\n\t\tMARKETING as double,\n\t\tSALES_CS as double,\n\t\tADMNSTRTN as double,\n\t\tRSRCH_DEV as double,\n\t\tLOGISTICS as double,\n\t\tOTHER_OVHD as double,\n\t\tCOPAOVHDC as double,\n\t\tCOPAPROFT as double,\n\t\tCOPACOGS as double,\n\t\t_BIC_ZZGRPCOGS as double,\n\t\t_BIC_ZCPACOGM as double,\n\t\tCOPASLQTY as double,\n\t\t_BIC_ZZGRPCTA as double,\n\t\tROWCNT as double,\n\t\tCOPASLQTU as string,\n\t\tUNIT as string,\n\t\tCURRENCY as string,\n\t\t_BIC_ZGRPCURR as string,\n\t\tFISCYEAR as string,\n\t\tCALQUARTER as string,\n\t\tCALQUART1 as string,\n\t\t_BIC_ZCPAVALU4 as double,\n\t\t_BIC_ZCPAVALU5 as double,\n\t\t_BIC_ZCPAVALU6 as double,\n\t\t_BIC_ZCPAVALU7 as double,\n\t\t_BIC_ZCPAVALU8 as double,\n\t\t_BIC_ZCPAVALU9 as double,\n\t\t_BIC_ZCPAVLU11 as double,\n\t\t_BIC_ZCPAVLU12 as double,\n\t\t_BIC_ZCPAVLU13 as double,\n\t\tINVCD_QTY as double,\n\t\tBASE_UOM as string,\n\t\t_BIC_ZANFLAG as string,\n\t\tBILL_DATE as string,\n\t\t_BIC_ZBKING_DT as string,\n\t\t_BIC_ZBKINGREL as string,\n\t\t_BIC_ZDOCCURR as string,\n\t\tEXCHG_RATE as decimal(10,0),\n\t\tCREATEDON as string,\n\t\t_BIC_ZCPAVAL10 as double,\n\t\t_BIC_ZCPWWBRC as string,\n\t\t_BIC_ZCPWWMUC as string,\n\t\t_BIC_ZCPVV015 as double,\n\t\t_BIC_ZCPVV016 as double,\n\t\t_BIC_ZCPVV017 as double,\n\t\t_BIC_ZCPVV018 as double,\n\t\t_BIC_ZCPVV102 as double,\n\t\tREGION as string,\n\t\t_BIC_ZBKVALDC as double,\n\t\t_BIC_ZSDKURFDT as string,\n\t\t_BIC_ZINVCAN as double,\n\t\t_BIC_ZDCMEMO as double,\n\t\t_BIC_ZZZVTEXT1 as string,\n\t\t_BIC_ZSDKBETR as double,\n\t\tKNVAL as double,\n\t\t_BIC_ZSDVARCON as string,\n\t\tCUST_GROUP as string,\n\t\tCOND_CURR as string,\n\t\t_BIC_ZSOLDPREG as string,\n\t\t_BIC_ZSOLDPCNT as string,\n\t\t_BIC_ZCPAVLU19 as double,\n\t\t_BIC_ZNODERANG as string,\n\t\t_BIC_ZSDKONDA as string,\n\t\t_BIC_ZCPAVLU20 as double,\n\t\tDOC_CURRCY as string,\n\t\t_BIC_ZCDRWWNOD as double,\n\t\t_BIC_ZZTP as string,\n\t\t_BIC_ZCPAVALTP as double,\n\t\t_BIC_ZWW003 as string,\n\t\t_BIC_ZLEBKFLG as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Z_OHZCPIK002\nsource(output(\n\t\tDOC_NUMBER as string,\n\t\tS_ORD_ITEM as string,\n\t\tFinal_quantity as double,\n\t\tORDER_QUANTITY as double,\n\t\tTARGET_QUANTITY as double\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Z_OHZSDIK002\nrtr_ORDER_DATA@Case_WC_OHZCPIK002_DS sink(saveMode:'overwrite' ) ~> WC_OHZCPIK002_DS\nrtr_ORDER_DATA@Case_WC_OHZCPIK002_DS_BKUP sink(saveMode:'overwrite' ) ~> WC_OHZCPIK002_DS_BKUP\nexp_Initial_e1,lkp_Z_TCONSUMERRTMKT derive(OUT_COUNTRY = 'LTRIM(RTRIM(Z_OHZCPIK002@COUNTRY))',\n\t\tO_TARGET_QUANTITY = 'IIF(ISNULL(Z_OHZSDIK002@TARGET_QUANTITY),0,Z_OHZSDIK002@TARGET_QUANTITY)',\n\t\tO_Final_quantity = iif(Z_OHZCPIK002.DOC_NUMBER == ' ',Z_OHZCPIK002.INVCD_QTY,Z_OHZSDIK002.Final_quantity),\n\t\tOUT_CURRENCY = '--IIF(ISNULL(Z_OHZCPIK002@CURRENCY),\"USD\",Z_OHZCPIK002@CURRENCY)    IIF((Z_OHZCPIK002@DOC_NUMBER=\" \"), Z_OHZCPIK002@/BIC/ZDOCCURR, DECODE(REG_MATCH(Z_OHZCPIK002@DOC_CURRCY, \"[a-z][A-Z]\"), TRUE, Z_OHZCPIK002@DOC_CURRCY, \"USD\"))',\n\t\tOUT_FLAG = '\"I\"',\n\t\tLOAD_DT = 'SESSSTARTTIME',\n\t\tO_ORDER_QUANTITY = 'IIF(ISNULL(Z_OHZSDIK002@ORDER_QUANTITY),0,Z_OHZSDIK002@ORDER_QUANTITY)',\n\t\tOUT_DOC_NUMBER = 'IIF(Z_OHZCPIK002@DOC_NUMBER=\" \", \"M\" || Z_OHZCPIK002@CO_DOC_NO,Z_OHZCPIK002@DOC_NUMBER)') ~> exp_Initial\nexp_Initial split(OUT_FLAG == 'I',\n\tdisjoint: false) ~> rtr_ORDER_DATA@(Case_WC_OHZCPIK002_DS,Case_WC_OHZCPIK002_DS_BKUP)\nZ_OHZCPIK002,Z_OHZSDIK002 lookup(Z_OHZCPIK002@DOC_NUMBER == Z_OHZSDIK002@DOC_NUMBER && \nZ_OHZCPIK002@S_ORD_ITEM == Z_OHZSDIK002@S_ORD_ITEM,\n\tbroadcast: 'none') ~> lkp_Z_OHZSIDKOO2\nexp_Initial_e1,Z_TCONSUMERRTMKT lookup(exp_Initial_e1@v_CONSUMER_ROUTE_TO_MKT == Z_TCONSUMERRTMKT@CONSUMER_RTM,\n\tbroadcast: 'none') ~> lkp_Z_TCONSUMERRTMKT\nZ_OHZCPIK002,lkp_Z_OHZSIDKOO2 derive(v_CONSUMER_ROUTE_TO_MKT = 'LTRIM(RTRIM(Z_OHZCPIK002@/BIC/ZWW003))') ~> exp_Initial_e1"
+      }
+   }
+}
