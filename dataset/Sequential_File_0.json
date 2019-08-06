@@ -1,40 +1,48 @@
 {
-   "name" : "Sequential_File_0",
-   "properties" : {
-      "linkedServiceName" : {
-         "referenceName" : "AzureBlobStorage3",
-         "type" : "LinkedServiceReference"
-      },
-      "type" : "DelimitedText",
-      "typeProperties" : {
-         "location" : {
-            "type" : "AzureBlobStorageLocation",
-            "fileName" : "Src_Employee.txt",
-            "container" : "azureinput"
-         },
-         "columnDelimiter" : ",",
-         "escapeChar" : "\\",
-         "firstRowAsHeader" : true,
-         "quoteChar" : "\""
-      },
-      "schema" : [ {
-         "name" : "bnk_id",
-         "type" : "Int32"
-      }, {
-         "name" : "bnk_name",
-         "type" : "String"
-      }, {
-         "name" : "address",
-         "type" : "String"
-      }, {
-         "name" : "city",
-         "type" : "String"
-      }, {
-         "name" : "state_code",
-         "type" : "Int32"
-      }, {
-         "name" : "contact_no",
-         "type" : "Int32"
-      } ]
-   }
+	"name": "Sequential_File_0",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage4",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Src_Employee.txt",
+				"container": "azureinput"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "bnk_id",
+				"type": "Int32"
+			},
+			{
+				"name": "bnk_name",
+				"type": "String"
+			},
+			{
+				"name": "address",
+				"type": "String"
+			},
+			{
+				"name": "city",
+				"type": "String"
+			},
+			{
+				"name": "state_code",
+				"type": "Int32"
+			},
+			{
+				"name": "contact_no",
+				"type": "Int32"
+			}
+		]
+	}
 }
