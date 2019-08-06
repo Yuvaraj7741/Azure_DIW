@@ -1,0 +1,29 @@
+{
+   "name" : "Z_OHZSDIK002",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Z_OHZSDIK002"
+      },
+      "schema" : [ {
+         "name" : "DOC_NUMBER",
+         "type" : "String"
+      }, {
+         "name" : "S_ORD_ITEM",
+         "type" : "String"
+      }, {
+         "name" : "Final_quantity",
+         "type" : "Double"
+      }, {
+         "name" : "ORDER_QUANTITY",
+         "type" : "Double"
+      }, {
+         "name" : "TARGET_QUANTITY",
+         "type" : "Double"
+      } ]
+   }
+}

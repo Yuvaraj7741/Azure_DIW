@@ -1,0 +1,20 @@
+{
+   "name" : "Z_TCONSUMERRTMKT",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Z_TCONSUMERRTMKT"
+      },
+      "schema" : [ {
+         "name" : "TXTSH",
+         "type" : "String"
+      }, {
+         "name" : "CONSUMER_RTM",
+         "type" : "String"
+      } ]
+   }
+}

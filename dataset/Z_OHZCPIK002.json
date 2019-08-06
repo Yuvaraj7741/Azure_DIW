@@ -1,0 +1,473 @@
+{
+   "name" : "Z_OHZCPIK002",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "Z_OHZCPIK002"
+      },
+      "schema" : [ {
+         "name" : "COMP_CODE",
+         "type" : "String"
+      }, {
+         "name" : "REC_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "CURTYPE",
+         "type" : "String"
+      }, {
+         "name" : "VTYPE",
+         "type" : "String"
+      }, {
+         "name" : "VERSION",
+         "type" : "String"
+      }, {
+         "name" : "CO_DOC_NO",
+         "type" : "String"
+      }, {
+         "name" : "REFER_DOC",
+         "type" : "String"
+      }, {
+         "name" : "REFER_ITM",
+         "type" : "String"
+      }, {
+         "name" : "CO_ITEM_NO",
+         "type" : "String"
+      }, {
+         "name" : "RECORDMODE",
+         "type" : "String"
+      }, {
+         "name" : "FISCPER",
+         "type" : "String"
+      }, {
+         "name" : "FISCVARNT",
+         "type" : "String"
+      }, {
+         "name" : "BUS_AREA",
+         "type" : "String"
+      }, {
+         "name" : "CO_AREA",
+         "type" : "String"
+      }, {
+         "name" : "FUNC_AREA",
+         "type" : "String"
+      }, {
+         "name" : "DISTR_CHAN",
+         "type" : "String"
+      }, {
+         "name" : "DIVISION",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPAACASS",
+         "type" : "String"
+      }, {
+         "name" : "CUSTOMER",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZEBZRESEL",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZEBZREVPA",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPAENDUS",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPAFAREA",
+         "type" : "String"
+      }, {
+         "name" : "MATL_GROUP",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZDRWWNOD",
+         "type" : "String"
+      }, {
+         "name" : "PLANT",
+         "type" : "String"
+      }, {
+         "name" : "PROD_HIER",
+         "type" : "String"
+      }, {
+         "name" : "MATERIAL",
+         "type" : "String"
+      }, {
+         "name" : "MAT_SALES",
+         "type" : "String"
+      }, {
+         "name" : "PROFIT_CTR",
+         "type" : "String"
+      }, {
+         "name" : "SALESORG",
+         "type" : "String"
+      }, {
+         "name" : "BILL_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPACADOC",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPACAITM",
+         "type" : "String"
+      }, {
+         "name" : "COSTELMNT",
+         "type" : "String"
+      }, {
+         "name" : "CHRT_ACCTS",
+         "type" : "String"
+      }, {
+         "name" : "COSTOBJ",
+         "type" : "String"
+      }, {
+         "name" : "GI_DATE",
+         "type" : "String"
+      }, {
+         "name" : "DOC_DATE",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPAORDNO",
+         "type" : "String"
+      }, {
+         "name" : "PART_PRCTR",
+         "type" : "String"
+      }, {
+         "name" : "PSTNG_DATE",
+         "type" : "String"
+      }, {
+         "name" : "S_ORD_ITEM",
+         "type" : "String"
+      }, {
+         "name" : "DOC_NUMBER",
+         "type" : "String"
+      }, {
+         "name" : "ABCPROCESS",
+         "type" : "String"
+      }, {
+         "name" : "COSTCENTER",
+         "type" : "String"
+      }, {
+         "name" : "WBS_ELEMT",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPACLTV",
+         "type" : "String"
+      }, {
+         "name" : "COUNTRY",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPAPLACI",
+         "type" : "String"
+      }, {
+         "name" : "LOGSYS",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZLOADDATE",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZDRWWGMC",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZDRPAPH1",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPAFREIG",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPALISPR",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPAINVOA",
+         "type" : "Double"
+      }, {
+         "name" : "QUANTITY",
+         "type" : "Double"
+      }, {
+         "name" : "COPAREVEN",
+         "type" : "Double"
+      }, {
+         "name" : "CUST_DSCNT",
+         "type" : "Double"
+      }, {
+         "name" : "PROD_DSCNT",
+         "type" : "Double"
+      }, {
+         "name" : "QTY_DSCNT",
+         "type" : "Double"
+      }, {
+         "name" : "COPASPROM",
+         "type" : "Double"
+      }, {
+         "name" : "CASH_DSCNT",
+         "type" : "Double"
+      }, {
+         "name" : "VOL_REBATE",
+         "type" : "Double"
+      }, {
+         "name" : "COPAODSCNT",
+         "type" : "Double"
+      }, {
+         "name" : "COPADISCT",
+         "type" : "Double"
+      }, {
+         "name" : "COPANETSL",
+         "type" : "Double"
+      }, {
+         "name" : "SALES_CMSN",
+         "type" : "Double"
+      }, {
+         "name" : "SPCDSLS_CS",
+         "type" : "Double"
+      }, {
+         "name" : "ACCRDFR_CS",
+         "type" : "Double"
+      }, {
+         "name" : "COPADIRSL",
+         "type" : "Double"
+      }, {
+         "name" : "COPANETRV",
+         "type" : "Double"
+      }, {
+         "name" : "DIRMAT_CS",
+         "type" : "Double"
+      }, {
+         "name" : "VARPROD_CS",
+         "type" : "Double"
+      }, {
+         "name" : "COPACOGSV",
+         "type" : "Double"
+      }, {
+         "name" : "COPAMRGN1",
+         "type" : "Double"
+      }, {
+         "name" : "MATOVHD",
+         "type" : "Double"
+      }, {
+         "name" : "FIXPROD_CS",
+         "type" : "Double"
+      }, {
+         "name" : "COPACOGSF",
+         "type" : "Double"
+      }, {
+         "name" : "COPAMRGN2",
+         "type" : "Double"
+      }, {
+         "name" : "COPAVRNCS",
+         "type" : "Double"
+      }, {
+         "name" : "COPAMRGN3",
+         "type" : "Double"
+      }, {
+         "name" : "MARKETING",
+         "type" : "Double"
+      }, {
+         "name" : "SALES_CS",
+         "type" : "Double"
+      }, {
+         "name" : "ADMNSTRTN",
+         "type" : "Double"
+      }, {
+         "name" : "RSRCH_DEV",
+         "type" : "Double"
+      }, {
+         "name" : "LOGISTICS",
+         "type" : "Double"
+      }, {
+         "name" : "OTHER_OVHD",
+         "type" : "Double"
+      }, {
+         "name" : "COPAOVHDC",
+         "type" : "Double"
+      }, {
+         "name" : "COPAPROFT",
+         "type" : "Double"
+      }, {
+         "name" : "COPACOGS",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZZGRPCOGS",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPACOGM",
+         "type" : "Double"
+      }, {
+         "name" : "COPASLQTY",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZZGRPCTA",
+         "type" : "Double"
+      }, {
+         "name" : "ROWCNT",
+         "type" : "Double"
+      }, {
+         "name" : "COPASLQTU",
+         "type" : "String"
+      }, {
+         "name" : "UNIT",
+         "type" : "String"
+      }, {
+         "name" : "CURRENCY",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZGRPCURR",
+         "type" : "String"
+      }, {
+         "name" : "FISCYEAR",
+         "type" : "String"
+      }, {
+         "name" : "CALQUARTER",
+         "type" : "String"
+      }, {
+         "name" : "CALQUART1",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPAVALU4",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPAVALU5",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPAVALU6",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPAVALU7",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPAVALU8",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPAVALU9",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPAVLU11",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPAVLU12",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPAVLU13",
+         "type" : "Double"
+      }, {
+         "name" : "INVCD_QTY",
+         "type" : "Double"
+      }, {
+         "name" : "BASE_UOM",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZANFLAG",
+         "type" : "String"
+      }, {
+         "name" : "BILL_DATE",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZBKING_DT",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZBKINGREL",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZDOCCURR",
+         "type" : "String"
+      }, {
+         "name" : "EXCHG_RATE",
+         "type" : "Decimal"
+      }, {
+         "name" : "CREATEDON",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPAVAL10",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPWWBRC",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPWWMUC",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPVV015",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPVV016",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPVV017",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPVV018",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZCPVV102",
+         "type" : "Double"
+      }, {
+         "name" : "REGION",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZBKVALDC",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZSDKURFDT",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZINVCAN",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZDCMEMO",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZZZVTEXT1",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZSDKBETR",
+         "type" : "Double"
+      }, {
+         "name" : "KNVAL",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZSDVARCON",
+         "type" : "String"
+      }, {
+         "name" : "CUST_GROUP",
+         "type" : "String"
+      }, {
+         "name" : "COND_CURR",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZSOLDPREG",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZSOLDPCNT",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPAVLU19",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZNODERANG",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZSDKONDA",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPAVLU20",
+         "type" : "Double"
+      }, {
+         "name" : "DOC_CURRCY",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCDRWWNOD",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZZTP",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZCPAVALTP",
+         "type" : "Double"
+      }, {
+         "name" : "/BIC/ZWW003",
+         "type" : "String"
+      }, {
+         "name" : "/BIC/ZLEBKFLG",
+         "type" : "String"
+      } ]
+   }
+}

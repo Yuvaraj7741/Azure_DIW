@@ -1,0 +1,13 @@
+{
+   "name" : "WC_OHZCPIK002_DS_BKUP",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "WC_OHZCPIK002_DS_BKUP"
+      }
+   }
+}
