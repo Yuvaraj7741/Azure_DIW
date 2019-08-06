@@ -1,53 +1,11 @@
 {
-   "name" : "jb_gnet_prof_prv_dly_extrt_ld2",
-   "properties" : {
-      "type" : "MappingDataFlow",
-      "typeProperties" : {
-         "sources" : [ {
-            "dataset" : {
-               "referenceName" : "ds_provider_lang_xwalk_cpf_to_hpn_lang4",
-               "type" : "DatasetReference"
-            },
-            "name" : "ds_provider_lang_xwalk_cpf_to_hpn_lang4"
-         }, {
-            "dataset" : {
-               "referenceName" : "ds_provider_lang_xwalk_cpf_to_hpn_lang1",
-               "type" : "DatasetReference"
-            },
-            "name" : "ds_provider_lang_xwalk_cpf_to_hpn_lang1"
-         }, {
-            "dataset" : {
-               "referenceName" : "ds_provider_lang_xwalk_cpf_to_hpn_lang2",
-               "type" : "DatasetReference"
-            },
-            "name" : "ds_provider_lang_xwalk_cpf_to_hpn_lang2"
-         }, {
-            "dataset" : {
-               "referenceName" : "ds_provider_lang_xwalk_cpf_to_hpn_lang3",
-               "type" : "DatasetReference"
-            },
-            "name" : "ds_provider_lang_xwalk_cpf_to_hpn_lang3"
-         }, {
-            "dataset" : {
-               "referenceName" : "ds_gnet_prof_prv_dly_extrt_ld1",
-               "type" : "DatasetReference"
-            },
-            "name" : "ds_gnet_prof_prv_dly_extrt_ld1"
-         }, {
-            "dataset" : {
-               "referenceName" : "Or_prvdb_demo",
-               "type" : "DatasetReference"
-            },
-            "name" : "Or_prvdb_demo"
-         } ],
-         "sinks" : [ {
-            "dataset" : {
-               "referenceName" : "ds_gnet_prof_prv_dly_extrt_ld2",
-               "type" : "DatasetReference"
-            },
-            "name" : "ds_gnet_prof_prv_dly_extrt_ld2"
-         } ],
-         "script" : "\n\nsource(output(\n\t\tLANGUAGE1 as string,\n\t\tHPNCODE as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> ds_provider_lang_xwalk_cpf_to_hpn_lang4\nsource(output(\n\t\tLANGUAGE1 as string,\n\t\tHPNCODE as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> ds_provider_lang_xwalk_cpf_to_hpn_lang1\nsource(output(\n\t\tLANGUAGE1 as string,\n\t\tHPNCODE as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> ds_provider_lang_xwalk_cpf_to_hpn_lang2\nsource(output(\n\t\tLANGUAGE1 as string,\n\t\tHPNCODE as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> ds_provider_lang_xwalk_cpf_to_hpn_lang3\nsource(output(\n\t\tSITE_ID as string,\n\t\tPROVNUM as string,\n\t\tPROVLOC as string,\n\t\tADDRESSTYPE as string,\n\t\tLOCTYPE as string,\n\t\tLOCLAST as string,\n\t\tLOCFIRST as string,\n\t\tLOCMI as string,\n\t\tATTN as string,\n\t\tADDRESS1 as string,\n\t\tADDRESS2 as string,\n\t\tCITY as string,\n\t\tSTATE as string,\n\t\tCOUNTRY as string,\n\t\tZIP as string,\n\t\tCOUNTY as string,\n\t\tEMAIL as string,\n\t\tPHONE as string,\n\t\tOUTOFAREA as string,\n\t\tCOUNTYSVCAREA as string,\n\t\tPRISNUM as string,\n\t\tWHEELCHAIR as string,\n\t\tSTATUS as string,\n\t\tPCP as string,\n\t\tPROVTYPE as string,\n\t\tELIGSTATUS as string,\n\t\tRECTYPE as string,\n\t\tSETUP as string,\n\t\tPROVKEY as integer,\n\t\tNPI_ID as string,\n\t\tPRV_LIC_NO as string,\n\t\tMCD_LIC_NO as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> ds_gnet_prof_prv_dly_extrt_ld1\nsource(output(\n\t\tPROVKEY as decimal(10,0),\n\t\tTITLE as string,\n\t\tSEX as string,\n\t\tLANGUAGE1 as string,\n\t\tLANGUAGE2 as string,\n\t\tLANGUAGE3 as string,\n\t\tLANGUAGE4 as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Or_prvdb_demo\nxfm_gnet_prof_prv_dly_extrt_ld1 sink(mapColumn(\n\t\tHPNCODE_LANGUAGE1 = HPNCODE,\n\t\tHPNCODE_LANGUAGE2 = HPNCODE,\n\t\tHPNCODE_LANGUAGE3 = HPNCODE,\n\t\tHPNCODE_LANGUAGE4 = HPNCODE\n\t)) ~> ds_gnet_prof_prv_dly_extrt_ld2\nds_gnet_prof_prv_dly_extrt_ld1,Or_prvdb_demo lookup(ds_gnet_prof_prv_dly_extrt_ld1@PROVKEY == Or_prvdb_demo@PROVKEY,\n\tbroadcast: 'none') ~> lkp_prvdb_demo\nds_provider_lang_xwalk_cpf_to_hpn_lang1,lkp_prvdb_demo join(Or_prvdb_demo@LANGUAGE1 == ds_provider_lang_xwalk_cpf_to_hpn_lang1@LANGUAGE1,\n joinType:'',\n\tbroadcast: 'none')~> ds_provider_lang_xwalk_cpf_to_hpn_lang1_Jnr\nds_provider_lang_xwalk_cpf_to_hpn_lang2,ds_provider_lang_xwalk_cpf_to_hpn_lang1 join(LANGUAGE2 == LANGUAGE1,\n joinType:'',\n\tbroadcast: 'none')~> ds_provider_lang_xwalk_cpf_to_hpn_lang2_Jnr\nds_provider_lang_xwalk_cpf_to_hpn_lang3,ds_provider_lang_xwalk_cpf_to_hpn_lang2_Jnr join(LANGUAGE3 == LANGUAGE1,\n joinType:'',\n\tbroadcast: 'none')~> ds_provider_lang_xwalk_cpf_to_hpn_lang3_Jnr\nds_provider_lang_xwalk_cpf_to_hpn_lang4,ds_provider_lang_xwalk_cpf_to_hpn_lang3_Jnr join(LANGUAGE4 == LANGUAGE1,\n joinType:'',\n\tbroadcast: 'none')~> lkp_provider_lang_xwalk_cpf_to_hpn\nlkp_provider_lang_xwalk_cpf_to_hpn derive(HPNCODE_LANGUAGE1 = HPNCODE_LANGUAGE1,\n\t\tHPNCODE_LANGUAGE2 = HPNCODE_LANGUAGE2,\n\t\tHPNCODE_LANGUAGE3 = HPNCODE_LANGUAGE3,\n\t\tHPNCODE_LANGUAGE4 = HPNCODE_LANGUAGE4) ~> xfm_gnet_prof_prv_dly_extrt_ld1"
-      }
-   }
+	"name": "jb_gnet_prof_prv_dly_extrt_ld2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"script": "\n"
+		}
+	}
 }
