@@ -9,16 +9,14 @@
 						"referenceName": "LKPTRANS",
 						"type": "DatasetReference"
 					},
-					"name": "LKPTRANS1",
-					"script": "source(output(\n\t\tbnk_id as decimal(10,0),\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as decimal(10,0),\n\t\tcontact_no as decimal(10,0),\n\t\tno_of_branches as decimal(10,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> LKPTRANS1"
+					"name": "LKPTRANS1"
 				},
 				{
 					"dataset": {
 						"referenceName": "load_bnk_src",
 						"type": "DatasetReference"
 					},
-					"name": "loadbnksrc",
-					"script": "source(output(\n\t\tbnk_id as decimal(10,0),\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as integer,\n\t\tstate_code as decimal(10,0),\n\t\tcontact_no as decimal(10,0),\n\t\tno_of_branches as decimal(10,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> loadbnksrc"
+					"name": "loadbnksrc"
 				}
 			],
 			"sinks": [
@@ -27,36 +25,30 @@
 						"referenceName": "load_bnk_src1",
 						"type": "DatasetReference"
 					},
-					"name": "loadbnksrc1",
-					"script": "SEQTRANS sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> loadbnksrc1"
+					"name": "loadbnksrc1"
 				}
 			],
 			"transformations": [
 				{
-					"name": "EXPTRANS",
-					"script": "loadbnksrc derive(upper_bnk_name = upper(bnk_name)) ~> EXPTRANS"
+					"name": "EXPTRANS"
 				},
 				{
-					"name": "EXPTRANS1",
-					"script": "EXPTRANS, LKPTRANS derive(bnk_id = bnk_id,\n\t\taddress = address,\n\t\tcity = city,\n\t\tcontact_no = contact_no,\n\t\tno_of_branches = no_of_branches,\n\t\tupper_bnk_name = upper_bnk_name) ~> EXPTRANS1"
+					"name": "EXPTRANS1"
 				},
 				{
-					"name": "SRTTRANS",
-					"script": "EXPTRANS1 sort(asc(upper_bnk_name, true),\n\tasc(address, true),\n\tasc(city, true),\n\tasc(contact_no, true),\n\tasc(no_of_branches, true)) ~> SRTTRANS"
+					"name": "SRTTRANS"
 				},
 				{
-					"name": "AGGTRANS",
-					"script": "SRTTRANS aggregate(groupBy(upper_bnk_name,\n\t\taddress,\n\t\tcity,\n\t\tcontact_no),\n\tavg_branches = average(no_of_branches)) ~> AGGTRANS"
+					"name": "AGGTRANS"
 				},
 				{
-					"name": "SEQTRANS",
-					"script": "AGGTRANS keyGenerate(output(s_no as long),\n\tstartAt: 1L) ~> SEQTRANS"
+					"name": "SEQTRANS"
 				},
 				{
-					"name": "LKPTRANS",
-					"script": "EXPTRANS, LKPTRANS1 lookup(loadbnksrc@bnk_id == LKPTRANS1@bnk_id,\n\tbroadcast: 'none')~> LKPTRANS"
+					"name": "LKPTRANS"
 				}
-			]
+			],
+			"script": "\nparameters{\n\tEDAA_S1_Loads as string ($EDAA_S1_Loads),\n\tEtlBatchId as string ($EtlBatchId),\n\tSrcSysId as integer (10),\n\tInvocation_Id as integer (121)\n}\nsource(output(\n\t\tbnk_id as decimal(10,0),\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as decimal(10,0),\n\t\tcontact_no as decimal(10,0),\n\t\tno_of_branches as decimal(10,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> LKPTRANS1\nsource(output(\n\t\tbnk_id as decimal(10,0),\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as integer,\n\t\tstate_code as decimal(10,0),\n\t\tcontact_no as decimal(10,0),\n\t\tno_of_branches as decimal(10,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> loadbnksrc\nloadbnksrc derive(upper_bnk_name = upper(bnk_name)) ~> EXPTRANS\nEXPTRANS, LKPTRANS derive(bnk_id = bnk_id,\n\t\taddress = address,\n\t\tcity = city,\n\t\tcontact_no = contact_no,\n\t\tno_of_branches = no_of_branches,\n\t\tupper_bnk_name = upper_bnk_name) ~> EXPTRANS1\nEXPTRANS1 sort(asc(upper_bnk_name, true),\n\tasc(address, true),\n\tasc(city, true),\n\tasc(contact_no, true),\n\tasc(no_of_branches, true)) ~> SRTTRANS\nSRTTRANS aggregate(groupBy(upper_bnk_name,\n\t\taddress,\n\t\tcity,\n\t\tcontact_no),\n\tavg_branches = average(no_of_branches)) ~> AGGTRANS\nAGGTRANS keyGenerate(output(s_no as long),\n\tstartAt: 1L) ~> SEQTRANS\nEXPTRANS, LKPTRANS1 lookup(loadbnksrc@bnk_id == LKPTRANS1@bnk_id,\n\tbroadcast: 'none')~> LKPTRANS\nSEQTRANS sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> loadbnksrc1"
 		}
 	}
 }
