@@ -1,0 +1,340 @@
+{
+   "name" : "sq_QVBLFNBD",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "type" : "DelimitedText",
+      "typeProperties" : {
+         "location" : {
+            "type" : "AzureBlobStorageLocation",
+            "fileName" : "Src_Employee.txt",
+            "container" : "azureinput"
+         },
+         "columnDelimiter" : ",",
+         "escapeChar" : "\\",
+         "firstRowAsHeader" : true,
+         "quoteChar" : "\""
+      },
+      "schema" : [ {
+         "name" : "SITE_ID",
+         "type" : "String"
+      }, {
+         "name" : "ENTITY_ID",
+         "type" : "String"
+      }, {
+         "name" : "EG_COMMON_ID",
+         "type" : "String"
+      }, {
+         "name" : "EG_MODIFIER_ID",
+         "type" : "String"
+      }, {
+         "name" : "FILLER_3",
+         "type" : "String"
+      }, {
+         "name" : "SBS_1_9_PK",
+         "type" : "String"
+      }, {
+         "name" : "SBS_SFX_PK",
+         "type" : "String"
+      }, {
+         "name" : "X5219_UNION_ID",
+         "type" : "String"
+      }, {
+         "name" : "X5220_LOCAL_ID",
+         "type" : "String"
+      }, {
+         "name" : "FILLER_6",
+         "type" : "String"
+      }, {
+         "name" : "EG_PMT_DUE_DT_CC",
+         "type" : "String"
+      }, {
+         "name" : "EG_PMT_DUE_DT_YY",
+         "type" : "String"
+      }, {
+         "name" : "EG_PMT_DUE_DT_MM",
+         "type" : "String"
+      }, {
+         "name" : "EG_PMT_DUE_DT_DD",
+         "type" : "String"
+      }, {
+         "name" : "BIL_DTL_ITM_NBR",
+         "type" : "String"
+      }, {
+         "name" : "BIL_DTL_ADD_NBR",
+         "type" : "String"
+      }, {
+         "name" : "BILL_ENTITY_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "EMPL_GROUP",
+         "type" : "String"
+      }, {
+         "name" : "SEQ_INV_1_10",
+         "type" : "String"
+      }, {
+         "name" : "SEQ_INV_11",
+         "type" : "String"
+      }, {
+         "name" : "MEDCD_INV_NUM",
+         "type" : "String"
+      }, {
+         "name" : "MBR_ALT_ID",
+         "type" : "String"
+      }, {
+         "name" : "USER_FUNC_CODE",
+         "type" : "String"
+      }, {
+         "name" : "SBS_ID_1_9",
+         "type" : "String"
+      }, {
+         "name" : "SBS_SEQ_N",
+         "type" : "String"
+      }, {
+         "name" : "BALANCE_AMT",
+         "type" : "String"
+      }, {
+         "name" : "SBS_LST_NAM",
+         "type" : "String"
+      }, {
+         "name" : "SBS_FST_NAM",
+         "type" : "String"
+      }, {
+         "name" : "SBS_MID_INIT",
+         "type" : "String"
+      }, {
+         "name" : "DEP_ID_1_9",
+         "type" : "String"
+      }, {
+         "name" : "DEP_SEQ_N",
+         "type" : "String"
+      }, {
+         "name" : "NUMBER_LIVES",
+         "type" : "String"
+      }, {
+         "name" : "MBR_PMT_DUE_DT_CC",
+         "type" : "String"
+      }, {
+         "name" : "MBR_PMT_DUE_DT_YY",
+         "type" : "String"
+      }, {
+         "name" : "MBR_PMT_DUE_DT_MM",
+         "type" : "String"
+      }, {
+         "name" : "MBR_PMT_DUE_DT_DD",
+         "type" : "String"
+      }, {
+         "name" : "MBR_DUE_DT_PREM_AMT",
+         "type" : "String"
+      }, {
+         "name" : "BSR_RATE",
+         "type" : "String"
+      }, {
+         "name" : "BIL_ITM_DSC",
+         "type" : "String"
+      }, {
+         "name" : "BIL_BEN_SET_ID",
+         "type" : "String"
+      }, {
+         "name" : "BIL_CYC_CD",
+         "type" : "String"
+      }, {
+         "name" : "SPOUSE_DEP_IND",
+         "type" : "String"
+      }, {
+         "name" : "STATEMENT_MEDIA_IND",
+         "type" : "String"
+      }, {
+         "name" : "TRANSACTION_CODE",
+         "type" : "String"
+      }, {
+         "name" : "FAMILY_MIX",
+         "type" : "String"
+      }, {
+         "name" : "RATE_TIER_CD",
+         "type" : "String"
+      }, {
+         "name" : "RATE_CVG_CD",
+         "type" : "String"
+      }, {
+         "name" : "MULT_APOP_IND",
+         "type" : "String"
+      }, {
+         "name" : "CAP_APPLID_IND",
+         "type" : "String"
+      }, {
+         "name" : "PAYROLL_CODE",
+         "type" : "String"
+      }, {
+         "name" : "RATE_FACTOR",
+         "type" : "String"
+      }, {
+         "name" : "BILL_FREQ",
+         "type" : "String"
+      }, {
+         "name" : "UNRECONCILLED_CD",
+         "type" : "String"
+      }, {
+         "name" : "LINE_OF_BUSINESS",
+         "type" : "String"
+      }, {
+         "name" : "RIDER_OPTION",
+         "type" : "String"
+      }, {
+         "name" : "TRAN_EFF_DT_CC",
+         "type" : "String"
+      }, {
+         "name" : "TRAN_EFF_DT_YY_9",
+         "type" : "String"
+      }, {
+         "name" : "TRAN_EFF_DT_MM_9",
+         "type" : "String"
+      }, {
+         "name" : "TRAN_EFF_DT_DD_9",
+         "type" : "String"
+      }, {
+         "name" : "MEDCD_PMNT_AMNT",
+         "type" : "String"
+      }, {
+         "name" : "BILL_EG_COMMON_ID",
+         "type" : "String"
+      }, {
+         "name" : "BILL_EG_MODIFIER",
+         "type" : "String"
+      }, {
+         "name" : "BANK_CODE_ID",
+         "type" : "String"
+      }, {
+         "name" : "STMT",
+         "type" : "String"
+      }, {
+         "name" : "MEDICAID_RATE_CD",
+         "type" : "String"
+      }, {
+         "name" : "NEW_MBR_ID",
+         "type" : "String"
+      }, {
+         "name" : "PRODUCT_ID",
+         "type" : "String"
+      }, {
+         "name" : "FUND_DESC_IND",
+         "type" : "String"
+      }, {
+         "name" : "FILLER_7",
+         "type" : "String"
+      }, {
+         "name" : "MEDCD_REBILL_IND",
+         "type" : "String"
+      }, {
+         "name" : "BILL_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "GROUP_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "TYPE_OF_BUSINESS",
+         "type" : "String"
+      }, {
+         "name" : "PMT_SOURCE_CODE",
+         "type" : "String"
+      }, {
+         "name" : "GL_EXT_CC",
+         "type" : "String"
+      }, {
+         "name" : "GL_EXT_YY",
+         "type" : "String"
+      }, {
+         "name" : "GL_EXT_MM",
+         "type" : "String"
+      }, {
+         "name" : "GL_EXT_DD",
+         "type" : "String"
+      }, {
+         "name" : "ARCH_DATE",
+         "type" : "String"
+      }, {
+         "name" : "FUNDING_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "REQUEST_TYP",
+         "type" : "String"
+      }, {
+         "name" : "SUBSCRIBER_COUNT",
+         "type" : "String"
+      }, {
+         "name" : "PEND_WAIVER_IND",
+         "type" : "String"
+      }, {
+         "name" : "ZERO_RATE_IND",
+         "type" : "String"
+      }, {
+         "name" : "ACCOUNT_PERIOD_MMYY",
+         "type" : "String"
+      }, {
+         "name" : "RETRO_BILL_IND",
+         "type" : "String"
+      }, {
+         "name" : "ADJ_CNTL_MM",
+         "type" : "String"
+      }, {
+         "name" : "ADJ_CNTL_NO",
+         "type" : "String"
+      }, {
+         "name" : "CONTRACT_ORIGIN",
+         "type" : "String"
+      }, {
+         "name" : "AR_INCL",
+         "type" : "String"
+      }, {
+         "name" : "LOAD",
+         "type" : "String"
+      }, {
+         "name" : "PREM_CALC_INDIC",
+         "type" : "String"
+      }, {
+         "name" : "OFF_CYCLE_BILL_IND",
+         "type" : "String"
+      }, {
+         "name" : "FILLER_8",
+         "type" : "String"
+      }, {
+         "name" : "ADD_OP_ID",
+         "type" : "String"
+      }, {
+         "name" : "ADD_PGM_ID",
+         "type" : "String"
+      }, {
+         "name" : "ADD_DT_CC",
+         "type" : "String"
+      }, {
+         "name" : "ADD_DT_YY",
+         "type" : "String"
+      }, {
+         "name" : "ADD_DT_MM",
+         "type" : "String"
+      }, {
+         "name" : "ADD_DT_DD",
+         "type" : "String"
+      }, {
+         "name" : "UPD_OP",
+         "type" : "String"
+      }, {
+         "name" : "UPD_PGM_ID",
+         "type" : "String"
+      }, {
+         "name" : "UPD_DT_CC",
+         "type" : "String"
+      }, {
+         "name" : "UPD_DT_YY",
+         "type" : "String"
+      }, {
+         "name" : "UPD_DT_MM",
+         "type" : "String"
+      }, {
+         "name" : "UPD_DT_DD",
+         "type" : "String"
+      } ]
+   }
+}
