@@ -20,11 +20,7 @@
 						"type": "DataFlowReference"
 					},
 					"staging": {
-						"linkedService": {
-							"referenceName": "ADLS_Src",
-							"type": "LinkedServiceReference"
-						},
-						"folderPath": "temp/undefined"
+						"folderPath": "/"
 					}
 				}
 			}
