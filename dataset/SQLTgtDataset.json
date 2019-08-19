@@ -1,0 +1,16 @@
+{
+	"name": "SQLTgtDataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDWConn",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Dimcurrency"
+		}
+	}
+}
