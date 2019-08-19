@@ -22,7 +22,7 @@
 				}
 			],
 			"transformations": [],
-			"script": "\n\nsource(output(\n\t\tCurrencyKey as string,\n\t\tCurrencyAlternateKey as string,\n\t\tCurrencyName as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> SrcDemo\nSrcDemo sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tstaged: true,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> srcTgt"
+			"script": "\n\nsource(output(\n\t\tCurrencyKey as string,\n\t\tCurrencyAlternateKey as string,\n\t\tCurrencyName as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> SrcDemo\nSrcDemo sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tstaged: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> srcTgt"
 		}
 	}
 }
