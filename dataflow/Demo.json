@@ -5,12 +5,24 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"name": "ADLSSource"
+					"dataset": {
+						"referenceName": "DelimitedText5",
+						"type": "DatasetReference"
+					},
+					"name": "SrcDemo"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable4",
+						"type": "DatasetReference"
+					},
+					"name": "srcTgt"
+				}
+			],
 			"transformations": [],
-			"script": "\n\nsource(output(\n\t\t\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> ADLSSource"
+			"script": "\n\nsource(output(\n\t\tCurrencyKey as string,\n\t\tCurrencyAlternateKey as string,\n\t\tCurrencyName as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> SrcDemo\nSrcDemo sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> srcTgt"
 		}
 	}
 }
