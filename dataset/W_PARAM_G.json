@@ -1,20 +1,25 @@
 {
-   "name" : "W_PARAM_G",
-   "properties" : {
-      "linkedServiceName" : {
-         "referenceName" : "AzureBlobStorage3",
-         "type" : "LinkedServiceReference"
-      },
-      "typeProperties" : {
-         "firstRowAsHeader" : false,
-         "tableName" : "W_PARAM_G"
-      },
-      "schema" : [ {
-         "name" : "ETL_PROC_WID",
-         "type" : "Decimal"
-      }, {
-         "name" : "ROW_WID",
-         "type" : "Decimal"
-      } ]
-   }
+	"name": "W_PARAM_G",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ETL_PROC_WID",
+				"type": "Decimal"
+			},
+			{
+				"name": "ROW_WID",
+				"type": "Decimal"
+			}
+		],
+		"typeProperties": {
+			"tableName": "W_PARAM_G",
+			"firstRowAsHeader": false
+		}
+	}
 }
