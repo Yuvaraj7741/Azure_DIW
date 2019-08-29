@@ -1,0 +1,20 @@
+{
+   "name" : "WC_PRODUCT_MIX_D",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "WC_PRODUCT_MIX_D"
+      },
+      "schema" : [ {
+         "name" : "ROW_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "PROD_MIX_A",
+         "type" : "String"
+      } ]
+   }
+}

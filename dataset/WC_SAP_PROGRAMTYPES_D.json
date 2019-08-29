@@ -1,0 +1,44 @@
+{
+   "name" : "WC_SAP_PROGRAMTYPES_D",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "WC_SAP_PROGRAMTYPES_D"
+      },
+      "schema" : [ {
+         "name" : "ROW_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "ETL_PROC_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "PROGRAM_TYPE_CD",
+         "type" : "String"
+      }, {
+         "name" : "PROGRAM_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "INACTIVE",
+         "type" : "String"
+      }, {
+         "name" : "NEW_PROG_TYPE_FLG1",
+         "type" : "String"
+      }, {
+         "name" : "NEW_PROG_TYPE_FLG2",
+         "type" : "String"
+      }, {
+         "name" : "RENEW_PROG_TYPE_FLG1",
+         "type" : "String"
+      }, {
+         "name" : "RENEW_PROG_TYPE_FLG2",
+         "type" : "String"
+      }, {
+         "name" : "PROGRAM_TYPE_CATEGORY",
+         "type" : "String"
+      } ]
+   }
+}

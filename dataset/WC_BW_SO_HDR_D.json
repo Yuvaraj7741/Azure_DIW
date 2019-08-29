@@ -1,0 +1,116 @@
+{
+   "name" : "WC_BW_SO_HDR_D",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "WC_BW_SO_HDR_D"
+      },
+      "schema" : [ {
+         "name" : "ROW_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "DATASOURCE_NUM_ID",
+         "type" : "Decimal"
+      }, {
+         "name" : "ETL_PROC_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "INTEGRATION_ID",
+         "type" : "String"
+      }, {
+         "name" : "BILL_BLOCK_CODE",
+         "type" : "String"
+      }, {
+         "name" : "CURRENCY",
+         "type" : "String"
+      }, {
+         "name" : "DELIVERY_BLOCK_CODE",
+         "type" : "String"
+      }, {
+         "name" : "ORDER_NUMBER",
+         "type" : "String"
+      }, {
+         "name" : "ORDER_NUMBER_NUM",
+         "type" : "Decimal"
+      }, {
+         "name" : "ORDER_TYPE",
+         "type" : "String"
+      }, {
+         "name" : "ORIGINAL_CONTRACT_NUMBER",
+         "type" : "String"
+      }, {
+         "name" : "PO_NUMBER",
+         "type" : "String"
+      }, {
+         "name" : "REASON_CODE",
+         "type" : "String"
+      }, {
+         "name" : "SALES_ORG_CODE",
+         "type" : "String"
+      }, {
+         "name" : "ENTRY_DATE",
+         "type" : "String"
+      }, {
+         "name" : "ORDER_DATE",
+         "type" : "String"
+      }, {
+         "name" : "DATA_SOURCE",
+         "type" : "String"
+      }, {
+         "name" : "RENEWAL_FLG",
+         "type" : "String"
+      }, {
+         "name" : "ORDER_DATE_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "ORDER_DATE_YM",
+         "type" : "Decimal"
+      }, {
+         "name" : "DOC_CURRENCY",
+         "type" : "String"
+      }, {
+         "name" : "ORDER_LVL_DISCNT",
+         "type" : "Decimal"
+      }, {
+         "name" : "THRESHOLD_LVL",
+         "type" : "String"
+      }, {
+         "name" : "X_PGM_BENEFIT_COMMENTS",
+         "type" : "String"
+      }, {
+         "name" : "X_PGM_BENEFIT_REQUEST",
+         "type" : "String"
+      }, {
+         "name" : "X_PGM_BENEFIT_STATUS",
+         "type" : "String"
+      }, {
+         "name" : "CREATED_BY",
+         "type" : "String"
+      }, {
+         "name" : "X_DR_SRC_NUM",
+         "type" : "String"
+      }, {
+         "name" : "X_DR_DISTI_ORD_NUM",
+         "type" : "String"
+      }, {
+         "name" : "LEGACY_CAMP_ID",
+         "type" : "String"
+      }, {
+         "name" : "CID",
+         "type" : "String"
+      }, {
+         "name" : "CID_CATEGORY",
+         "type" : "String"
+      }, {
+         "name" : "SALES_REP_ID",
+         "type" : "String"
+      }, {
+         "name" : "SALES_REP_DR_ID",
+         "type" : "String"
+      } ]
+   }
+}

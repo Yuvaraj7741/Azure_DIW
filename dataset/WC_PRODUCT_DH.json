@@ -1,0 +1,20 @@
+{
+   "name" : "WC_PRODUCT_DH",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "WC_PRODUCT_DH"
+      },
+      "schema" : [ {
+         "name" : "ROW_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "LOB",
+         "type" : "String"
+      } ]
+   }
+}

@@ -1,0 +1,29 @@
+{
+   "name" : "WC_COMM_BOOK_F",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "WC_COMM_BOOK_F"
+      },
+      "schema" : [ {
+         "name" : "COPA_ORDER_NUMBER_NUM",
+         "type" : "Decimal"
+      }, {
+         "name" : "CONTRACT_END_DT_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "ANALYSIS_DT_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "CONTRACT_START_DT_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "ORDER_DT_WID",
+         "type" : "Decimal"
+      } ]
+   }
+}

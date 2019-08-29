@@ -1,0 +1,65 @@
+{
+   "name" : "WC_COMM_FILESRC_D",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "WC_COMM_FILESRC_D"
+      },
+      "schema" : [ {
+         "name" : "SOURCE",
+         "type" : "String"
+      }, {
+         "name" : "EMP_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "PERIOD_END_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "SAP_EMP_ID",
+         "type" : "String"
+      }, {
+         "name" : "EMP_NAME",
+         "type" : "String"
+      }, {
+         "name" : "PERIOD",
+         "type" : "Decimal"
+      }, {
+         "name" : "YEAR",
+         "type" : "Decimal"
+      }, {
+         "name" : "TEXT1",
+         "type" : "String"
+      }, {
+         "name" : "TEXT2",
+         "type" : "String"
+      }, {
+         "name" : "TEXT3",
+         "type" : "String"
+      }, {
+         "name" : "TEXT4",
+         "type" : "String"
+      }, {
+         "name" : "TEXT5",
+         "type" : "String"
+      }, {
+         "name" : "TEXT6",
+         "type" : "String"
+      }, {
+         "name" : "NUMBER1",
+         "type" : "Decimal"
+      }, {
+         "name" : "NUMBER2",
+         "type" : "Decimal"
+      }, {
+         "name" : "DATE1",
+         "type" : "DateTime"
+      }, {
+         "name" : "DATE2",
+         "type" : "DateTime"
+      } ]
+   }
+}

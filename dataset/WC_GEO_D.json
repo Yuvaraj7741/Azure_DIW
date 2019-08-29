@@ -1,0 +1,26 @@
+{
+   "name" : "WC_GEO_D",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "WC_GEO_D"
+      },
+      "schema" : [ {
+         "name" : "ROW_WID",
+         "type" : "Decimal"
+      }, {
+         "name" : "MSRP_PCT",
+         "type" : "Double"
+      }, {
+         "name" : "ISR_LOW_CAP",
+         "type" : "Double"
+      }, {
+         "name" : "ISR_HIGH_CAP",
+         "type" : "Double"
+      } ]
+   }
+}

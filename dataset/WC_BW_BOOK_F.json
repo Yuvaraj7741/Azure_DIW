@@ -1,0 +1,23 @@
+{
+   "name" : "WC_BW_BOOK_F",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "WC_BW_BOOK_F"
+      },
+      "schema" : [ {
+         "name" : "ORDER_NUMBER",
+         "type" : "String"
+      }, {
+         "name" : "ORDER_NUMBER_NUM",
+         "type" : "Decimal"
+      }, {
+         "name" : "NET_AMT_BOOKINGS_USD",
+         "type" : "Decimal"
+      } ]
+   }
+}

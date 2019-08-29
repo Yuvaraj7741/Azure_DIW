@@ -1,0 +1,13 @@
+{
+   "name" : "WC_BW_BOOK_FSX",
+   "properties" : {
+      "linkedServiceName" : {
+         "referenceName" : "AzureBlobStorage3",
+         "type" : "LinkedServiceReference"
+      },
+      "typeProperties" : {
+         "firstRowAsHeader" : false,
+         "tableName" : "WC_BW_BOOK_FSX"
+      }
+   }
+}
