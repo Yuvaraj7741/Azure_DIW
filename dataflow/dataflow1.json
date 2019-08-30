@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "W_PARAM_G",
+						"referenceName": "Party",
 						"type": "DatasetReference"
 					},
 					"name": "input"
@@ -26,7 +26,7 @@
 					"name": "Pivot1"
 				}
 			],
-			"script": "\n\nsource(output(\n\t\tETL_PROC_WID as decimal(NaN,NaN),\n\t\tROW_WID as decimal(NaN,NaN)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> input\ninput pivot(groupBy(ROW_WID),\n\tpivotBy(ETL_PROC_WID),\n\ta = sum(ROW_WID),\n\tcolumnNaming: 'a$NROW_ID$Vb',\n\tlateral: false) ~> Pivot1\nPivot1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> sink1"
+			"script": "\n\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> input\ninput pivot(groupBy(ROW_WID = ROW_WID),\n\tpivotBy(ETL_PROC_WID),\n\ta = sum(ROW_WID),\n\tcolumnNaming: 'a$NROW_ID$Vb',\n\tlateral: false) ~> Pivot1\nPivot1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> sink1"
 		}
 	}
 }
