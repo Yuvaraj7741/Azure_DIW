@@ -1,21 +1,22 @@
 {
-   "name" : "Party",
-   "properties" : {
-      "linkedServiceName" : {
-         "referenceName" : "AzureBlobStorage3",
-         "type" : "LinkedServiceReference"
-      },
-      "type" : "DelimitedText",
-      "typeProperties" : {
-         "location" : {
-            "type" : "AzureBlobStorageLocation",
-            "fileName" : "Src_Employee.txt",
-            "container" : "azureinput"
-         },
-         "columnDelimiter" : ",",
-         "escapeChar" : "\\",
-         "firstRowAsHeader" : true,
-         "quoteChar" : "\""
-      }
-   }
+	"name": "Party",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "test2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "diw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
 }
