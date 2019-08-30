@@ -3,10 +3,30 @@
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
-			"sinks": [],
-			"transformations": [],
-			"script": "\n"
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "W_PARAM_G",
+						"type": "DatasetReference"
+					},
+					"name": "input"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Pivot1"
+				}
+			],
+			"script": "\n\nsource(output(\n\t\tETL_PROC_WID as decimal(undefined,undefined),\n\t\tROW_WID as decimal(undefined,undefined)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> input\ninput pivot(groupBy(ROW_WID),\n\tpivotBy(ETL_PROC_WID),\n\t{} = sum(),\n\tcolumnNaming: '$N$V',\n\tlateral: false) ~> Pivot1\nPivot1 sink(input(\n\t\tname as string,\n\t\tid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> sink1"
 		}
 	}
 }
