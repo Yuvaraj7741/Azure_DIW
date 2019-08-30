@@ -1,0 +1,32 @@
+{
+	"name": "SwetaCheck",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "W_PARAM_G",
+						"type": "DatasetReference"
+					},
+					"name": "input"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable_New2",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Pivot1"
+				}
+			],
+			"script": "\n\nsource(output(\n\t\tETL_PROC_WID as decimal(NaN,NaN),\n\t\tROW_WID as decimal(NaN,NaN)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> input\ninput pivot(groupBy(ROW_WID),\n\tpivotBy(ETL_PROC_WID),\n\ta = sum(ROW_WID),\n\tcolumnNaming: 'a$NROW_ID$Vb',\n\tlateral: false) ~> Pivot1\nPivot1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> sink1"
+		}
+	}
+}
