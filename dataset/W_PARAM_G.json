@@ -2,7 +2,7 @@
 	"name": "W_PARAM_G",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSqlTest",
+			"referenceName": "sweta",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
