@@ -14,6 +14,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
 					"name": "sink1"
 				}
 			],
@@ -22,7 +26,7 @@
 					"name": "Pivot1"
 				}
 			],
-			"script": "\n\nsource(output(\n\t\tstate_name as string,\n\t\tstate_code as string,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> input\ninput pivot(groupBy(state_code),\n\tpivotBy(state_name),\n\t{} = sum(0),\n\tcolumnNaming: 'a$N$Vc',\n\tlateral: false) ~> Pivot1\nPivot1 sink() ~> sink1"
+			"script": "\n\nsource(output(\n\t\tstate_name as string,\n\t\tstate_code as string,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> input\ninput pivot(groupBy(state_code),\n\tpivotBy(state_name),\n\t{} = sum(0),\n\tcolumnNaming: 'a$N$Vc',\n\tlateral: false) ~> Pivot1\nPivot1 sink(input(\n\t\tstate_name as string,\n\t\tstate_code as string,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> sink1"
 		}
 	}
 }
