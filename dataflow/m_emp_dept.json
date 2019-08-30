@@ -6,49 +6,27 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "Dept_LKP",
+						"referenceName": "W_PARAM_G",
 						"type": "DatasetReference"
 					},
-					"name": "DeptLKP",
-					"script": "source(output(\n\t\tDeptno as decimal(10,0),\n\t\tdeptname as string,\n\t\tLoc as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> DeptLKP"
-				},
-				{
-					"dataset": {
-						"referenceName": "EMP",
-						"type": "DatasetReference"
-					},
-					"name": "EMP",
-					"script": "source(output(\n\t\tempno as decimal(10,0),\n\t\tename as string,\n\t\tdeptno as decimal(10,0),\n\t\tsal as decimal(10,0),\n\t\tcomm as decimal(10,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> EMP"
+					"name": "input"
 				}
 			],
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "Tgt_1",
+						"referenceName": "AzureSqlTable_New2",
 						"type": "DatasetReference"
 					},
-					"name": "Tgt1",
-					"script": "FILTRANS sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> Tgt1"
+					"name": "sink1"
 				}
 			],
 			"transformations": [
 				{
-					"name": "JNRTRANS",
-					"script": "EMP, DeptLKP join(DeptLKP@Deptno == EMP@deptno,\n\tjoinType:'outer',\n\tbroadcast: 'none')~> JNRTRANS"
-				},
-				{
-					"name": "EXPTRANS",
-					"script": "JNRTRANS derive(Upper_ename = upper(ename)) ~> EXPTRANS"
-				},
-				{
-					"name": "AGGTRANS",
-					"script": "EXPTRANS aggregate(groupBy(empno,\n\t\tUpper_ename,\n\t\tEMP@deptno,\n\t\tcomm,\n\t\tdeptname,\n\t\tLoc),\n\tmax_sal = max(sal)) ~> AGGTRANS"
-				},
-				{
-					"name": "FILTRANS",
-					"script": "AGGTRANS filter(max_sal > 4500) ~> FILTRANS"
+					"name": "Pivot1"
 				}
-			]
+			],
+			"script": "\n\nsource(output(\n\t\tETL_PROC_WID as decimal(NaN,NaN),\n\t\tROW_WID as decimal(NaN,NaN)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> input\ninput pivot(groupBy(ROW_WID),\n\tpivotBy(ETL_PROC_WID),\n\ta = sum(ROW_WID),\n\tcolumnNaming: 'a$NROW_ID$Vb',\n\tlateral: false) ~> Pivot1\nPivot1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> sink1"
 		}
 	}
 }
