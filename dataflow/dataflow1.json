@@ -26,7 +26,7 @@
 					"name": "Pivot1"
 				}
 			],
-			"script": "\n\nsource(output(\n\t\tETL_PROC_WID as decimal(NaN,NaN),\n\t\tROW_WID as decimal(NaN,NaN)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> input\ninput pivot(groupBy(ROW_WID),\n\tpivotBy(ETL_PROC_WID),\n\t{} = sum(),\n\tcolumnNaming: '$N$V',\n\tlateral: false) ~> Pivot1\nPivot1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> sink1"
+			"script": "\n\nsource(output(\n\t\tETL_PROC_WID as decimal(NaN,NaN),\n\t\tROW_WID as decimal(NaN,NaN)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> input\ninput pivot(groupBy(ROW_WID),\n\tpivotBy(ETL_PROC_WID),\n\t{} = sum(ROW_WID),\n\tcolumnNaming: '$N$V',\n\tlateral: false) ~> Pivot1\nPivot1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> sink1"
 		}
 	}
 }
