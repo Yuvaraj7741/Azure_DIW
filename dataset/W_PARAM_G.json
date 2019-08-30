@@ -2,7 +2,7 @@
 	"name": "W_PARAM_G",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage3",
+			"referenceName": "AzureSqlTest",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -18,7 +18,8 @@
 			}
 		],
 		"typeProperties": {
-			"tableName": "W_PARAM_G",
+			"schema": "dbo",
+			"table": "IDW",
 			"firstRowAsHeader": false
 		}
 	}
