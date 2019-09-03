@@ -1,0 +1,51 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "IDWADFInstance"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "AzureSqlDatabase",
+				"parameters": {
+					"DBServer": {
+						"type": "String",
+						"defaultValue": "idwsqlsvr.database.windows.net"
+					},
+					"DBName": {
+						"type": "String",
+						"defaultValue": "IDWSqlDB"
+					},
+					"DBUserId": {
+						"type": "String",
+						"defaultValue": "idwadmin"
+					},
+					"DBPassword": {
+						"type": "String",
+						"defaultValue": "abcd1234$"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": {
+						"type": "SecureString",
+						"value": "**********"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
