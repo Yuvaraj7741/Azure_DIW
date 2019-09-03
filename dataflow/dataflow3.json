@@ -26,7 +26,7 @@
 					"name": "Pivot1"
 				}
 			],
-			"script": "\n\nsource(output(\n\t\tId as integer,\n\t\tName as string,\n\t\tSalary as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 pivot(groupBy(Id),\n\tpivotBy(Name),\n\t{} = sum(Salary),\n\tcolumnNaming: 'a$N$V_b',\n\tlateral: false) ~> Pivot1\nPivot1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> sink1"
+			"script": "\n\nsource(output(\n\t\tId as integer,\n\t\tName as string,\n\t\tSalary as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 pivot(groupBy(Id),\n\tpivotBy(Name),\n\tid = sum(Salary),\n\tcolumnNaming: 'a$N$V_b',\n\tlateral: false) ~> Pivot1\nPivot1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> sink1"
 		}
 	}
 }
