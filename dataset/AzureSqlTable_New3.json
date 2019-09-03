@@ -1,0 +1,23 @@
+{
+	"name": "AzureSqlTable_New3",
+	"properties": {
+		"description": "AzureSqlTable",
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DBServer": "idwsqlsvr.database.windows.net",
+				"DBName": "IDWSqlDB",
+				"DBUserId": "idwadmin",
+				"DBPassword": "abcd1234$"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "[dbo].[PipelineControl]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
