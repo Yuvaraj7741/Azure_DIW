@@ -1,26 +1,27 @@
 {
-   "name" : "Load_Bank_Summary",
-   "properties" : {
-      "activities" : [ {
-         "name" : "Load_Bank_Summary",
-         "type" : "ExecuteDataFlow",
-         "policy" : {
-            "timeout" : "7.00:00:00",
-            "retry" : 0,
-            "retryIntervalInSeconds" : 30,
-            "secureOutput" : "false"
-         },
-         "typeProperties" : {
-            "dataflow" : {
-               "type" : "DataFlowReference",
-               "referenceName" : "Load_Bank_Summary"
-            },
-            "linkedService" : {
-               "type" : "LinkedServiceReference",
-               "referenceName" : "AzureBlobStorage3"
-            },
-            "dataIntegrationUnits" : 0
-         }
-      } ]
-   }
+	"name": "Load_Bank_Summary",
+	"properties": {
+		"activities": [
+			{
+				"name": "Load_Bank_Summary",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "Load_Bank_Summary",
+						"type": "DataFlowReference"
+					},
+					"dataIntegrationUnits": 0
+				}
+			}
+		],
+		"annotations": []
+	}
 }
