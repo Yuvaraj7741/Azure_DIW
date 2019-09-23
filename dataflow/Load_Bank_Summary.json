@@ -5,18 +5,29 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"name": "Sequential_File_0"
+					"name": "edwtablegamedtlhours1"
 				},
 				{
-					"name": "Sequential_File_1"
+					"name": "edwgamingtablegamepitdims1"
 				}
 			],
 			"sinks": [
 				{
-					"name": "Sequential_File_11"
+					"name": "edwtablegamedtlhourfactt1"
 				}
 			],
-			"script": "\nparameters{\n\tid as integer ($id),\n\t$stg_db as string ('projectdf'),\n\tstg_pwd as string ('projdf')\n}\nsource(output(\n\t\tbnk_id as integer,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as integer,\n\t\tcontact_no as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Sequential_File_0\nsource(output(\n\t\tstate_name as string,\n\t\tstate_code as integer,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Sequential_File_1\nSequential_File_0 derive(bnk_name = upper(bnk_name)) ~> Transformer_2\nTransformer_2 filter(bnk_id > 2) ~> Filter_4\nFilter_4, Sequential_File_1 lookup(Sequential_File_0@state_code == Sequential_File_1@state_code,\n\tbroadcast: 'none')~> Lookup_6\nLookup_6 aggregate(groupBy(bnk_name,\n\t\tstate_name),\n\tcity = count(city)) ~> Aggregator_9\nAggregator_9 sink(mapColumn(\n\t\tbnk_name,\n\t\tstate_name,\n\t\tcity\n\t)) ~> Sequential_File_11"
+			"transformations": [
+				{
+					"name": "joindtlhourpitdims1"
+				},
+				{
+					"name": "rmddtlhourpitdim"
+				},
+				{
+					"name": "xfmdtlhourpitdims1"
+				}
+			],
+			"script": "\nparameters{\n\tAPT_GRID_ENABLE as any (YES),\n\tAPT_GRID_COMPUTENODES as any (2),\n\tPS_APP_DIR as any ((Aspre-defined)),\n\tPS_DB_Name as any ((Aspre-defined)),\n\tPS_STREAM_INFO as any ((Aspre-defined)),\n\tPS_TD_Connector as any ((Aspre-defined))\n}\nsource(output(\n\t\tc_prop_cd as string,\n\t\td_headcount_date as date,\n\t\td_gaming_date as date,\n\t\ti_hour as integer,\n\t\ti_minute as integer,\n\t\ti_shift as integer,\n\t\tc_pit_num as string,\n\t\tc_table_num as string,\n\t\tc_table_location as string,\n\t\tc_sub_table_location as string,\n\t\tf_minbet_low as integer,\n\t\tf_max_hold_pct as decimal(10,0),\n\t\ti_open_table as integer,\n\t\ti_closed_table as integer,\n\t\ti_headcount_total as integer,\n\t\ti_open_ratings as integer,\n\t\tf_people_expected as decimal(10,0),\n\t\ti_total_guests as integer,\n\t\ti_total_guests_hc as integer,\n\t\ti_total_min_played as integer,\n\t\tf_total_hands_played as decimal(10,0),\n\t\tf_total_handle as decimal(10,0),\n\t\tf_total_theo as decimal(10,0),\n\t\tf_total_actual as decimal(10,0),\n\t\tf_total_buy_in as decimal(10,0),\n\t\tf_total_countercheck as decimal(10,0),\n\t\tf_total_cash_in as decimal(10,0),\n\t\tf_total_cash_out as decimal(10,0),\n\t\tc_prop_game_cd as string,\n\t\td_gaming_date_1 as date\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamedtlhours1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_club as string,\n\t\tc_pit_num as string,\n\t\td_from_date as date,\n\t\td_to_date as date\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwgamingtablegamepitdims1\nedwtablegamedtlhours1, edwgamingtablegamepitdims1 join(edwgamingtablegamepitdims1@c_prop_cd == edwtablegamedtlhours1@c_prop_cd\n\t&& edwgamingtablegamepitdims1@c_pit_num == edwtablegamedtlhours1@c_pit_num,\n\tjoinType:'',\n\tbroadcast: 'none')~> joindtlhourpitdims1\nxfmdtlhourpitdims1 derive(c_prop_cd_KeyCol = 'c_prop_cd There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_pit_num_KeyCol = 'c_pit_num There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_table_num_KeyCol = 'c_table_num There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\td_gaming_date_KeyCol = 'd_gaming_date There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\ti_hour_KeyCol = 'i_hour There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_prop_game_cd_KeyCol = 'c_prop_game_cd There is no Remove Duplicate Trans in ADF DataFlow, we need to explore') ~> rmddtlhourpitdim\njoindtlhourpitdims1 derive(c_club = 'if (edw_table_game_dtl_hour_s1@d_gaming_date_1 >= edw_gaming_table_game_pit_dim_s1@d_from_date AND edw_table_game_dtl_hour_s1@d_gaming_date_1 <= edw_gaming_table_game_pit_dim_s1@d_to_date) then ( IF IsNotNull((edw_gaming_table_game_pit_dim_s1@c_club)) THEN (edw_gaming_table_game_pit_dim_s1@c_club) ELSE (\" \")) else (\" \")',\n\t\td_from_date = 'if (edw_table_game_dtl_hour_s1@d_gaming_date_1 >= edw_gaming_table_game_pit_dim_s1@d_from_date AND edw_table_game_dtl_hour_s1@d_gaming_date_1 <= edw_gaming_table_game_pit_dim_s1@d_to_date) then edw_gaming_table_game_pit_dim_s1@d_from_date else StringToDate(\"1900-01-01\", \"%yyyy-%mm-%dd\")',\n\t\td_to_date = 'if (edw_table_game_dtl_hour_s1@d_gaming_date_1 >= edw_gaming_table_game_pit_dim_s1@d_from_date AND edw_table_game_dtl_hour_s1@d_gaming_date_1 <= edw_gaming_table_game_pit_dim_s1@d_to_date) then edw_gaming_table_game_pit_dim_s1@d_to_date else StringToDate(\"1900-01-01\", \"%yyyy-%mm-%dd\")') ~> xfmdtlhourpitdims1\nrmddtlhourpitdim sink(mapColumn(\n\t\tc_prop_cd,\n\t\tc_prop_game_cd,\n\t\tc_pit_num,\n\t\tc_club,\n\t\tc_table_num,\n\t\tc_table_location,\n\t\tc_sub_table_location,\n\t\td_headcount_date,\n\t\td_gaming_date,\n\t\ti_hour,\n\t\ti_minute,\n\t\ti_shift,\n\t\tf_minbet_low,\n\t\ti_open_table,\n\t\ti_closed_table,\n\t\ti_headcount_total,\n\t\ti_open_ratings,\n\t\ti_total_guests,\n\t\ti_total_guests_hc,\n\t\ti_total_min_played,\n\t\tf_total_theo,\n\t\tf_total_actual,\n\t\tf_total_buy_in,\n\t\tf_total_cash_in,\n\t\tf_total_cash_out,\n\t\tf_total_countercheck,\n\t\tf_total_hands_played,\n\t\tf_total_handle,\n\t\tf_max_hold_pct,\n\t\tf_people_expected,\n\t\td_from_date,\n\t\td_to_date,\n\t\td_gaming_date_1\n\t)) ~> edwtablegamedtlhourfactt1"
 		}
 	}
 }
