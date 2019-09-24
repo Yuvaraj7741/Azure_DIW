@@ -3,10 +3,49 @@
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
-			"sinks": [],
-			"transformations": [],
-			"script": "\n"
+			"sources": [
+				{
+					"name": "edwtablegamesums1"
+				},
+				{
+					"name": "edwheadcountstgs1"
+				},
+				{
+					"name": "edwtablegamedtlhours1"
+				},
+				{
+					"name": "edwtablegamerims1"
+				},
+				{
+					"name": "edwtablegamedtls1"
+				},
+				{
+					"name": "edwgsttableratingdtls1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "edwtablepropnumdimt1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "fnlproptablenums1"
+				},
+				{
+					"name": "xfmproptablegtrds1"
+				},
+				{
+					"name": "xfmproptables1"
+				},
+				{
+					"name": "fnluniqproptablenums1"
+				},
+				{
+					"name": "rmdproptablenums1"
+				}
+			],
+			"script": "\nparameters{\n\tAPT_GRID_ENABLE as any (YES),\n\tAPT_GRID_COMPUTENODES as any (2),\n\tPS_APP_DIR as any ((Aspre-defined)),\n\tPS_DB_Name as any ((Aspre-defined)),\n\tPS_STREAM_INFO as any ((Aspre-defined)),\n\tPS_TD_Connector as any ((Aspre-defined))\n}\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_table_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamesums1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_table_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwheadcountstgs1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_table_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamedtlhours1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_table_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamerims1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_table_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamedtls1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_table_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwgsttableratingdtls1\nedwheadcountstgs1, edwtablegamesums1, edwtablegamerims1, edwtablegamedtlhours1, edwtablegamedtls1 union(byName: true)~> fnlproptablenums1\nedwgsttableratingdtls1 derive(c_prop_table_cd = concat(c_prop_cd,c_table_num)) ~> xfmproptablegtrds1\nfnlproptablenums1 derive(c_prop_table_cd = concat(c_prop_cd,c_table_num)) ~> xfmproptables1\nxfmproptablegtrds1, xfmproptables1 union(byName: true)~> fnluniqproptablenums1\nfnluniqproptablenums1 derive(c_prop_cd_KeyCol = 'c_prop_cd There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_table_num_KeyCol = 'c_table_num There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_prop_table_cd_KeyCol = 'c_prop_table_cd There is no Remove Duplicate Trans in ADF DataFlow, we need to explore') ~> rmdproptablenums1\nrmdproptablenums1 sink(mapColumn(\n\t\tc_prop_cd,\n\t\tc_table_num,\n\t\tc_prop_table_cd\n\t)) ~> edwtablepropnumdimt1"
 		}
 	}
 }
