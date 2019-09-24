@@ -1,0 +1,39 @@
+{
+	"name": "dataflow9",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "edwtablegamesums1"
+				},
+				{
+					"name": "edwheacountstgs1"
+				},
+				{
+					"name": "edwtablegamedtlhours1"
+				},
+				{
+					"name": "edwtablegamerims1"
+				},
+				{
+					"name": "edwgstotherratingdtls1"
+				},
+				{
+					"name": "edwgsttableratingdtls1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "edwtablenumdimt1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "fnlunqtablenums1"
+				}
+			],
+			"script": "\nparameters{\n\tAPT_GRID_ENABLE as any (YES),\n\tAPT_GRID_COMPUTENODES as any (2),\n\tPS_APP_DIR as any ((Aspre-defined)),\n\tPS_DB_Name as any ((Aspre-defined)),\n\tPS_STREAM_INFO as any ((Aspre-defined)),\n\tPS_TD_Connector as any ((Aspre-defined))\n}\nsource(output(\n\t\tc_table_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamesums1\nsource(output(\n\t\tc_table_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwheacountstgs1\nsource(output(\n\t\tc_table_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamedtlhours1\nsource(output(\n\t\tc_table_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamerims1\nsource(output(\n\t\tc_table_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwgstotherratingdtls1\nsource(output(\n\t\tc_table_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwgsttableratingdtls1\nedwgsttableratingdtls1, edwheacountstgs1, edwtablegamesums1, edwtablegamerims1, edwtablegamedtlhours1, edwgstotherratingdtls1 union(byName: true)~> fnlunqtablenums1\nfnlunqtablenums1 sink(mapColumn(\n\t\tc_table_num\n\t)) ~> edwtablenumdimt1"
+		}
+	}
+}

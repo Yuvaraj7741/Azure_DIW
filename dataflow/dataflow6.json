@@ -1,0 +1,36 @@
+{
+	"name": "dataflow6",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "edwtablepropgamedims1"
+				},
+				{
+					"name": "edwgamingtablegamexrefs1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "edwgamingtablegamedimt1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "xfmgamingtablegamexrefs1"
+				},
+				{
+					"name": "xfmtablepropgamedims1"
+				},
+				{
+					"name": "fnluniqgamexrefs1"
+				},
+				{
+					"name": "rmdgamexrefs1"
+				}
+			],
+			"script": "\nparameters{\n\tAPT_GRID_ENABLE as any (YES),\n\tAPT_GRID_COMPUTENODES as any (2),\n\tPS_APP_DIR as any ((Aspre-defined)),\n\tPS_DB_Name as any ((Aspre-defined)),\n\tPS_STREAM_INFO as any ((Aspre-defined)),\n\tPS_TD_Connector as any ((Aspre-defined))\n}\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_prop_game_cd as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablepropgamedims1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_prop_game_cd as string,\n\t\tc_game_key as string,\n\t\td_effective_end_dt as date,\n\t\td_effective_start_dt as date,\n\t\tf_expected_lt_box_hold_pct as decimal(10,0),\n\t\tf_misc_stats as decimal(10,0),\n\t\tf_theo_formula_hold_pct as decimal(10,0),\n\t\tf_bet_off_peak as decimal(10,0),\n\t\tf_bet_peak as decimal(10,0),\n\t\tf_cluster as decimal(10,0),\n\t\tf_cost_per_labor_hr as decimal(10,0),\n\t\tf_fixed_time as decimal(10,0),\n\t\tf_house_adv as decimal(10,0),\n\t\tf_labor_per_table_hr as decimal(10,0),\n\t\tf_month_rental_fee_ft as decimal(10,0),\n\t\tf_month_rental_fee_pt as decimal(10,0),\n\t\tf_nbr_headcount_norm as decimal(10,0),\n\t\tf_tax_rate as decimal(10,0),\n\t\tf_var_time as decimal(10,0),\n\t\tf_win_correction_factor as decimal(10,0),\n\t\ti_game_num as integer,\n\t\ti_game_speed_theo_formula as integer,\n\t\ti_include_flag as integer,\n\t\ti_seats_available as integer,\n\t\tf_game_volatility as decimal(10,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwgamingtablegamexrefs1\nedwgamingtablegamexrefs1 derive(c_prop_cd = c_prop_cd,\n\t\tc_prop_game_cd = c_prop_game_cd,\n\t\tc_game_key = c_game_key,\n\t\td_effective_end_dt = d_effective_end_dt,\n\t\td_effective_start_dt = d_effective_start_dt,\n\t\tf_expected_lt_box_hold_pct = f_expected_lt_box_hold_pct,\n\t\tf_misc_stats = f_misc_stats,\n\t\tf_theo_formula_hold_pct = f_theo_formula_hold_pct,\n\t\tf_bet_off_peak = f_bet_off_peak,\n\t\tf_bet_peak = f_bet_peak,\n\t\tf_cluster = f_cluster,\n\t\tf_cost_per_labor_hr = f_cost_per_labor_hr,\n\t\tf_fixed_time = f_fixed_time,\n\t\tf_house_adv = f_house_adv,\n\t\tf_labor_per_table_hr = f_labor_per_table_hr,\n\t\tf_month_rental_fee_ft = f_month_rental_fee_ft,\n\t\tf_month_rental_fee_pt = f_month_rental_fee_pt,\n\t\tf_nbr_headcount_norm = f_nbr_headcount_norm,\n\t\tf_tax_rate = f_tax_rate,\n\t\tf_var_time = f_var_time,\n\t\tf_win_correction_factor = f_win_correction_factor,\n\t\ti_game_num = i_game_num,\n\t\ti_game_speed_theo_formula = i_game_speed_theo_formula,\n\t\ti_include_flag = i_include_flag,\n\t\ti_seats_available = i_seats_available,\n\t\tf_game_volatility = f_game_volatility) ~> xfmgamingtablegamexrefs1\nedwtablepropgamedims1 derive(c_game_key = 'PadString(\"ZZ\", \" \", 3)',\n\t\td_effective_end_date = '\"1900-12-31\"',\n\t\td_effective_start_date = '\"1900-12-31\"',\n\t\tf_expected_lt_box_hold_pct = '0@00',\n\t\tf_misc_stats = '0@00',\n\t\tf_theo_formula_hold_pct = '0@00',\n\t\tf_bet_off_peak = '0@00',\n\t\tf_bet_peak = '0@00',\n\t\tf_cluster = '0@00',\n\t\tf_cost_per_labor_hr = '0@00',\n\t\tf_fixed_time = '0@00',\n\t\tf_house_adv = '0@00',\n\t\tf_labor_per_table_hr = '0@00',\n\t\tf_month_rental_fee_ft = '0@00',\n\t\tf_month_rental_fee_pt = '0@00',\n\t\tf_nbr_headcount_norm = '0@00',\n\t\tf_tax_rate = '0@00',\n\t\tf_var_time = '0@00',\n\t\tf_win_correction_factor = '0@00',\n\t\ti_game_num = '-1',\n\t\ti_game_speed_theo_formula = 'SetNull()',\n\t\ti_include_flag = '-1',\n\t\ti_seats_available = 'SetNull()',\n\t\tf_game_volatility = '0@00') ~> xfmtablepropgamedims1\nxfmgamingtablegamexrefs1, xfmtablepropgamedims1 union(byName: true)~> fnluniqgamexrefs1\nfnluniqgamexrefs1 derive(c_prop_cd_KeyCol = 'c_prop_cd There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_prop_game_cd_KeyCol = 'c_prop_game_cd There is no Remove Duplicate Trans in ADF DataFlow, we need to explore') ~> rmdgamexrefs1\nrmdgamexrefs1 sink(mapColumn(\n\t\tc_prop_cd,\n\t\tc_prop_game_cd,\n\t\tc_game_key,\n\t\td_effective_end_date,\n\t\td_effective_start_date,\n\t\tf_expected_lt_box_hold_pct,\n\t\tf_misc_stats,\n\t\tf_theo_formula_hold_pct,\n\t\tf_bet_off_peak,\n\t\tf_bet_peak,\n\t\tf_cluster,\n\t\tf_cost_per_labor_hr,\n\t\tf_fixed_time,\n\t\tf_house_adv,\n\t\tf_labor_per_table_hr,\n\t\tf_month_rental_fee_ft,\n\t\tf_month_rental_fee_pt,\n\t\tf_nbr_headcount_norm,\n\t\tf_tax_rate,\n\t\tf_var_time,\n\t\tf_win_correction_factor,\n\t\ti_game_num,\n\t\ti_game_speed_theo_formula,\n\t\ti_include_flag,\n\t\ti_seats_available,\n\t\tf_game_volatility\n\t)) ~> edwgamingtablegamedimt1"
+		}
+	}
+}

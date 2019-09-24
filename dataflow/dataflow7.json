@@ -1,0 +1,39 @@
+{
+	"name": "dataflow7",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "edwgamingtablegamepitdims1"
+				},
+				{
+					"name": "edwgsttableratingdtls1"
+				},
+				{
+					"name": "edwgstconsxrefs1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "edwgsttableratingdtlfactstgt1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "joinratingdtlpitdims1"
+				},
+				{
+					"name": "rmdratingdtlpitdims1"
+				},
+				{
+					"name": "xfmraintgdtlpitdims1"
+				},
+				{
+					"name": "jointableratingdtlgcxs1"
+				}
+			],
+			"script": "\nparameters{\n\tAPT_GRID_ENABLE as any (YES),\n\tAPT_GRID_COMPUTENODES as any (2),\n\tPS_APP_DIR as any ((Aspre-defined)),\n\tPS_DB_Name as any ((Aspre-defined)),\n\tPS_STREAM_INFO as any ((Aspre-defined)),\n\tPS_TD_Connector as any ((Aspre-defined))\n}\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_club as string,\n\t\tc_pit_num as string,\n\t\td_from_date as date,\n\t\td_to_date as date\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwgamingtablegamepitdims1\nsource(output(\n\t\tc_prop_cd as string,\n\t\ti_xref_dmid as decimal(10,0),\n\t\ti_rating_num as integer,\n\t\td_rating_date as date,\n\t\ti_rating_hyd as integer,\n\t\td_trans_date as date,\n\t\td_trans_time as integer,\n\t\ti_trans_hyd as integer,\n\t\tc_company as string,\n\t\tc_shift as string,\n\t\tc_pit_num as string,\n\t\tc_prop_game_cd as string,\n\t\tc_table_num as string,\n\t\tc_rate_type as string,\n\t\ti_countercheck_cnt as integer,\n\t\tf_countercheck as decimal(10,0),\n\t\tf_cash as decimal(10,0),\n\t\tf_avg_bet_1 as decimal(10,0),\n\t\tf_avg_bet_2 as decimal(10,0),\n\t\tf_avg_bet_3 as decimal(10,0),\n\t\tf_avg_bet_4 as decimal(10,0),\n\t\tf_avg_bet_5 as decimal(10,0),\n\t\tf_avg_bet_6 as decimal(10,0),\n\t\tf_hands_played as decimal(10,0),\n\t\tf_handle as decimal(10,0),\n\t\tf_buy_in as decimal(10,0),\n\t\tf_cash_out as decimal(10,0),\n\t\td_seq_rating_start_time as integer,\n\t\td_rating_start_time as integer,\n\t\td_rating_end_time as integer,\n\t\ti_minutes_played as integer,\n\t\tf_theo_win as decimal(10,0),\n\t\tf_comp_worth as decimal(10,0),\n\t\tc_rated_by as string,\n\t\tc_entered_by as string,\n\t\tc_game_speed as string,\n\t\ti_rating_start_hr as integer,\n\t\ti_rating_end_hr as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwgsttableratingdtls1\nsource(output(\n\t\ti_dmid as decimal(10,0),\n\t\ti_xref_dmid as decimal(10,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwgstconsxrefs1\njointableratingdtlgcxs1, edwgamingtablegamepitdims1 join(edwgamingtablegamepitdims1@c_prop_cd == edwgsttableratingdtls1@c_prop_cd\n\t&& edwgamingtablegamepitdims1@c_pit_num == edwgsttableratingdtls1@c_pit_num,\n\tjoinType:'',\n\tbroadcast: 'none')~> joinratingdtlpitdims1\nxfmraintgdtlpitdims1 derive(c_prop_cd_KeyCol = 'c_prop_cd There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_prop_game_cd_KeyCol = 'c_prop_game_cd There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\ti_xref_dmid_KeyCol = 'i_xref_dmid There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\ti_rating_num_KeyCol = 'i_rating_num There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\ti_rating_hyd_KeyCol = 'i_rating_hyd There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\td_seq_rating_start_time_KeyCol = 'd_seq_rating_start_time There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_shift_KeyCol = 'c_shift There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_pit_num_KeyCol = 'c_pit_num There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_table_num_KeyCol = 'c_table_num There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\td_rating_start_time_KeyCol = 'd_rating_start_time There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\td_rating_end_time_KeyCol = 'd_rating_end_time There is no Remove Duplicate Trans in ADF DataFlow, we need to explore') ~> rmdratingdtlpitdims1\njoinratingdtlpitdims1 derive(i_dmid = '( IF IsNotNull((edw_gst_cons_xref_s1@i_dmid)) THEN (edw_gst_cons_xref_s1@i_dmid) ELSE ((\"-1\")))',\n\t\tc_company = '( IF IsNotNull((edw_gst_table_rating_dtl_s1@c_company)) THEN (edw_gst_table_rating_dtl_s1@c_company) ELSE (\"  \"))',\n\t\tc_club = 'if (edw_gst_table_rating_dtl_s1@d_rating_date >= edw_gaming_table_game_pit_dim_s1@d_from_date AND edw_gst_table_rating_dtl_s1@d_rating_date <= edw_gaming_table_game_pit_dim_s1@d_to_date) then ( IF IsNotNull((edw_gaming_table_game_pit_dim_s1@c_club)) THEN (edw_gaming_table_game_pit_dim_s1@c_club) ELSE (\" \")) else (\" \")',\n\t\td_from_date = 'if (edw_gst_table_rating_dtl_s1@d_rating_date >= edw_gaming_table_game_pit_dim_s1@d_from_date AND edw_gst_table_rating_dtl_s1@d_rating_date <= edw_gaming_table_game_pit_dim_s1@d_to_date) then edw_gaming_table_game_pit_dim_s1@d_from_date else StringToDate(\"1899-12-31\", \"%yyyy-%mm-%dd\")',\n\t\td_to_date = 'if (edw_gst_table_rating_dtl_s1@d_rating_date >= edw_gaming_table_game_pit_dim_s1@d_from_date AND edw_gst_table_rating_dtl_s1@d_rating_date <= edw_gaming_table_game_pit_dim_s1@d_to_date) then edw_gaming_table_game_pit_dim_s1@d_to_date else StringToDate(\"1899-12-31\", \"%yyyy-%mm-%dd\")') ~> xfmraintgdtlpitdims1\nedwgsttableratingdtls1, edwgstconsxrefs1 join(edwgstconsxrefs1@i_xref_dmid == edwgsttableratingdtls1@i_xref_dmid,\n\tjoinType:'',\n\tbroadcast: 'none')~> jointableratingdtlgcxs1\nrmdratingdtlpitdims1 sink(mapColumn(\n\t\tc_prop_cd,\n\t\ti_cms_dmid = i_xref_dmid,\n\t\ti_dmid,\n\t\ti_rating_num,\n\t\td_rating_date,\n\t\ti_rating_hyd,\n\t\td_trans_date,\n\t\td_trans_time,\n\t\ti_trans_hyd,\n\t\tc_company,\n\t\tc_shift,\n\t\tc_pit_num,\n\t\tc_club,\n\t\tc_prop_game_cd,\n\t\tc_table_num,\n\t\tc_rate_type,\n\t\ti_countercheck_cnt,\n\t\tf_countercheck,\n\t\tf_cash,\n\t\tf_avg_bet_1,\n\t\tf_avg_bet_2,\n\t\tf_avg_bet_3,\n\t\tf_avg_bet_4,\n\t\tf_avg_bet_5,\n\t\tf_avg_bet_6,\n\t\tf_hands_played,\n\t\tf_handle,\n\t\tf_buy_in,\n\t\tf_cash_out,\n\t\td_seq_rating_start_time,\n\t\td_rating_start_time,\n\t\td_rating_end_time,\n\t\ti_minutes_played,\n\t\tf_theo_win,\n\t\tf_actual_win = f_comp_worth,\n\t\tc_rated_by,\n\t\tc_entered_by,\n\t\tc_game_speed,\n\t\ti_rating_start_hr,\n\t\ti_rating_end_hr,\n\t\td_from_date,\n\t\td_to_date\n\t)) ~> edwgsttableratingdtlfactstgt1"
+		}
+	}
+}
