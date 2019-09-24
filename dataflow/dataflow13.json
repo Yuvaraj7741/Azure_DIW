@@ -1,0 +1,60 @@
+{
+	"name": "dataflow13",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "edwtablegamesums1"
+				},
+				{
+					"name": "edwgamingtablexrefs1"
+				},
+				{
+					"name": "edwtableoptimgametypewphs1"
+				},
+				{
+					"name": "edwtablegamecdstdxrefs1"
+				},
+				{
+					"name": "edwheadcountstgs1"
+				},
+				{
+					"name": "edwtablegamerims1"
+				},
+				{
+					"name": "edwgstotherratingdtls1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "edwtablepropgamedimt1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "fnltablepropgames1"
+				},
+				{
+					"name": "xfmtblgamingwphs1"
+				},
+				{
+					"name": "xfmtablepropgames1"
+				},
+				{
+					"name": "fnluniqtablepropgames1"
+				},
+				{
+					"name": "rmdtablepropgames1"
+				},
+				{
+					"name": "jointablegamings1"
+				},
+				{
+					"name": "jointblgamingwphs1"
+				}
+			],
+			"script": "\nparameters{\n\tAPT_GRID_ENABLE as any (YES),\n\tAPT_GRID_COMPUTENODES as any (2),\n\tPS_APP_DIR as any ((Aspre-defined)),\n\tPS_DB_Name as any ((Aspre-defined)),\n\tPS_STREAM_INFO as any ((Aspre-defined)),\n\tPS_TD_Connector as any ((Aspre-defined))\n}\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_prop_game_cd as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamesums1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_prop_game_cd as string,\n\t\tc_game_report_desc as string,\n\t\tc_game_type_gl_rollup as string,\n\t\tc_game_report_type as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwgamingtablexrefs1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_prop_game_cd as string,\n\t\tc_game_type_std as string,\n\t\tc_game_desc_edw as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtableoptimgametypewphs1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_prop_game_cd as string,\n\t\tc_game_desc as string,\n\t\tc_game_short_desc as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamecdstdxrefs1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_prop_game_cd as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwheadcountstgs1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_prop_game_cd as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamerims1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_prop_game_cd as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwgstotherratingdtls1\nedwheadcountstgs1, edwtablegamesums1, edwtablegamerims1, edwgstotherratingdtls1 union(byName: true)~> fnltablepropgames1\njointblgamingwphs1 derive(c_game_report_desc = 'if (IsNull(edw_gaming_table_xref_s1@c_game_report_desc) and IsNull(edw_table_optim_gametype_wph_s1@c_game_desc_edw)) then \"Unknown\" else  if IsNull(edw_gaming_table_xref_s1@c_game_report_desc) then edw_table_optim_gametype_wph_s1@c_game_desc_edw else edw_gaming_table_xref_s1@c_game_report_desc',\n\t\tc_game_report_type = 'if (IsNull(edw_gaming_table_xref_s1@c_game_report_type) and IsNull(edw_table_optim_gametype_wph_s1@c_game_type_std)) then \"Unknown\" else  if IsNull(edw_gaming_table_xref_s1@c_game_report_type) then edw_table_optim_gametype_wph_s1@c_game_type_std else edw_gaming_table_xref_s1@c_game_report_type',\n\t\tc_game_type_gl_rollup = '( IF IsNotNull((edw_gaming_table_xref_s1@c_game_type_gl_rollup)) THEN (edw_gaming_table_xref_s1@c_game_type_gl_rollup) ELSE (\"Unknown\"))') ~> xfmtblgamingwphs1\nfnltablepropgames1 derive(c_game_desc = 'PadString(\"\", \" \", 30)',\n\t\tc_game_short_desc = 'PadString(\"\", \" \", 2)',\n\t\tc_game_report_desc = '\"Unknown\"',\n\t\tc_game_report_type = '\"Unknown\"',\n\t\tc_game_type_gl_rollup = '\"Unknown\"') ~> xfmtablepropgames1\nxfmtblgamingwphs1, xfmtablepropgames1 union(byName: true)~> fnluniqtablepropgames1\nfnluniqtablepropgames1 derive(c_prop_cd_KeyCol = 'c_prop_cd There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_prop_game_cd_KeyCol = 'c_prop_game_cd There is no Remove Duplicate Trans in ADF DataFlow, we need to explore') ~> rmdtablepropgames1\nedwtablegamecdstdxrefs1, edwgamingtablexrefs1 join(edwgamingtablexrefs1@c_prop_cd == edwtablegamecdstdxrefs1@c_prop_cd\n\t&& edwgamingtablexrefs1@c_prop_game_cd == edwtablegamecdstdxrefs1@c_prop_game_cd,\n\tjoinType:'',\n\tbroadcast: 'none')~> jointablegamings1\njointablegamings1, edwtableoptimgametypewphs1 join(edwtableoptimgametypewphs1@c_prop_cd == edwtablegamecdstdxrefs1@c_prop_cd\n\t&& edwtableoptimgametypewphs1@c_prop_game_cd == edwtablegamecdstdxrefs1@c_prop_game_cd,\n\tjoinType:'',\n\tbroadcast: 'none')~> jointblgamingwphs1\nrmdtablepropgames1 sink(mapColumn(\n\t\tc_prop_cd,\n\t\tc_prop_game_cd,\n\t\tc_game_desc,\n\t\tc_game_short_desc,\n\t\tc_game_report_desc,\n\t\tc_game_report_type,\n\t\tc_game_type_gl_rollup\n\t)) ~> edwtablepropgamedimt1"
+		}
+	}
+}
