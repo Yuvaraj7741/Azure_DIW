@@ -1,0 +1,57 @@
+{
+	"name": "dataflow11",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "edwtablegamesums1"
+				},
+				{
+					"name": "edwheadcountstgs1"
+				},
+				{
+					"name": "edwtablegamedtlhours1"
+				},
+				{
+					"name": "edwtablegamerims1"
+				},
+				{
+					"name": "edwtablegamedtls1"
+				},
+				{
+					"name": "edwgstotherratingdtls1"
+				},
+				{
+					"name": "edwgsttableratingdtls1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "edwtablesubpropdimt1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "fnlsubprops1"
+				},
+				{
+					"name": "xfmsubpropgtrds1"
+				},
+				{
+					"name": "xfmsubprops1"
+				},
+				{
+					"name": "fnluniqsubprops1"
+				},
+				{
+					"name": "rmdsubprops1"
+				},
+				{
+					"name": "xfmsubpropgords1"
+				}
+			],
+			"script": "\nparameters{\n\tAPT_GRID_ENABLE as any (YES),\n\tAPT_GRID_COMPUTENODES as any (2),\n\tPS_APP_DIR as any ((Aspre-defined)),\n\tPS_DB_Name as any ((Aspre-defined)),\n\tPS_STREAM_INFO as any ((Aspre-defined)),\n\tPS_TD_Connector as any ((Aspre-defined))\n}\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_pit_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamesums1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_pit_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwheadcountstgs1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_pit_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamedtlhours1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_pit_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamerims1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_pit_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwtablegamedtls1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_pit_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwgstotherratingdtls1\nsource(output(\n\t\tc_prop_cd as string,\n\t\tc_pit_num as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> edwgsttableratingdtls1\nedwheadcountstgs1, edwtablegamesums1, edwtablegamerims1, edwtablegamedtlhours1, edwtablegamedtls1 union(byName: true)~> fnlsubprops1\nedwgsttableratingdtls1 derive(c_table_sub_prop_desc = 'if (edw_gst_table_rating_dtl_s1@c_prop_cd = \"BAC\" AND edw_gst_table_rating_dtl_s1@c_pit_num = \"31\") then \"BWW\" else  if edw_gst_table_rating_dtl_s1@c_prop_cd = \"BAC\" then \"BPP\" else  if (edw_gst_table_rating_dtl_s1@c_prop_cd = \"FLV\" AND edw_gst_table_rating_dtl_s1@c_pit_num = \"21\") then \"FMV\" else  if edw_gst_table_rating_dtl_s1@c_prop_cd = \"FLV\" then \"FFL\" else edw_gst_table_rating_dtl_s1@c_prop_cd') ~> xfmsubpropgtrds1\nfnlsubprops1 derive(c_table_sub_prop_desc = 'if (fnl_sub_prop_s1@c_prop_cd = \"BAC\" AND fnl_sub_prop_s1@c_pit_num = \"31\") then \"BWW\" else  if fnl_sub_prop_s1@c_prop_cd = \"BAC\" then \"BPP\" else  if (fnl_sub_prop_s1@c_prop_cd = \"FLV\" AND fnl_sub_prop_s1@c_pit_num = \"21\") then \"FMV\" else  if fnl_sub_prop_s1@c_prop_cd = \"FLV\" then \"FFL\" else fnl_sub_prop_s1@c_prop_cd') ~> xfmsubprops1\nxfmsubpropgtrds1, xfmsubprops1, xfmsubpropgords1 union(byName: true)~> fnluniqsubprops1\nfnluniqsubprops1 derive(c_prop_cd_KeyCol = 'c_prop_cd There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_pit_num_KeyCol = 'c_pit_num There is no Remove Duplicate Trans in ADF DataFlow, we need to explore',\n\t\tc_table_sub_prop_desc_KeyCol = 'c_table_sub_prop_desc There is no Remove Duplicate Trans in ADF DataFlow, we need to explore') ~> rmdsubprops1\nedwgstotherratingdtls1 derive(c_table_sub_prop_desc = 'if (edw_gst_other_rating_dtl_s1@c_prop_cd = \"BAC\" AND edw_gst_other_rating_dtl_s1@c_pit_num = \"31\") then \"BWW\" else  if edw_gst_other_rating_dtl_s1@c_prop_cd = \"BAC\" then \"BPP\" else  if (edw_gst_other_rating_dtl_s1@c_prop_cd = \"FLV\" AND edw_gst_other_rating_dtl_s1@c_pit_num = \"21\") then \"FMV\" else  if edw_gst_other_rating_dtl_s1@c_prop_cd = \"FLV\" then \"FFL\" else edw_gst_other_rating_dtl_s1@c_prop_cd') ~> xfmsubpropgords1\nrmdsubprops1 sink(mapColumn(\n\t\tc_prop_cd,\n\t\tc_pit_num,\n\t\tc_table_sub_prop_desc\n\t)) ~> edwtablesubpropdimt1"
+		}
+	}
+}
