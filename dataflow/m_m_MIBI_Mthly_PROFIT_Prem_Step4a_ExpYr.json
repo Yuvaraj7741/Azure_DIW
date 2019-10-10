@@ -1,0 +1,26 @@
+{
+   "name" : "m_m_MIBI_Mthly_PROFIT_Prem_Step4a_ExpYr",
+   "properties" : {
+      "type" : "MappingDataFlow",
+      "typeProperties" : {
+         "sources" : [ {
+            "dataset" : {
+               "referenceName" : "sc_FSTWK161_PM_EXP_YR",
+               "type" : "DatasetReference"
+            },
+            "name" : "scFSTWK161PMEXPYR"
+         } ],
+         "sinks" : [ {
+            "dataset" : {
+               "referenceName" : "sc_FSTWK161_PM_EXP_YR",
+               "type" : "DatasetReference"
+            },
+            "name" : "scFSTWK161PMEXPYR1"
+         } ],
+         "transformations" : [ {
+            "name" : "expexpExpYr"
+         } ],
+         "script" : "\nparameters{\n\tMIBI_AccountYearMonth as any()}\nsource(output(\n\t\tACTG_YR_MO as integer,\n\t\tCONTR_ID as string,\n\t\tCONTR_EFF_D as date,\n\t\tCONTR_XPIR_D as date,\n\t\tACTG_D as date,\n\t\tACTG_YR as integer,\n\t\tATTACH_D as date,\n\t\tATTACH_YR as integer,\n\t\tXPOS_YR as integer,\n\t\tXPOS_YR_STRT_D as date,\n\t\tXPOS_YR_END_D as date,\n\t\tINTRM_EXP_D as date,\n\t\tINTRM_EXP_YR as integer,\n\t\tWP_US_CURY_A as decimal(10,0),\n\t\tWP_LEDG_CURY_A as decimal(10,0),\n\t\tWP_ORIG_CURY_A as decimal(10,0),\n\t\tEP_CNG_US_CURY_A as decimal(10,0),\n\t\tEP_CNG_LEDG_CURY_A as decimal(10,0),\n\t\tEP_CNG_ORIG_CURY_A as decimal(10,0),\n\t\tSRC_ROW_ID as integer,\n\t\tPROC_CNTL_ID_N as integer,\n\t\tTOTAL_EARNED_MONTH_N as decimal(10,0),\n\t\tMONTH_F as decimal(10,0),\n\t\tEP_CNG_US_CURY_SPLT_A as decimal(10,0),\n\t\tEP_CNG_LEDG_CURY_SPLT_A as decimal(10,0),\n\t\tEP_CNG_ORIG_CURY_SPLT_A as decimal(10,0),\n\t\tEP_CNG_US_CURY_SPLTRND_A as decimal(10,0),\n\t\tEP_CNG_LEDG_CURY_SPLTRND_A as decimal(10,0),\n\t\tEP_CNG_ORIG_CURY_SPLTRND_A as decimal(10,0),\n\t\tCRT_TS as date\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> scFSTWK161PMEXPYR\nexpexpExpYr sink(mapColumn(\n\t\tACTG_YR_MO,\n\t\tCONTR_ID,\n\t\tCONTR_EFF_D,\n\t\tCONTR_XPIR_D,\n\t\tACTG_D,\n\t\tACTG_YR,\n\t\tATTACH_D,\n\t\tATTACH_YR,\n\t\tXPOS_YR,\n\t\tXPOS_YR_STRT_D,\n\t\tXPOS_YR_END_D,\n\t\tINTRM_EXP_D,\n\t\tINTRM_EXP_YR,\n\t\tWP_US_CURY_A,\n\t\tWP_LEDG_CURY_A,\n\t\tWP_ORIG_CURY_A,\n\t\tEP_CNG_US_CURY_A,\n\t\tEP_CNG_LEDG_CURY_A,\n\t\tEP_CNG_ORIG_CURY_A,\n\t\tSRC_ROW_ID,\n\t\tPROC_CNTL_ID_N,\n\t\tTOTAL_EARNED_MONTH_N,\n\t\tMONTH_F,\n\t\tEP_CNG_US_CURY_SPLT_A,\n\t\tEP_CNG_LEDG_CURY_SPLT_A,\n\t\tEP_CNG_ORIG_CURY_SPLT_A,\n\t\tEP_CNG_US_CURY_SPLTRND_A,\n\t\tEP_CNG_LEDG_CURY_SPLTRND_A,\n\t\tEP_CNG_ORIG_CURY_SPLTRND_A,\n\t\tCRT_TS\n\t)) ~> scFSTWK161PMEXPYR1\nscFSTWK161PMEXPYR derive(CRT_TS = 'SESSSTARTTIME') ~> expexpExpYr"
+      }
+   }
+}
