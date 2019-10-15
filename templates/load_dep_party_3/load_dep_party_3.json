@@ -1,0 +1,205 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		},
+		"AzureBlobStorage3": {
+			"type": "string"
+		},
+		"test2": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/load_dep_party_3')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "load_dep_party_3",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": "false"
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "load_dep_party_3",
+								"type": "DataFlowReference"
+							},
+							"linkedService": {
+								"type": "LinkedServiceReference",
+								"referenceName": "[parameters('AzureBlobStorage3')]"
+							},
+							"dataIntegrationUnits": 0
+						}
+					}
+				],
+				"parameters": {
+					"id": {
+						"type": "string",
+						"defaultValue": "'0'"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/load_dep_party_3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_dep_party_3')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Dependent",
+								"type": "DatasetReference"
+							},
+							"name": "Dependent"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Party",
+								"type": "DatasetReference"
+							},
+							"name": "Party"
+						}
+					],
+					"transformations": [],
+					"script": "\n\nsource(output(\n\t\tTitle as string,\n\t\tFirst_Name as string,\n\t\tMiddle_Name as string,\n\t\tLast_Name as string,\n\t\tMember_ID as decimal(10,0),\n\t\tMember_Suffix as string,\n\t\tBirth_Date as date,\n\t\tGender_Code as string,\n\t\tMember_Record_Number as decimal(10,0),\n\t\tSocial_Security_Number as decimal(10,0),\n\t\tMember_Type_Code as decimal(10,0),\n\t\tOriginal_Effective_Date as date,\n\t\tRelationship_to_Subscriber_Code as decimal(10,0),\n\t\tRelationship_to_Subscriber_Code_Label as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Dependent\nDependent sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tmapColumn(\n\t\tTitle,\n\t\tGender = Gender_Code,\n\t\tFirst_Name,\n\t\tMiddle_Name,\n\t\tLast_Name,\n\t\tMember_Identifier = Member_ID,\n\t\tMember_Suffix,\n\t\tDate_of_Birth = Birth_Date,\n\t\tMember_Number = Member_Record_Number,\n\t\tSoc_Number = Social_Security_Number,\n\t\tType_Code = Member_Type_Code,\n\t\tRelationship_to_Subscriber_Code,\n\t\tRelationship_to_Subscriber_Code_Label,\n\t\tEffective_Date = Original_Effective_Date\n\t)) ~> Party"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Dependent')]",
+				"[concat(variables('factoryId'), '/datasets/Party')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dependent')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureBlobStorage3')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Src_Employee.txt",
+						"container": "azureinput"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Title",
+						"type": "String"
+					},
+					{
+						"name": "First_Name",
+						"type": "String"
+					},
+					{
+						"name": "Middle_Name",
+						"type": "String"
+					},
+					{
+						"name": "Last_Name",
+						"type": "String"
+					},
+					{
+						"name": "Member_ID",
+						"type": "Decimal"
+					},
+					{
+						"name": "Member_Suffix",
+						"type": "String"
+					},
+					{
+						"name": "Birth_Date",
+						"type": "DateTime"
+					},
+					{
+						"name": "Gender_Code",
+						"type": "String"
+					},
+					{
+						"name": "Member_Record_Number",
+						"type": "Decimal"
+					},
+					{
+						"name": "Social_Security_Number",
+						"type": "Decimal"
+					},
+					{
+						"name": "Member_Type_Code",
+						"type": "Decimal"
+					},
+					{
+						"name": "Original_Effective_Date",
+						"type": "DateTime"
+					},
+					{
+						"name": "Relationship_to_Subscriber_Code",
+						"type": "Decimal"
+					},
+					{
+						"name": "Relationship_to_Subscriber_Code_Label",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Party')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('test2')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "diw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		}
+	]
+}
