@@ -1,0 +1,28 @@
+{
+	"name": "Test_Demo1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Load_Bank_Summary",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "Load_Bank_Summary2",
+						"type": "DataFlowReference"
+					},
+					"dataIntegrationUnits": 0
+				}
+			}
+		],
+		"annotations": []
+	}
+}

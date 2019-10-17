@@ -1,0 +1,48 @@
+{
+	"name": "Load_Bank_Summary2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Sequential_File_02",
+						"type": "DatasetReference"
+					},
+					"name": "SequentialFile0"
+				},
+				{
+					"dataset": {
+						"referenceName": "Sequential_File_112",
+						"type": "DatasetReference"
+					},
+					"name": "SequentialFile1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Sequential_File_113",
+						"type": "DatasetReference"
+					},
+					"name": "SequentialFile11"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Transformer2"
+				},
+				{
+					"name": "Filter4"
+				},
+				{
+					"name": "Lookup6"
+				},
+				{
+					"name": "Aggregator9"
+				}
+			],
+			"script": "\n\nsource(output(\n\t\tbnk_id as integer,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as integer,\n\t\tcontact_no as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile0\nsource(output(\n\t\tstate_name as string,\n\t\tstate_code as integer,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile1\nSequentialFile0 derive(bnk_name = upper(bnk_name)) ~> Transformer2\nTransformer2 filter(bnk_id > 2) ~> Filter4\nFilter4, SequentialFile1 lookup(SequentialFile0@state_code == SequentialFile1@state_code,\n\tbroadcast: 'none')~> Lookup6\nLookup6 aggregate(groupBy(bnk_name,\n\t\tstate_name),\n\tcity = count()) ~> Aggregator9\nAggregator9 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tmapColumn(\n\t\tbnk_name,\n\t\tstate_name,\n\t\tcity\n\t)) ~> SequentialFile11"
+		}
+	}
+}

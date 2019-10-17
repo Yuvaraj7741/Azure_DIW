@@ -1,0 +1,36 @@
+{
+	"name": "Sequential_File_112",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": " \\(2)E:\\test\\load_bnk_ref.txt",
+				"container": " \\(2)E:\\test\\load_bnk_ref"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "state_name",
+				"type": "String"
+			},
+			{
+				"name": "state_code",
+				"type": "Int32"
+			},
+			{
+				"name": "country",
+				"type": "String"
+			}
+		]
+	}
+}
