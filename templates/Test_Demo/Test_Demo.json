@@ -1,0 +1,222 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		},
+		"AzureBlobStorage3": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Test_Demo')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Load_Bank_Summary",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Load_Bank_Summary",
+								"type": "DataFlowReference"
+							},
+							"dataIntegrationUnits": 0
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Load_Bank_Summary')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_Bank_Summary')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Sequential_File_0",
+								"type": "DatasetReference"
+							},
+							"name": "SequentialFile0"
+						},
+						{
+							"dataset": {
+								"referenceName": "Sequential_File_1",
+								"type": "DatasetReference"
+							},
+							"name": "SequentialFile1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sequential_File_11",
+								"type": "DatasetReference"
+							},
+							"name": "SequentialFile11"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Transformer2"
+						},
+						{
+							"name": "Filter4"
+						},
+						{
+							"name": "Lookup6"
+						},
+						{
+							"name": "Aggregator9"
+						}
+					],
+					"script": "\n\nsource(output(\n\t\tbnk_id as integer,\n\t\tbnk_name as string,\n\t\taddress as string,\n\t\tcity as string,\n\t\tstate_code as integer,\n\t\tcontact_no as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile0\nsource(output(\n\t\tstate_name as string,\n\t\tstate_code as integer,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> SequentialFile1\nSequentialFile0 derive(bnk_name = upper(bnk_name)) ~> Transformer2\nTransformer2 filter(bnk_id > 2) ~> Filter4\nFilter4, SequentialFile1 lookup(SequentialFile0@state_code == SequentialFile1@state_code,\n\tbroadcast: 'none')~> Lookup6\nLookup6 aggregate(groupBy(bnk_name,\n\t\tstate_name),\n\tcity = count()) ~> Aggregator9\nAggregator9 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tmapColumn(\n\t\tbnk_name,\n\t\tstate_name,\n\t\tcity\n\t)) ~> SequentialFile11"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Sequential_File_0')]",
+				"[concat(variables('factoryId'), '/datasets/Sequential_File_1')]",
+				"[concat(variables('factoryId'), '/datasets/Sequential_File_11')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sequential_File_0')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureBlobStorage3')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": " \\(2)E:\\test\\load_bnk_src1.txt",
+						"container": " \\(2)E:\\test\\load_bnk_src1"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "bnk_id",
+						"type": "Int32"
+					},
+					{
+						"name": "bnk_name",
+						"type": "String"
+					},
+					{
+						"name": "address",
+						"type": "String"
+					},
+					{
+						"name": "city",
+						"type": "String"
+					},
+					{
+						"name": "state_code",
+						"type": "Int32"
+					},
+					{
+						"name": "contact_no",
+						"type": "Int32"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sequential_File_1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureBlobStorage3')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": " \\(2)E:\\test\\load_bnk_ref.txt",
+						"container": " \\(2)E:\\test\\load_bnk_ref"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "state_name",
+						"type": "String"
+					},
+					{
+						"name": "state_code",
+						"type": "Int32"
+					},
+					{
+						"name": "country",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sequential_File_11')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureBlobStorage3')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "E:\\test\\load_bnk_output.txt",
+						"container": "E:\\test\\load_bnk_output"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		}
+	]
+}
