@@ -1,0 +1,755 @@
+{
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"resources": [
+		{
+			"apiVersion": "2018-06-01",
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Maps TRR Extract_MAPS TRR Source')]",
+				"[concat(variables('factoryId'), '/datasets/dbo_CTS_MAPD_TRR_Trans_tbl WITH (nolock)')]",
+				"[concat(variables('factoryId'), '/datasets/Maps TRR Extract_dbo_cts_MAPD_TransTracking_tbl')]",
+				"[concat(variables('factoryId'), '/datasets/Maps TRR Extract_dbo_CTS_MAPD_TRR_Trans_tbl')]"
+			],
+			"name": "[concat(parameters('factoryName'), '/Maps TRR Extract')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"properties": {
+				"typeProperties": {
+					"sources": [
+						{
+							"name": "MAPSTRRSource",
+							"dataset": {
+								"type": "DatasetReference",
+								"referenceName": "Maps TRR Extract_MAPS TRR Source"
+							}
+						},
+						{
+							"name": "dboCTSMAPDTRRTranstblWITHnolock",
+							"dataset": {
+								"type": "DatasetReference",
+								"referenceName": "dbo_CTS_MAPD_TRR_Trans_tbl WITH (nolock)"
+							}
+						}
+					],
+					"sinks": [
+						{
+							"name": "MMPTransactionTrackingTbl",
+							"dataset": {
+								"type": "DatasetReference",
+								"referenceName": "Maps TRR Extract_dbo_cts_MAPD_TransTracking_tbl"
+							}
+						},
+						{
+							"name": "MMPCustomDBStagingTbl",
+							"dataset": {
+								"type": "DatasetReference",
+								"referenceName": "Maps TRR Extract_dbo_CTS_MAPD_TRR_Trans_tbl"
+							}
+						}
+					],
+					"transformations": [
+						{
+							"name": "Lookup"
+						},
+						{
+							"name": "MAPDStatusSet"
+						}
+					],
+					"script": "\n\nsource(output(\n\t\tTRR_IDX as integer,\n\t\tFileTracking_IDX as integer,\n\t\tTracking_ID as integer,\n\t\tTRR_RecordType as string,\n\t\tHICN as string,\n\t\tSurname as string,\n\t\tFirstName as string,\n\t\tMiddleInitial as string,\n\t\tGender as string,\n\t\tDateOfBirth as string,\n\t\tRecordType as string,\n\t\tContractNumber as string,\n\t\tStateCode as string,\n\t\tCountyCode as string,\n\t\tDisabilityInd as string,\n\t\tHospiceInd as string,\n\t\tInstituteNHCInd as string,\n\t\tESRDInd as string,\n\t\tTRC as string,\n\t\tTranTypeCode as string,\n\t\tEntitlementTypeCode as string,\n\t\tEffectiveDate as string,\n\t\tWorkingAged as string,\n\t\tPBPID as string,\n\t\tEmptyField as string,\n\t\tTranDate as string,\n\t\tUIInitiatedChange as string,\n\t\tVariableData as string,\n\t\tDistrictOfficeCode as string,\n\t\tPreviousPartD as string,\n\t\tEmptyField2 as string,\n\t\tSourceID as string,\n\t\tPriorPBP as string,\n\t\tApplicationDate as string,\n\t\tUIuserOrganization as string,\n\t\tOutofAreaFlag as string,\n\t\tSegmentNumber as string,\n\t\tPartCBeneficiaryPremium as string,\n\t\tPartDBeneficiaryPremium as string,\n\t\tElectionType as string,\n\t\tEnrollmentSource as string,\n\t\tPartDOptOutFlag as string,\n\t\tPremiumWithholdPartCandD as string,\n\t\tNbrUncoveredMonths as string,\n\t\tCreditableCoverageFlag as string,\n\t\tEmployerSubsidyOverride as string,\n\t\tProcessingTimestamp as string,\n\t\tEmptyField3 as string,\n\t\tSecondaryDrugInsFlag as string,\n\t\tSecondaryRxID as string,\n\t\tSecondaryRxGroup as string,\n\t\tEGHP as string,\n\t\tPartDLIPSLevel as string,\n\t\tLowIncomeCoPayCategory as string,\n\t\tLowIncomePeriodEffDate as string,\n\t\tPartDLEPAmount as string,\n\t\tPartDLEPWaivedAmount as string,\n\t\tPartDLEPSubsidyAmount as string,\n\t\tPartDLowIncomeSubsidyAmount as string,\n\t\tPartDRxBIN as string,\n\t\tPartDRxPCN as string,\n\t\tPartDRxGroup as string,\n\t\tPartDRxID as string,\n\t\tSecondaryRxBIN as string,\n\t\tSecondaryRxPCN as string,\n\t\tDeMinimisDiffAmount as string,\n\t\tMSPStatusFlag as string,\n\t\tLowIncomePeriodEndDate as string,\n\t\tLISSourceCode as string,\n\t\tEnrolleeTypeFlag as string,\n\t\tApplicationDateInd as string,\n\t\tTRCShortName as string,\n\t\tEmptyField4 as string,\n\t\tSystemAssignedTrackingID as string,\n\t\tPlanAssignedTrackingID as string,\n\t\tEAMMbrMemberID as string,\n\t\tEAMMbrRxID as string,\n\t\tEAMMbrEGHPFlag as string,\n\t\tEAMMbrEmployerGroupNumber as string,\n\t\tEAMMbrProviderFirstName as string,\n\t\tEAMMbrProviderLastName as string,\n\t\tEAMMbrPCPID as string,\n\t\tEAMMbrAddressType as string,\n\t\tEAMMbrAddress1 as string,\n\t\tEAMMbrAddress2 as string,\n\t\tEAMMbrCity as string,\n\t\tEAMMbrState as string,\n\t\tEAMMbrZip as string,\n\t\tEAMMbrPhone as string,\n\t\tEAMMbr2ndAddressType as string,\n\t\tEAMMbr2ndAddress1 as string,\n\t\tEAMMbr2ndAddress2 as string,\n\t\tEAMMbr2ndCity as string,\n\t\tEAMMbr2ndState as string,\n\t\tEAMMbr2ndZip as string,\n\t\tEAMMbr2ndPhone as string,\n\t\tEAMMbrDecisionResp as string,\n\t\tEAMMbrRespName as string,\n\t\tEAMMbrRespAddress as string,\n\t\tEAMMbrRespCity as string,\n\t\tEAMMbrRespState as string,\n\t\tEAMMbrRespZip as string,\n\t\tEAMMbrRespPhone as string,\n\t\tEAMMbrRespRelation as string,\n\t\tEAMMbrEmergContact as string,\n\t\tEAMMbrEmergRelation as string,\n\t\tEAMMbrEmergPhone as string,\n\t\tEAMMbrPlan1 as string,\n\t\tEAMMbrPlan2 as string,\n\t\tEAMMbrPlan3 as string,\n\t\tEAMMbrPlan4 as string,\n\t\tEAMMbrPlan5 as string,\n\t\tEAMMbrPlan6 as string,\n\t\tEAMMbrPlan7 as string,\n\t\tEAMMbrPlan8 as string,\n\t\tEAMMbrPlan9 as string,\n\t\tEAMMbrPlan10 as string,\n\t\tEAMTranFirstname as string,\n\t\tEAMTranMiddleInitial as string,\n\t\tEAMTranLastName as string,\n\t\tEAMTranDOB as string,\n\t\tEAMTranGender as string,\n\t\tEAMTranSalesRep as string,\n\t\tCreate_dt as string,\n\t\tCreate_ID as string,\n\t\tUpdate_dt as string,\n\t\tUpdate_ID as string,\n\t\tTempStatus as string,\n\t\tGroup_Number as string,\n\t\tSubGroup_Number as string,\n\t\tSBMStatus as string,\n\t\tMax_EffDate as string,\n\t\tDateofDeath as string,\n\t\tOldSBMID as string,\n\t\tDRC as string,\n\t\tFAdemoOptPutFlag as string,\n\t\tActualEffDate as string,\n\t\tPlan4GrpNumber as string,\n\t\tPlan4SubGrpNumber as string,\n\t\tIDC_PP as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> MAPSTRRSource\nsource(output(\n\t\tTRR_IDX as string,\n\t\tFileTracking_IDX as string,\n\t\tTracking_ID as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> dboCTSMAPDTRRTranstblWITHnolock\nMAPDStatusSet sink(mapColumn(\n\t\tMAPD_TranStatus = Mapd_Status_Out\n\t)) ~> MMPTransactionTrackingTbl\n sink(mapColumn(\n\t)) ~> MMPCustomDBStagingTbl\nMAPSTRRSource,dboCTSMAPDTRRTranstblWITHnolock lookup(MAPSTRRSource@TRR_IDX == dboCTSMAPDTRRTranstblWITHnolock@TRR_IDX && \nMAPSTRRSource@FileTracking_IDX == dboCTSMAPDTRRTranstblWITHnolock@FileTracking_IDX && \nMAPSTRRSource@Tracking_ID == dboCTSMAPDTRRTranstblWITHnolock@Tracking_ID,\n\tbroadcast: 'none') ~> Lookup\n derive(Mapd_Status_Out = '(DT_STR,50,1252)\"NEW\"') ~> MAPDStatusSet"
+				},
+				"type": "MappingDataFlow"
+			}
+		},
+		{
+			"apiVersion": "2018-06-01",
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Maps TRR Extract')]"
+			],
+			"name": "[concat(parameters('factoryName'), '/Package')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"properties": {
+				"activities": [
+					{
+						"typeProperties": {
+							"dataflow": {
+								"type": "DataFlowReference",
+								"referenceName": "Maps TRR Extract"
+							},
+							"dataIntegrationUnits": 0
+						},
+						"name": "Maps TRR Extract",
+						"type": "ExecuteDataFlow",
+						"policy": {
+							"secureInput": false,
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"secureOutput": false,
+							"retryIntervalInSeconds": 30
+						}
+					}
+				]
+			}
+		},
+		{
+			"apiVersion": "2018-06-01",
+			"dependsOn": [],
+			"name": "[concat(parameters('factoryName'), '/Maps TRR Extract_MAPS TRR Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"properties": {
+				"schema": [
+					{
+						"name": "TRR_IDX",
+						"type": "Int32"
+					},
+					{
+						"name": "FileTracking_IDX",
+						"type": "Int32"
+					},
+					{
+						"name": "Tracking_ID",
+						"type": "Int32"
+					},
+					{
+						"name": "TRR_RecordType",
+						"type": "String"
+					},
+					{
+						"name": "HICN",
+						"type": "String"
+					},
+					{
+						"name": "Surname",
+						"type": "String"
+					},
+					{
+						"name": "FirstName",
+						"type": "String"
+					},
+					{
+						"name": "MiddleInitial",
+						"type": "String"
+					},
+					{
+						"name": "Gender",
+						"type": "String"
+					},
+					{
+						"name": "DateOfBirth",
+						"type": "String"
+					},
+					{
+						"name": "RecordType",
+						"type": "String"
+					},
+					{
+						"name": "ContractNumber",
+						"type": "String"
+					},
+					{
+						"name": "StateCode",
+						"type": "String"
+					},
+					{
+						"name": "CountyCode",
+						"type": "String"
+					},
+					{
+						"name": "DisabilityInd",
+						"type": "String"
+					},
+					{
+						"name": "HospiceInd",
+						"type": "String"
+					},
+					{
+						"name": "InstituteNHCInd",
+						"type": "String"
+					},
+					{
+						"name": "ESRDInd",
+						"type": "String"
+					},
+					{
+						"name": "TRC",
+						"type": "String"
+					},
+					{
+						"name": "TranTypeCode",
+						"type": "String"
+					},
+					{
+						"name": "EntitlementTypeCode",
+						"type": "String"
+					},
+					{
+						"name": "EffectiveDate",
+						"type": "String"
+					},
+					{
+						"name": "WorkingAged",
+						"type": "String"
+					},
+					{
+						"name": "PBPID",
+						"type": "String"
+					},
+					{
+						"name": "EmptyField",
+						"type": "String"
+					},
+					{
+						"name": "TranDate",
+						"type": "String"
+					},
+					{
+						"name": "UIInitiatedChange",
+						"type": "String"
+					},
+					{
+						"name": "VariableData",
+						"type": "String"
+					},
+					{
+						"name": "DistrictOfficeCode",
+						"type": "String"
+					},
+					{
+						"name": "PreviousPartD",
+						"type": "String"
+					},
+					{
+						"name": "EmptyField2",
+						"type": "String"
+					},
+					{
+						"name": "SourceID",
+						"type": "String"
+					},
+					{
+						"name": "PriorPBP",
+						"type": "String"
+					},
+					{
+						"name": "ApplicationDate",
+						"type": "String"
+					},
+					{
+						"name": "UIuserOrganization",
+						"type": "String"
+					},
+					{
+						"name": "OutofAreaFlag",
+						"type": "String"
+					},
+					{
+						"name": "SegmentNumber",
+						"type": "String"
+					},
+					{
+						"name": "PartCBeneficiaryPremium",
+						"type": "String"
+					},
+					{
+						"name": "PartDBeneficiaryPremium",
+						"type": "String"
+					},
+					{
+						"name": "ElectionType",
+						"type": "String"
+					},
+					{
+						"name": "EnrollmentSource",
+						"type": "String"
+					},
+					{
+						"name": "PartDOptOutFlag",
+						"type": "String"
+					},
+					{
+						"name": "PremiumWithholdPartCandD",
+						"type": "String"
+					},
+					{
+						"name": "NbrUncoveredMonths",
+						"type": "String"
+					},
+					{
+						"name": "CreditableCoverageFlag",
+						"type": "String"
+					},
+					{
+						"name": "EmployerSubsidyOverride",
+						"type": "String"
+					},
+					{
+						"name": "ProcessingTimestamp",
+						"type": "String"
+					},
+					{
+						"name": "EmptyField3",
+						"type": "String"
+					},
+					{
+						"name": "SecondaryDrugInsFlag",
+						"type": "String"
+					},
+					{
+						"name": "SecondaryRxID",
+						"type": "String"
+					},
+					{
+						"name": "SecondaryRxGroup",
+						"type": "String"
+					},
+					{
+						"name": "EGHP",
+						"type": "String"
+					},
+					{
+						"name": "PartDLIPSLevel",
+						"type": "String"
+					},
+					{
+						"name": "LowIncomeCoPayCategory",
+						"type": "String"
+					},
+					{
+						"name": "LowIncomePeriodEffDate",
+						"type": "String"
+					},
+					{
+						"name": "PartDLEPAmount",
+						"type": "String"
+					},
+					{
+						"name": "PartDLEPWaivedAmount",
+						"type": "String"
+					},
+					{
+						"name": "PartDLEPSubsidyAmount",
+						"type": "String"
+					},
+					{
+						"name": "PartDLowIncomeSubsidyAmount",
+						"type": "String"
+					},
+					{
+						"name": "PartDRxBIN",
+						"type": "String"
+					},
+					{
+						"name": "PartDRxPCN",
+						"type": "String"
+					},
+					{
+						"name": "PartDRxGroup",
+						"type": "String"
+					},
+					{
+						"name": "PartDRxID",
+						"type": "String"
+					},
+					{
+						"name": "SecondaryRxBIN",
+						"type": "String"
+					},
+					{
+						"name": "SecondaryRxPCN",
+						"type": "String"
+					},
+					{
+						"name": "DeMinimisDiffAmount",
+						"type": "String"
+					},
+					{
+						"name": "MSPStatusFlag",
+						"type": "String"
+					},
+					{
+						"name": "LowIncomePeriodEndDate",
+						"type": "String"
+					},
+					{
+						"name": "LISSourceCode",
+						"type": "String"
+					},
+					{
+						"name": "EnrolleeTypeFlag",
+						"type": "String"
+					},
+					{
+						"name": "ApplicationDateInd",
+						"type": "String"
+					},
+					{
+						"name": "TRCShortName",
+						"type": "String"
+					},
+					{
+						"name": "EmptyField4",
+						"type": "String"
+					},
+					{
+						"name": "SystemAssignedTrackingID",
+						"type": "String"
+					},
+					{
+						"name": "PlanAssignedTrackingID",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrMemberID",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrRxID",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrEGHPFlag",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrEmployerGroupNumber",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrProviderFirstName",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrProviderLastName",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrPCPID",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrAddressType",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrAddress1",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrAddress2",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrCity",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrState",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrZip",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrPhone",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbr2ndAddressType",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbr2ndAddress1",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbr2ndAddress2",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbr2ndCity",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbr2ndState",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbr2ndZip",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbr2ndPhone",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrDecisionResp",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrRespName",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrRespAddress",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrRespCity",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrRespState",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrRespZip",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrRespPhone",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrRespRelation",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrEmergContact",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrEmergRelation",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrEmergPhone",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrPlan1",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrPlan2",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrPlan3",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrPlan4",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrPlan5",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrPlan6",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrPlan7",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrPlan8",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrPlan9",
+						"type": "String"
+					},
+					{
+						"name": "EAMMbrPlan10",
+						"type": "String"
+					},
+					{
+						"name": "EAMTranFirstname",
+						"type": "String"
+					},
+					{
+						"name": "EAMTranMiddleInitial",
+						"type": "String"
+					},
+					{
+						"name": "EAMTranLastName",
+						"type": "String"
+					},
+					{
+						"name": "EAMTranDOB",
+						"type": "String"
+					},
+					{
+						"name": "EAMTranGender",
+						"type": "String"
+					},
+					{
+						"name": "EAMTranSalesRep",
+						"type": "String"
+					},
+					{
+						"name": "Create_dt",
+						"type": "String"
+					},
+					{
+						"name": "Create_ID",
+						"type": "String"
+					},
+					{
+						"name": "Update_dt",
+						"type": "String"
+					},
+					{
+						"name": "Update_ID",
+						"type": "String"
+					},
+					{
+						"name": "TempStatus",
+						"type": "String"
+					},
+					{
+						"name": "Group_Number",
+						"type": "String"
+					},
+					{
+						"name": "SubGroup_Number",
+						"type": "String"
+					},
+					{
+						"name": "SBMStatus",
+						"type": "String"
+					},
+					{
+						"name": "Max_EffDate",
+						"type": "String"
+					},
+					{
+						"name": "DateofDeath",
+						"type": "String"
+					},
+					{
+						"name": "OldSBMID",
+						"type": "String"
+					},
+					{
+						"name": "DRC",
+						"type": "String"
+					},
+					{
+						"name": "FAdemoOptPutFlag",
+						"type": "String"
+					},
+					{
+						"name": "ActualEffDate",
+						"type": "String"
+					},
+					{
+						"name": "Plan4GrpNumber",
+						"type": "String"
+					},
+					{
+						"name": "Plan4SubGrpNumber",
+						"type": "String"
+					},
+					{
+						"name": "IDC_PP",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"firstRowAsHeader": false,
+					"tableName": "Maps TRR Extract.MAPS TRR Source"
+				},
+				"linkedServiceName": {
+					"type": "LinkedServiceReference",
+					"referenceName": "[parameters('D000099_HMSAAPPS2 HMSA_MAPD_Dev_ADO')]"
+				},
+				"type": "AzureSqlTable"
+			}
+		},
+		{
+			"apiVersion": "2018-06-01",
+			"dependsOn": [],
+			"name": "[concat(parameters('factoryName'), '/dbo_CTS_MAPD_TRR_Trans_tbl WITH (nolock)')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"properties": {
+				"schema": [
+					{
+						"name": "TRR_IDX"
+					},
+					{
+						"name": "FileTracking_IDX"
+					},
+					{
+						"name": "Tracking_ID"
+					}
+				],
+				"typeProperties": {
+					"firstRowAsHeader": false,
+					"tableName": "dbo.CTS_MAPD_TRR_Trans_tbl WITH (nolock)"
+				},
+				"linkedServiceName": {
+					"type": "LinkedServiceReference",
+					"referenceName": "[parameters('D000046_PBMAIN hmsa_pb_dev_mmp_custom_OLEDB')]"
+				},
+				"type": "AzureSqlTable"
+			}
+		},
+		{
+			"apiVersion": "2018-06-01",
+			"dependsOn": [],
+			"name": "[concat(parameters('factoryName'), '/Maps TRR Extract_dbo_cts_MAPD_TransTracking_tbl')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"properties": {
+				"typeProperties": {
+					"firstRowAsHeader": false,
+					"tableName": "Maps TRR Extract.dbo_cts_MAPD_TransTracking_tbl"
+				},
+				"linkedServiceName": {
+					"type": "LinkedServiceReference",
+					"referenceName": "[parameters('D000046_PBMAIN hmsa_pb_dev_mmp_custom_ADOT')]"
+				},
+				"type": "AzureSqlTable"
+			}
+		},
+		{
+			"apiVersion": "2018-06-01",
+			"dependsOn": [],
+			"name": "[concat(parameters('factoryName'), '/Maps TRR Extract_dbo_CTS_MAPD_TRR_Trans_tbl')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"properties": {
+				"typeProperties": {
+					"firstRowAsHeader": false,
+					"tableName": "Maps TRR Extract.dbo_CTS_MAPD_TRR_Trans_tbl"
+				},
+				"linkedServiceName": {
+					"type": "LinkedServiceReference",
+					"referenceName": "[parameters('D000046_PBMAIN hmsa_pb_dev_mmp_custom_ADO')]"
+				},
+				"type": "AzureSqlTable"
+			}
+		}
+	],
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"D000046_PBMAIN hmsa_pb_dev_mmp_custom_ADO": {
+			"type": "String"
+		},
+		"D000046_PBMAIN hmsa_pb_dev_mmp_custom_OLEDB": {
+			"type": "String"
+		},
+		"factoryName": {
+			"metadata": "Data Factory name",
+			"type": "String"
+		},
+		"D000099_HMSAAPPS2 HMSA_MAPD_Dev_ADO": {
+			"type": "String"
+		},
+		"D000046_PBMAIN hmsa_pb_dev_mmp_custom_ADOT": {
+			"type": "String"
+		}
+	}
+}
