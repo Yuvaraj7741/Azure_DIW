@@ -1,0 +1,22 @@
+{
+	"name": "DS_DataVault_001",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"schemaName": {
+				"type": "string"
+			},
+			"tableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlMITable",
+		"typeProperties": {
+			"firstRowAsHeader": true
+		}
+	}
+}

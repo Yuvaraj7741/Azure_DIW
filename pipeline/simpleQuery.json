@@ -1,0 +1,205 @@
+{
+	"name": "simpleQuery",
+	"properties": {
+		"activities": [
+			{
+				"name": "CopyData_STAGE_TBL_1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "StredProcSTAGE_TBL_1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_DataVault_001",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaName": "@variables('MI_SRC_SCHEMA_demo')",
+							"tableName": "@variables('MI_SRC_TBL_STAGE_TBL_1')"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_StageVault_001",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaName": "@variables('STG_SRC_SCHEMA_demo')",
+							"tableName": "@variables('STG_SRC_TBL_STAGE_TBL_1')"
+						}
+					}
+				]
+			},
+			{
+				"name": "StredProcSTAGE_TBL_1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureParameters": {
+						"SCHEMA_NAME": {
+							"value": {
+								"value": "@variables('STG_SRC_SCHEMA_demo')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"TABLE_NAME": {
+							"value": {
+								"value": "@variables('STG_SRC_TBL_STAGE_TBL_1')",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					},
+					"dataIntegrationUnits": 0
+				}
+			},
+			{
+				"name": "CopyData_stage_tbl",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "simpleQuery",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_StageVault_001",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaName": "@variables('STG_TGT_SCHEMA_demo')",
+							"tableName": "@variables('STG_TGT_TBL_STAGE_TBL')"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_CustomerVault_001",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaName": "@variables('MI_TGT_SCHEMA_demo')",
+							"tableName": "@variables('MI_TGT_TBL_STAGE_TBL')"
+						}
+					}
+				]
+			},
+			{
+				"name": "simpleQuery",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "CopyData_STAGE_TBL_1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "simpleQuery",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"dataIntegrationUnits": 0
+				}
+			}
+		],
+		"variables": {
+			"STG_SRC_TBL_STAGE_TBL_1": {
+				"type": "String",
+				"defaultValue": "SRC_STAGE_TBL_1_STAGE_TBL"
+			},
+			"MI_TGT_SCHEMA_demo": {
+				"type": "String",
+				"defaultValue": "demo"
+			},
+			"STG_TGT_SCHEMA_demo": {
+				"type": "String",
+				"defaultValue": "TGT_demo"
+			},
+			"MI_TGT_TBL_STAGE_TBL": {
+				"type": "String",
+				"defaultValue": "STAGE_TBL"
+			},
+			"MI_SRC_SCHEMA_demo": {
+				"type": "String",
+				"defaultValue": "demo"
+			},
+			"STG_TGT_TBL_STAGE_TBL": {
+				"type": "String",
+				"defaultValue": "TGT_STAGE_TBL_1_STAGE_TBL"
+			},
+			"MI_SRC_TBL_STAGE_TBL_1": {
+				"type": "String",
+				"defaultValue": "STAGE_TBL_1"
+			},
+			"STG_SRC_SCHEMA_demo": {
+				"type": "String",
+				"defaultValue": "SRC_demo"
+			}
+		},
+		"annotations": []
+	}
+}

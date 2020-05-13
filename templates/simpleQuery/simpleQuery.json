@@ -1,0 +1,311 @@
+{
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"resources": [
+		{
+			"apiVersion": "2020-01-01",
+			"dependsOn": [],
+			"name": "[concat(parameters('factoryName'), '/DS_StageVault_001')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"properties": {
+				"typeProperties": {
+					"firstRowAsHeader": false
+				},
+				"linkedServiceName": {
+					"type": "LinkedServiceReference",
+					"referenceName": "[parameters('demo')]"
+				},
+				"type": "AzureSqlTable",
+				"parameters": {
+					"schemaName": {
+						"type": "string"
+					},
+					"tableName": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		{
+			"apiVersion": "2018-06-01",
+			"dependsOn": [],
+			"name": "[concat(parameters('factoryName'), '/DS_DataVault_001')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"properties": {
+				"typeProperties": {
+					"firstRowAsHeader": true
+				},
+				"linkedServiceName": {
+					"type": "LinkedServiceReference",
+					"referenceName": "[parameters('demo')]"
+				},
+				"type": "AzureSqlMITable",
+				"parameters": {
+					"schemaName": {
+						"type": "string"
+					},
+					"tableName": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		{
+			"apiVersion": "2018-06-01",
+			"dependsOn": [],
+			"name": "[concat(parameters('factoryName'), '/DS_CustomerVault_001')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"properties": {
+				"typeProperties": {
+					"firstRowAsHeader": true
+				},
+				"linkedServiceName": {
+					"type": "LinkedServiceReference",
+					"referenceName": "[parameters('demo')]"
+				},
+				"type": "AzureSqlMITable",
+				"parameters": {
+					"schemaName": {
+						"type": "string"
+					},
+					"tableName": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		{
+			"apiVersion": "2018-06-01",
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/STAGE_TBL_1')]",
+				"[concat(variables('factoryId'), '/datasets/STAGE_TBL')]"
+			],
+			"name": "[concat(parameters('factoryName'), '/simpleQuery')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"properties": {
+				"typeProperties": {
+					"sources": [
+						{
+							"name": "stagetbl1",
+							"dataset": {
+								"type": "DatasetReference",
+								"referenceName": "DS_StageVault_001"
+							}
+						}
+					],
+					"sinks": [
+						{
+							"name": "stagetbl",
+							"dataset": {
+								"type": "DatasetReference",
+								"referenceName": "DS_StageVault_001"
+							}
+						}
+					],
+					"transformations": [
+						{
+							"name": "exprstagetbl1"
+						},
+						{
+							"name": "aggrstagetbl1"
+						},
+						{
+							"name": "exprstagetbl11"
+						},
+						{
+							"name": "aggrstagetbl11"
+						},
+						{
+							"name": "sorterstagetbl1"
+						}
+					],
+					"script": "\n\nsource(output(\n\t\tMETRIC1 as string,\n\t\tCOL1 as string,\n\t\tCOL2 as string,\n\t\tCOL3 as string,\n\t\tCOL4 as string,\n\t\tCOL5 as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> stagetbl1\nsorterstagetbl1 sink(allowSchemaDrift: true,\n\t \n\tvalidateSchema: false,\n\tinsertable:true,mapColumn(\n\t\tCOL1,\n\t\tCOL2,\n\t\tCOL3,\n\t\tCOL4,\n\t\tCOL5,\n\t\tmax_metric,\n\t\tmin_metric,\n\t\tavg_metric,\n\t\ttotal_metric = METRIC1,\n\t\tentry_cnt\n\t)) ~> stagetbl\nstagetbl1 derive(METRIC1 = METRIC1,\n\t\tCOL1 = COL1,\n\t\tCOL2 = COL2,\n\t\tCOL3 = COL3,\n\t\tCOL4 = COL4,\n\t\tCOL5 = COL5) ~> exprstagetbl1\nexprstagetbl1 aggregate(groupBy(COL1,\n\t\tCOL2,\n\t\tCOL3,\n\t\tCOL4,\n\t\tCOL5),\n\tMETRIC1 = sum(METRIC1)) ~> aggrstagetbl1\naggrstagetbl1 derive(COL1 = COL1,\n\t\tCOL2 = COL2,\n\t\tCOL3 = COL3,\n\t\tCOL4 = COL4,\n\t\tCOL5 = COL5,\n\t\tMETRIC1 = METRIC1) ~> exprstagetbl11\nexprstagetbl11 aggregate(groupBy(COL1,\n\t\tCOL2,\n\t\tCOL3,\n\t\tCOL4,\n\t\tCOL5),\n\tmax_metric = max(METRIC1),\n\tmin_metric = max(METRIC1),\n\tMETRIC1 = sum(METRIC1)) ~> aggrstagetbl11\naggrstagetbl11 sort(asc(COL1,true),\n\tasc(COL2,true),\n\tasc(COL3,true),\n\tasc(COL4,true),\n\tasc(COL5,true)) ~> sorterstagetbl1"
+				},
+				"type": "MappingDataFlow"
+			}
+		},
+		{
+			"apiVersion": "2018-06-01",
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/simpleQuery')]"
+			],
+			"name": "[concat(parameters('factoryName'), '/simpleQuery')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"properties": {
+				"variables": {
+					"STG_SRC_TBL_STAGE_TBL_1": {
+						"defaultValue": "SRC_STAGE_TBL_1_STAGE_TBL",
+						"type": "String"
+					},
+					"MI_TGT_SCHEMA_demo": {
+						"defaultValue": "demo",
+						"type": "String"
+					},
+					"STG_TGT_SCHEMA_demo": {
+						"defaultValue": "TGT_demo",
+						"type": "String"
+					},
+					"MI_TGT_TBL_STAGE_TBL": {
+						"defaultValue": "STAGE_TBL",
+						"type": "String"
+					},
+					"MI_SRC_SCHEMA_demo": {
+						"defaultValue": "demo",
+						"type": "String"
+					},
+					"STG_TGT_TBL_STAGE_TBL": {
+						"defaultValue": "TGT_STAGE_TBL_1_STAGE_TBL",
+						"type": "String"
+					},
+					"MI_SRC_TBL_STAGE_TBL_1": {
+						"defaultValue": "STAGE_TBL_1",
+						"type": "String"
+					},
+					"STG_SRC_SCHEMA_demo": {
+						"defaultValue": "SRC_demo",
+						"type": "String"
+					}
+				},
+				"activities": [
+					{
+						"outputs": [
+							{
+								"type": "DatasetReference",
+								"parameters": {
+									"schemaName": "@variables('STG_SRC_SCHEMA_demo')",
+									"tableName": "@variables('STG_SRC_TBL_STAGE_TBL_1')"
+								},
+								"referenceName": "DS_StageVault_001"
+							}
+						],
+						"typeProperties": {
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"dataIntegrationUnits": 0,
+							"source": {
+								"type": "AzureSqlSource"
+							}
+						},
+						"dependsOn": [
+							{
+								"activity": "StredProcSTAGE_TBL_1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"inputs": [
+							{
+								"type": "DatasetReference",
+								"parameters": {
+									"schemaName": "@variables('MI_SRC_SCHEMA_demo')",
+									"tableName": "@variables('MI_SRC_TBL_STAGE_TBL_1')"
+								},
+								"referenceName": "DS_DataVault_001"
+							}
+						],
+						"name": "CopyData_STAGE_TBL_1",
+						"type": "Copy"
+					},
+					{
+						"typeProperties": {
+							"dataIntegrationUnits": 0,
+							"storedProcedureParameters": {
+								"SCHEMA_NAME": {
+									"type": "String",
+									"value": "@variables('STG_SRC_SCHEMA_demo')"
+								},
+								"TABLE_NAME": {
+									"type": "String",
+									"value": "@variables('STG_SRC_TBL_STAGE_TBL_1')"
+								}
+							}
+						},
+						"name": "StredProcSTAGE_TBL_1",
+						"type": "SqlServerStoredProcedure"
+					},
+					{
+						"outputs": [
+							{
+								"type": "DatasetReference",
+								"parameters": {
+									"schemaName": "@variables('MI_TGT_SCHEMA_demo')",
+									"tableName": "@variables('MI_TGT_TBL_STAGE_TBL')"
+								},
+								"referenceName": "DS_CustomerVault_001"
+							}
+						],
+						"typeProperties": {
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"dataIntegrationUnits": 0,
+							"source": {
+								"type": "AzureSqlSource"
+							}
+						},
+						"dependsOn": [
+							{
+								"activity": "simpleQuery",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"inputs": [
+							{
+								"type": "DatasetReference",
+								"parameters": {
+									"schemaName": "@variables('STG_TGT_SCHEMA_demo')",
+									"tableName": "@variables('STG_TGT_TBL_STAGE_TBL')"
+								},
+								"referenceName": "DS_StageVault_001"
+							}
+						],
+						"name": "CopyData_stage_tbl",
+						"type": "Copy"
+					},
+					{
+						"typeProperties": {
+							"dataflow": {
+								"type": "DataFlowReference",
+								"referenceName": "simpleQuery"
+							},
+							"dataIntegrationUnits": 0
+						},
+						"dependsOn": [
+							{
+								"activity": "CopyData_STAGE_TBL_1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"name": "simpleQuery",
+						"type": "ExecuteDataFlow",
+						"policy": {
+							"secureInput": false,
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"secureOutput": false,
+							"retryIntervalInSeconds": 30
+						}
+					}
+				]
+			}
+		}
+	],
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"metadata": "Data Factory name",
+			"type": "String"
+		},
+		"demo": {
+			"type": "String"
+		}
+	}
+}

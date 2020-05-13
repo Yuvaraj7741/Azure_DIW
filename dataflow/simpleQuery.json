@@ -1,0 +1,44 @@
+{
+	"name": "simpleQuery",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_StageVault_001",
+						"type": "DatasetReference"
+					},
+					"name": "stagetbl1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_StageVault_001",
+						"type": "DatasetReference"
+					},
+					"name": "stagetbl"
+				}
+			],
+			"transformations": [
+				{
+					"name": "exprstagetbl1"
+				},
+				{
+					"name": "aggrstagetbl1"
+				},
+				{
+					"name": "exprstagetbl11"
+				},
+				{
+					"name": "aggrstagetbl11"
+				},
+				{
+					"name": "sorterstagetbl1"
+				}
+			],
+			"script": "source(output(\n\t\tMETRIC1 as string,\n\t\tCOL1 as string,\n\t\tCOL2 as string,\n\t\tCOL3 as string,\n\t\tCOL4 as string,\n\t\tCOL5 as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> stagetbl1\nstagetbl1 derive(METRIC1 = METRIC1,\n\t\tCOL1 = COL1,\n\t\tCOL2 = COL2,\n\t\tCOL3 = COL3,\n\t\tCOL4 = COL4,\n\t\tCOL5 = COL5) ~> exprstagetbl1\nexprstagetbl1 aggregate(groupBy(COL1,\n\t\tCOL2,\n\t\tCOL3,\n\t\tCOL4,\n\t\tCOL5),\n\tMETRIC1 = sum(METRIC1)) ~> aggrstagetbl1\naggrstagetbl1 derive(COL1 = COL1,\n\t\tCOL2 = COL2,\n\t\tCOL3 = COL3,\n\t\tCOL4 = COL4,\n\t\tCOL5 = COL5,\n\t\tMETRIC1 = METRIC1) ~> exprstagetbl11\nexprstagetbl11 aggregate(groupBy(COL1,\n\t\tCOL2,\n\t\tCOL3,\n\t\tCOL4,\n\t\tCOL5),\n\tmax_metric = max(METRIC1),\n\t\tmin_metric = max(METRIC1),\n\t\tMETRIC1 = sum(METRIC1)) ~> aggrstagetbl11\naggrstagetbl11 sort(asc(COL1, true),\n\tasc(COL2, true),\n\tasc(COL3, true),\n\tasc(COL4, true),\n\tasc(COL5, true)) ~> sorterstagetbl1\nsorterstagetbl1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tCOL1,\n\t\tCOL2,\n\t\tCOL3,\n\t\tCOL4,\n\t\tCOL5,\n\t\tmax_metric,\n\t\tmin_metric,\n\t\tavg_metric,\n\t\ttotal_metric = METRIC1,\n\t\tentry_cnt\n\t)) ~> stagetbl"
+		}
+	}
+}
