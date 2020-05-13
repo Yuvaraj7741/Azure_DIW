@@ -1,0 +1,113 @@
+{
+	"name": "PPL_Walgreens_DataQuality_Master",
+	"properties": {
+		"activities": [
+			{
+				"name": "ACTY_FRECH_Layer",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.HadoopTableNames",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "ACTY_Call_RAW_Process",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/687386@cognizant.com/DIFIngestion",
+								"baseParameters": {
+									"batchId": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"feedName": {
+										"value": "@item()",
+										"type": "Expression"
+									},
+									"systemName": "Wal_Demo_Hadoop_ADLS",
+									"layerName": "datalake",
+									"metadataPath": "IDWMetaStoreDev/",
+									"triggerType": "Schedule",
+									"startTime": {
+										"value": "@pipeline().TriggerTime",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "ADB_IDWFrameWork_ProcessComponent",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"HadoopDatabaseNames": {
+				"type": "string",
+				"defaultValue": "foodmart"
+			},
+			"HadoopTableNames": {
+				"type": "array",
+				"defaultValue": [
+					"sales_fact_1997",
+					"sales_fact_1998",
+					"sales_fact_dec_1998",
+					"inventory_fact_1997",
+					"inventory_fact_1998",
+					"agg_pl_01_sales_fact_1997",
+					"agg_l_03_sales_fact_1997",
+					"agg_l_04_sales_fact_1997",
+					"agg_ll_01_sales_fact_1997",
+					"agg_l_05_sales_fact_1997",
+					"agg_c_10_sales_fact_1997",
+					"agg_c_14_sales_fact_1997",
+					"agg_lc_100_sales_fact_1997",
+					"agg_c_special_sales_fact_1997",
+					"agg_g_ms_pcat_sales_fact_1997",
+					"agg_lc_06_sales_fact_1997",
+					"currency",
+					"account",
+					"category",
+					"customer",
+					"days",
+					"department",
+					"employee",
+					"employee_closure",
+					"expense_fact",
+					"position",
+					"product",
+					"product_class",
+					"promotion",
+					"region",
+					"reserve_employee",
+					"salary",
+					"store",
+					"store_ragged",
+					"time_by_day",
+					"warehouse",
+					"warehouse_class"
+				]
+			}
+		},
+		"folder": {
+			"name": "Walgreens"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

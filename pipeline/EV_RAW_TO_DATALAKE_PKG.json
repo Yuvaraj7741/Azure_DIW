@@ -1,0 +1,67 @@
+{
+	"name": "EV_RAW_TO_DATALAKE_PKG",
+	"properties": {
+		"activities": [
+			{
+				"name": "Notebook1",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/687357@cognizant.com/DIFIngestion",
+					"baseParameters": {
+						"filePath": {
+							"value": "@pipeline().parameters.fileName",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@pipeline().parameters.folderName",
+							"type": "Expression"
+						},
+						"metadataPath": {
+							"value": "@pipeline().parameters.metadataPath",
+							"type": "Expression"
+						},
+						"triggerType": {
+							"value": "@pipeline().parameters.triggerType",
+							"type": "Expression"
+						},
+						"batchId": {
+							"value": "@pipeline().RunId",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ADB_IDWFrameWork_ProcessComponent",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"fileName": {
+				"type": "string"
+			},
+			"folderName": {
+				"type": "string"
+			},
+			"metadataPath": {
+				"type": "string",
+				"defaultValue": "IDWMetaStoreTest/"
+			},
+			"triggerType": {
+				"type": "string",
+				"defaultValue": "Event"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

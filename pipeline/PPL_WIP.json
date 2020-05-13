@@ -1,0 +1,85 @@
+{
+	"name": "PPL_WIP",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"description": "Through this activity the processing would happen for each configuration value.",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Lookup_Get_Configuration_Values",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('ACTY_Lookup_Get_Configuration_Values').output",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "DatabricksNotebook1",
+							"description": "Through this activity the file process of Landing to stage would happen",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/400370@cognizant.com/KaiserDemo/IDWLandingToStage",
+								"baseParameters": {
+									"DataFilePath": {
+										"value": "@item().LandingPath",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "ADB_IDWFrameWork_ProcessComponent",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "ACTY_Lookup_Get_Configuration_Values",
+				"description": "This lookup activity is used to read the configuration values in the files",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"dataset": {
+						"referenceName": "ABS_IDWFRMWRK_DIWLayer",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Kaiser Demo"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

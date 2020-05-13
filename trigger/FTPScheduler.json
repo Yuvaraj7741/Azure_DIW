@@ -1,0 +1,31 @@
+{
+	"name": "FTPScheduler",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "SC_LNDG_TO_RAW",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"feedName": "Sales_Data",
+					"layerName": "landing",
+					"metadataPath": "IDWMetaStoreDev/",
+					"systemName": "Sales_System",
+					"triggerType": "Schedule"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 24,
+				"startTime": "2019-11-13T14:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

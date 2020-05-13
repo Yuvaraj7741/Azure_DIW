@@ -1,0 +1,35 @@
+{
+	"name": "IDWFRMWRK_BLOB_Landing_Layer",
+	"properties": {
+		"description": "Through this connection we would connecting to landing layer of IDW",
+		"linkedServiceName": {
+			"referenceName": "ABS_IDW_FRMWRK_Config",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Path": {
+				"type": "string"
+			},
+			"FileName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().FileName",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().Path",
+					"type": "Expression"
+				},
+				"container": "diw"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

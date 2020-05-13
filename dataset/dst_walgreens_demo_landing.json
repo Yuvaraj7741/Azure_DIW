@@ -1,0 +1,21 @@
+{
+	"name": "dst_walgreens_demo_landing",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ABS_IDW_FRMWRK_Config",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "landing",
+				"container": "diwadls"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

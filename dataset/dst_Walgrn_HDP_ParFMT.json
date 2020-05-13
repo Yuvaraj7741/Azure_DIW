@@ -1,0 +1,36 @@
+{
+	"name": "dst_Walgrn_HDP_ParFMT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ABS_IDW_FRMWRK_Config",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TableName": {
+				"type": "string"
+			},
+			"LayerName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(dataset().TableName,'.parquet')",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().LayerName",
+					"type": "Expression"
+				},
+				"container": "diwadls"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

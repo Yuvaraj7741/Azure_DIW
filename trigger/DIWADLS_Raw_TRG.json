@@ -1,0 +1,27 @@
+{
+	"name": "DIWADLS_Raw_TRG",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PPL_DIF_SCHEDULER",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"metadataPath": "IDWMetaStoreTest/"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/diwadls/blobs/raw",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/c799623a-3f04-4e86-b158-d98a2abd8139/resourceGroups/IDWIngestion/providers/Microsoft.Storage/storageAccounts/idwlake",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

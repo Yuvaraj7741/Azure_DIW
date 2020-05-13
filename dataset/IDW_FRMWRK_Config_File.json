@@ -1,0 +1,25 @@
+{
+	"name": "IDW_FRMWRK_Config_File",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ABS_IDW_FRMWRK_Config",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "IDWConfig.csv",
+				"folderPath": "IDWConfigurations",
+				"container": "diw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,16 @@
+{
+	"name": "LS_NCBI_Data",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "This is a linked server connection to NCBI database",
+		"annotations": [],
+		"type": "FtpServer",
+		"typeProperties": {
+			"host": "ftp://ftp.1000genomes.ebi.ac.uk",
+			"port": 21,
+			"enableSsl": false,
+			"enableServerCertificateValidation": false,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

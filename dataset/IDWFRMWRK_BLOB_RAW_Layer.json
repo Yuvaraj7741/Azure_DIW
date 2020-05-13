@@ -1,0 +1,34 @@
+{
+	"name": "IDWFRMWRK_BLOB_RAW_Layer",
+	"properties": {
+		"description": "Through this connection we would connecting to RAW layer of IDW",
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_IDW_RAW_DataLake",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Path": {
+				"type": "string"
+			},
+			"FileName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureDataLakeStoreLocation",
+				"fileName": {
+					"value": "@dataset().FileName",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().Path",
+					"type": "Expression"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

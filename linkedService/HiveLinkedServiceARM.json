@@ -1,0 +1,18 @@
+{
+	"name": "HiveLinkedServiceARM",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "Hive",
+		"typeProperties": {
+			"host": "192.168.0.1",
+			"port": 443,
+			"authenticationType": "UsernameAndPassword",
+			"serviceDiscoveryMode": false,
+			"useNativeQuery": false,
+			"username": "admin",
+			"enableSsl": false,
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBQ0RBVEFGQUNUT1JZXzA5YmMyY2FmLWZhMWMtNDIxOS1hZjQ5LWI1ZjlkODU3ZDBhYiINCn0="
+		}
+	}
+}

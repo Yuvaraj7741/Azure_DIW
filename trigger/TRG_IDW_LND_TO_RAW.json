@@ -1,0 +1,28 @@
+{
+	"name": "TRG_IDW_LND_TO_RAW",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "KPMGPipeline_LNDG_TO_RAW",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"AcceptedDataFileName": "@triggerBody().fileName",
+					"DataFileName": "@triggerBody().fileName",
+					"FolderPath": "@triggerBody().folderPath"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/diw/blobs/landing/",
+			"scope": "/subscriptions/c799623a-3f04-4e86-b158-d98a2abd8139/resourceGroups/IDWIngestion/providers/Microsoft.Storage/storageAccounts/idwlake",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

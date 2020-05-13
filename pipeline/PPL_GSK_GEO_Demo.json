@@ -1,0 +1,59 @@
+{
+	"name": "PPL_GSK_GEO_Demo",
+	"properties": {
+		"description": "This pipeline is created for the Geonyme process through Microsoft Genoyme Service",
+		"activities": [
+			{
+				"name": "ADB_Get_Genoyme_Data",
+				"description": "Through this activity we would download sample data",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/400370@cognizant.com/ADB_Get_GynomeData"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_ADB_GEO_Demo",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ADB_Prc_GenoymeDataThroughMGService",
+				"description": "Through this activity we would download sample data",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ADB_Get_Genoyme_Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/400370@cognizant.com/ADB_Process_GeonymeThroughMG"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_ADB_GEO_Demo",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

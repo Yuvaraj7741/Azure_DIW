@@ -1,0 +1,99 @@
+{
+	"name": "SC_LNDG_TO_RAW",
+	"properties": {
+		"activities": [
+			{
+				"name": "Notebook1",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/687386@cognizant.com/DIF/Ingestion/dev/GSK/DIFIngestionGSKDev_v0.9",
+					"baseParameters": {
+						"feedName": {
+							"value": "@pipeline().parameters.feedName",
+							"type": "Expression"
+						},
+						"systemName": {
+							"value": "@pipeline().parameters.systemName",
+							"type": "Expression"
+						},
+						"layerName": {
+							"value": "@pipeline().parameters.layerName",
+							"type": "Expression"
+						},
+						"triggerType": {
+							"value": "@pipeline().parameters.triggerType",
+							"type": "Expression"
+						},
+						"metadataPath": {
+							"value": "@pipeline().parameters.metadataPath",
+							"type": "Expression"
+						},
+						"batchId": {
+							"value": "@pipeline().RunId",
+							"type": "Expression"
+						},
+						"startTime": {
+							"value": "@pipeline().TriggerTime",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ADB_IDWFrameWork_ProcessComponent",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"feedName": {
+				"type": "string",
+				"defaultValue": "Sales_Data"
+			},
+			"layerName": {
+				"type": "string"
+			},
+			"metadataPath": {
+				"type": "string"
+			},
+			"systemName": {
+				"type": "string",
+				"defaultValue": "Sales_System"
+			},
+			"triggerType": {
+				"type": "string",
+				"defaultValue": "Schedule"
+			}
+		},
+		"variables": {
+			"feedName": {
+				"type": "String"
+			},
+			"systemName": {
+				"type": "String"
+			},
+			"layerName": {
+				"type": "String"
+			},
+			"metadataPath": {
+				"type": "String"
+			},
+			"triggerType": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "DIF_DEV"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

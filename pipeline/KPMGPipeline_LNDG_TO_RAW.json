@@ -1,0 +1,74 @@
+{
+	"name": "KPMGPipeline_LNDG_TO_RAW",
+	"properties": {
+		"activities": [
+			{
+				"name": "Notebook1",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/687386@cognizant.com/DIF/IDWLandingToStage",
+					"baseParameters": {
+						"DataFilePath": {
+							"value": "@pipeline().parameters.DataFilePath",
+							"type": "Expression"
+						},
+						"DataFileName": {
+							"value": "@pipeline().parameters.DataFileName",
+							"type": "Expression"
+						},
+						"StageDataFilePath": {
+							"value": "@pipeline().parameters.StageDataFilePath",
+							"type": "Expression"
+						},
+						"AcceptedDataFileName": {
+							"value": "@pipeline().parameters.AcceptedDataFileName",
+							"type": "Expression"
+						},
+						"LayerName": {
+							"value": "@pipeline().parameters.LayerName",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ADB_IDWFrameWork_ProcessComponent",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"AcceptedDataFileName": {
+				"type": "string"
+			},
+			"DataFileName": {
+				"type": "string"
+			},
+			"DataFilePath": {
+				"type": "string",
+				"defaultValue": "/dbfs/mnt/kaiserdemo/landing/"
+			},
+			"StageDataFilePath": {
+				"type": "string",
+				"defaultValue": "/dbfs/mnt/kaiserdemo/raw/"
+			},
+			"LayerName": {
+				"type": "string",
+				"defaultValue": "landing"
+			},
+			"FolderPath": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

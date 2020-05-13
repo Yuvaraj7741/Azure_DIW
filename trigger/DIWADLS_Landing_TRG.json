@@ -1,0 +1,39 @@
+{
+	"name": "DIWADLS_Landing_TRG",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PPL_DIF_SCHEDULER",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"metadataPath": "IDWMetaStoreTest/"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "PPL_DIF_TRIGGER",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"filePath": "@triggerBody().fileName",
+					"folderPath": "@triggerBody().folderPath",
+					"metadataPath": "IDWMetaStoreChubb/",
+					"triggerType": "Event"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/diwadls/blobs/landing/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/c799623a-3f04-4e86-b158-d98a2abd8139/resourceGroups/IDWIngestion/providers/Microsoft.Storage/storageAccounts/idwlake",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"name": "ABS_IDW_FRMWRK_Config",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "This is linked service created to read the framework configuration",
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=idwdemostorage;EndpointSuffix=core.windows.net;",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIklEV0RFTU9BREZfNDlkMzY3MDQtMzZlMy00NWY2LTlkOGQtN2MxNDgyMjI4YTJhIg0KfQ=="
+		}
+	}
+}

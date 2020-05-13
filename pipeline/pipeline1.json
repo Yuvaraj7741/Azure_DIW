@@ -3,25 +3,153 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow3",
-				"type": "ExecuteDataFlow",
+				"name": "ACTY_Set_Start_Time",
+				"type": "SetVariable",
 				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dataflow3",
-						"type": "DataFlowReference"
+					"variableName": "ActivityStartTime",
+					"value": {
+						"value": "@utcnow()",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Set_Start_Time",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			},
+			{
+				"name": "Wait2",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Set_Start_Time1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			},
+			{
+				"name": "ACTY_Set_Start_Time1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ACTY_WriteLog",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "ActivityStartTime",
+					"value": {
+						"value": "@utcnow()",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_WriteLog",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Wait1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "IDWLogLines",
+					"value": {
+						"value": "@Concat(pipeline().RunId,variables('ColumnSeparator'),pipeline().TriggerId,variables('ColumnSeparator'),'Wait-Activity1',variables('ColumnSeparator'),variables('ActivityStartTime'),variables('ColumnSeparator'),utcnow(),variables('RowSeparator'))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_Swap_Values",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Wait2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "IDWSwapLogLine",
+					"value": {
+						"value": "@variables('IDWLogLines')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_WriteLog1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Swap_Values",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "IDWLogLines",
+					"value": {
+						"value": "@Concat(variables('IDWSwapLogLine'),pipeline().RunId,variables('ColumnSeparator'),pipeline().TriggerId,variables('ColumnSeparator'),'Wait-Activity2',variables('ColumnSeparator'),variables('ActivityStartTime'),variables('ColumnSeparator'),utcnow())",
+						"type": "Expression"
 					}
 				}
 			}
 		],
+		"variables": {
+			"ActivityStartTime": {
+				"type": "String"
+			},
+			"IDWLogs": {
+				"type": "Array"
+			},
+			"ColumnSeparator": {
+				"type": "String",
+				"defaultValue": ","
+			},
+			"RowSeparator": {
+				"type": "String",
+				"defaultValue": "|"
+			},
+			"IDWLogLines": {
+				"type": "String"
+			},
+			"IDWSwapLogLine": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"

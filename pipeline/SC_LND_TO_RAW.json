@@ -1,0 +1,93 @@
+{
+	"name": "SC_LND_TO_RAW",
+	"properties": {
+		"activities": [
+			{
+				"name": "ACTY_ForEach_Layer",
+				"description": "Through this activity we would get the files in Landing area",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.layerName",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "ACTY_DatabricksNotebook_Process_LandingToStage",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Shared/DIF/DIFIngestion_v0.1",
+								"baseParameters": {
+									"feedName": {
+										"value": "@coalesce(pipeline().parameters.feedName,'')",
+										"type": "Expression"
+									},
+									"systemName": {
+										"value": "@pipeline().parameters.systemName",
+										"type": "Expression"
+									},
+									"layerName": {
+										"value": "@item()",
+										"type": "Expression"
+									},
+									"triggerType": {
+										"value": "@pipeline().parameters.triggerType",
+										"type": "Expression"
+									},
+									"metadataPath": {
+										"value": "@pipeline().parameters.metadataPath",
+										"type": "Expression"
+									},
+									"batchId": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricksDefault",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"feedName": {
+				"type": "string"
+			},
+			"layerName": {
+				"type": "array"
+			},
+			"metadataPath": {
+				"type": "string",
+				"defaultValue": "IDWMetaStoreCDC/"
+			},
+			"systemName": {
+				"type": "string"
+			},
+			"triggerType": {
+				"type": "string",
+				"defaultValue": "Schedule"
+			}
+		},
+		"folder": {
+			"name": "DIF"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

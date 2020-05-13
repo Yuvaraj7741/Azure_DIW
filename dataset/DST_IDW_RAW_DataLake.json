@@ -1,0 +1,16 @@
+{
+	"name": "DST_IDW_RAW_DataLake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_IDW_RAW_DataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"fileName": "",
+			"folderPath": "Enriched"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

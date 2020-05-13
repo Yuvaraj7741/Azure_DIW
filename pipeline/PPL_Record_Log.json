@@ -1,0 +1,93 @@
+{
+	"name": "PPL_Record_Log",
+	"properties": {
+		"description": "This is a Pipeline to record the logs of a ADF pipeline",
+		"activities": [
+			{
+				"name": "Switch1",
+				"type": "Switch",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"on": {
+						"value": "@pipeline().parameters.LogStatusFlag",
+						"type": "Expression"
+					},
+					"cases": [
+						{
+							"value": "x",
+							"activities": [
+								{
+									"name": "ACTY_Log_copy1",
+									"type": "AppendVariable",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "Logs",
+										"value": {
+											"value": "@Concat(pipeline().parameters.PipelineID,variables('ColumnSeparator'),pipeline().parameters.ParentPipelineID,variables('ColumnSeparator'),pipeline().parameters.ActivityName,variables('ColumnSeparator'),pipeline().parameters.ActivityOrder,variables('ColumnSeparator'),pipeline().parameters.StartTime,variables('ColumnSeparator'),pipeline().parameters.EndTime)",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					],
+					"defaultActivities": [
+						{
+							"name": "ACTY_Log",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Logs",
+								"value": {
+									"value": "@Concat(pipeline().parameters.PipelineID,variables('ColumnSeparator'),pipeline().parameters.ParentPipelineID,variables('ColumnSeparator'),pipeline().parameters.ActivityName,variables('ColumnSeparator'),pipeline().parameters.ActivityOrder,variables('ColumnSeparator'),pipeline().parameters.StartTime,variables('ColumnSeparator'),pipeline().parameters.EndTime)",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"LogStatusFlag": {
+				"type": "string"
+			},
+			"PipelineID": {
+				"type": "string"
+			},
+			"ParentPipelineID": {
+				"type": "string"
+			},
+			"ActivityName": {
+				"type": "string"
+			},
+			"ActivityOrder": {
+				"type": "string"
+			},
+			"StartTime": {
+				"type": "string"
+			},
+			"EndTime": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"Logs": {
+				"type": "Array"
+			},
+			"ColumnSeparator": {
+				"type": "String",
+				"defaultValue": ","
+			},
+			"RowSeparator": {
+				"type": "String",
+				"defaultValue": "|"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

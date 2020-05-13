@@ -1,0 +1,42 @@
+{
+	"name": "landingTrigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "LDNG_TO_RAW",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"fileName": "@triggerBody().fileName",
+					"folderName": "@triggerBody().folderPath",
+					"metadataPath": "IDWMetaStore/",
+					"triggerType": "Event"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "EV_LND_TO_RAW",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"fileName": "@triggerBody().fileName",
+					"folderName": "@triggerBody().folderPath",
+					"metadataPath": "IDWMetaStoreTest/",
+					"triggerType": "Event"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/diw/blobs/landing/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/c799623a-3f04-4e86-b158-d98a2abd8139/resourceGroups/IDWIngestion/providers/Microsoft.Storage/storageAccounts/idwlake",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

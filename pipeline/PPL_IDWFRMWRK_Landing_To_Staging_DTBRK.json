@@ -1,0 +1,400 @@
+{
+	"name": "PPL_IDWFRMWRK_Landing_To_Staging_DTBRK",
+	"properties": {
+		"description": "This is a pipeline through which we would be ingesting data from Landing to Staging after applying Data cleansing rules",
+		"activities": [
+			{
+				"name": "ACTY_Lookup_Get_Configuration_Values",
+				"description": "This lookup activity is used to read the configuration values in the files",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"dataset": {
+						"referenceName": "ABS_IDWFRMWRK_DIWLayer",
+						"type": "DatasetReference",
+						"parameters": {
+							"Path": {
+								"value": "@pipeline().parameters.ConfigurationFilepath",
+								"type": "Expression"
+							},
+							"Name": {
+								"value": "@pipeline().parameters.ConfigurationFilename",
+								"type": "Expression"
+							}
+						}
+					}
+				}
+			},
+			{
+				"name": "ACTY_SetVariable_LandingPath",
+				"description": "This variable is used to set the Landing Path variable",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Lookup_Get_Configuration_Values",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "LandingPath",
+					"value": {
+						"value": "@activity('ACTY_Lookup_Get_Configuration_Values').output.firstRow.IDWConfigurations[0].LandingPath",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_SetVariable_MaskColumns",
+				"description": "This variable is used to set the MaskColumns variable",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Lookup_Get_Configuration_Values",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MaskColumns",
+					"value": {
+						"value": "@activity('ACTY_Lookup_Get_Configuration_Values').output.firstRow.IDWConfigurations[0].MaskColumns",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_SetVariable_StagingPath",
+				"description": "This variable is used to set the StagingPath variable",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Lookup_Get_Configuration_Values",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "StagingPath",
+					"value": {
+						"value": "@activity('ACTY_Lookup_Get_Configuration_Values').output.firstRow.IDWConfigurations[0].StagingPath",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_SetVariable_CertifiedDataPath",
+				"description": "This variable is used to set the CertifiedDataPath variable",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Lookup_Get_Configuration_Values",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "CertifiedDataPath",
+					"value": {
+						"value": "@activity('ACTY_Lookup_Get_Configuration_Values').output.firstRow.IDWConfigurations[0].CertifiedDataPath",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_SetVariable_RejectedDataPath",
+				"description": "This variable is used to set the RejectedDataPath variable",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Lookup_Get_Configuration_Values",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "RejectedDataPath",
+					"value": {
+						"value": "@activity('ACTY_Lookup_Get_Configuration_Values').output.firstRow.IDWConfigurations[0].RejectedDataPath",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_SetVariable_NotNullColumns",
+				"description": "This variable is used to set the NotNullColumns variable",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Lookup_Get_Configuration_Values",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "NotNullColumns",
+					"value": {
+						"value": "@activity('ACTY_Lookup_Get_Configuration_Values').output.firstRow.IDWConfigurations[0].NotNullColumns",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_Get Metadata_LandingFiles",
+				"description": "Through this activity we would the files that are in the landing zone",
+				"type": "GetMetadata",
+				"dependsOn": [
+					{
+						"activity": "ACTY_SetVariable_LandingPath",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ACTY_SetVariable_MaskColumns",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ACTY_SetVariable_StagingPath",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ACTY_SetVariable_CertifiedDataPath",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ACTY_SetVariable_RejectedDataPath",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ACTY_SetVariable_NotNullColumns",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ACTY_SetVariable_Feednames",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ABS_IDWFRMWRK_DIWLayer_CSV",
+						"type": "DatasetReference",
+						"parameters": {
+							"ContainerName": {
+								"value": "@substring(variables('LandingPath'),0,indexof(variables('LandingPath'),'/'))",
+								"type": "Expression"
+							},
+							"Path": "StudentData",
+							"Filename": "*.csv"
+						}
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "ACTY_SetVariable_Feednames",
+				"description": "This variable is used to set the Feednames variable",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Lookup_Get_Configuration_Values",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "feednames",
+					"value": {
+						"value": "@activity('ACTY_Lookup_Get_Configuration_Values').output.firstRow.IDWConfigurations[0].feednames",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_ForEach_LandingFiles",
+				"description": "Through this activity we would get the files in Landing area",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Get Metadata_LandingFiles",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('ACTY_Get Metadata_LandingFiles').output.childItems",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"batchCount": 10,
+					"activities": [
+						{
+							"name": "ACTY_DatabricksNotebook_Process_LandingToStage",
+							"description": "Through this activity the file process of Landing to stage would happen",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/400370@cognizant.com/KaiserDemo/IDWLandingToStage",
+								"baseParameters": {
+									"DataFilePath": {
+										"value": "@variables('LandingPath')",
+										"type": "Expression"
+									},
+									"DataFileName": {
+										"value": "@item().name",
+										"type": "Expression"
+									},
+									"StageDataFilePath": {
+										"value": "@variables('StagingPath')",
+										"type": "Expression"
+									},
+									"AcceptedDataFileName": {
+										"value": "@item().name",
+										"type": "Expression"
+									},
+									"RejectedDataFileName": {
+										"value": "@concat('Rejected_',replace(item().name,'.csv','_'),utcnow('yyyyMMdd'),'.csv')",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "ADB_IDWFrameWork_ProcessComponent",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"ConfigurationFilepath": {
+				"type": "string",
+				"defaultValue": "diw/IDWConfigurations/"
+			},
+			"ConfigurationFilename": {
+				"type": "string",
+				"defaultValue": "DiF_Azure_Configuration.json"
+			}
+		},
+		"variables": {
+			"LandingPath": {
+				"type": "String",
+				"defaultValue": "diw/StudentData/"
+			},
+			"StagingPath": {
+				"type": "String",
+				"defaultValue": "diw/StudentDataStaging/"
+			},
+			"CertifiedDataPath": {
+				"type": "String",
+				"defaultValue": "diw/StudentDataStaging/CertifiedData/"
+			},
+			"RejectedDataPath": {
+				"type": "String",
+				"defaultValue": "diw/StudentDataStaging/RejectedData/"
+			},
+			"MaskColumns": {
+				"type": "Array",
+				"defaultValue": [
+					"Student SSN"
+				]
+			},
+			"NotNullColumns": {
+				"type": "Array",
+				"defaultValue": [
+					"Student ID",
+					"Student Name",
+					"Student DOB",
+					"Attendance Chart",
+					"Practical marks",
+					"Theory marks"
+				]
+			},
+			"feednames": {
+				"type": "String",
+				"defaultValue": "*.csv"
+			},
+			"LandingFileName": {
+				"type": "String"
+			},
+			"CertifieddataFilename": {
+				"type": "String"
+			},
+			"NoncertifieddataFilename": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Kaiser Demo"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

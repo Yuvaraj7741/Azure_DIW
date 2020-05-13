@@ -1,0 +1,134 @@
+{
+	"name": "PPL_PRC_IDW_DIF_SourceSystems",
+	"properties": {
+		"activities": [
+			{
+				"name": "ACTY_ForEach_SourceSystems",
+				"description": "Through this activity we would get the files in Landing area",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Lookup_Get_Configuration_Values",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('systemNames')",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"batchCount": 10,
+					"activities": [
+						{
+							"name": "PRC_System_Layer",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "SC_LND_TO_RAW",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"feedName": {
+										"value": "@variables('feedName')",
+										"type": "Expression"
+									},
+									"layerName": {
+										"value": "@variables('layerNames')",
+										"type": "Expression"
+									},
+									"metadataPath": {
+										"value": "@pipeline().parameters.metadataPath",
+										"type": "Expression"
+									},
+									"systemName": {
+										"value": "@item()",
+										"type": "Expression"
+									},
+									"triggerType": {
+										"value": "@pipeline().parameters.triggerType",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "ACTY_Lookup_Get_Configuration_Values",
+				"description": "This lookup activity is used to read the configuration values in the files",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"dataset": {
+						"referenceName": "ABS_IDWFRMWRK_DIWLayer",
+						"type": "DatasetReference",
+						"parameters": {
+							"Path": {
+								"value": "@concat('idwmetastore/',pipeline().parameters.metadataPath)",
+								"type": "Expression"
+							},
+							"Name": {
+								"value": "configMetadata.json",
+								"type": "Expression"
+							}
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"metadataPath": {
+				"type": "string",
+				"defaultValue": "IDWMetaStoreCDC/"
+			},
+			"triggerType": {
+				"type": "string",
+				"defaultValue": "Schedule"
+			}
+		},
+		"variables": {
+			"systemNames": {
+				"type": "Array",
+				"defaultValue": [
+					"FTP_System",
+					"SQL_System"
+				]
+			},
+			"layerNames": {
+				"type": "Array",
+				"defaultValue": [
+					"landing",
+					"datalake"
+				]
+			},
+			"feedName": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "DIF"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

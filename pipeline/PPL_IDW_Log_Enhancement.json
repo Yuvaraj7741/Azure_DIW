@@ -1,0 +1,157 @@
+{
+	"name": "PPL_IDW_Log_Enhancement",
+	"properties": {
+		"description": "This is a test pipeline for IDW Log",
+		"activities": [
+			{
+				"name": "ACTY_Set_Activity_Order",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Activity",
+					"value": {
+						"value": "'1'",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_Set_Activity_Name",
+				"description": "Through this activity we would set the activity name",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "ActivityName",
+					"value": {
+						"value": "Copy-Activity",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_Set_Start_Time",
+				"description": "Through this activity we would set the start time",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "StartTime",
+					"value": {
+						"value": "@utcnow()",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_Wait",
+				"description": "This activity is to mimic copy activity",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Set_Activity_Order",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ACTY_Set_Activity_Name",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ACTY_Set_Start_Time",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			},
+			{
+				"name": "ACTY_Set_EndTime",
+				"description": "Through this activity we would set the End time",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Wait",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "EndTime",
+					"value": {
+						"value": "@utcnow()",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ACTY_Collate_Log",
+				"description": "Through this activity we would collate the logs",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ACTY_Set_EndTime",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Activity",
+					"value": {
+						"value": "@Concat(pipeline().RunId,variables('ColumnSeparator'),pipeline().TriggerId,variables('ColumnSeparator'),variables('ActivityOrder'),variables('ColumnSeparator'),variables('ActivityName'),variables('ColumnSeparator'),variables('StartTime'),variables('ColumnSeparator'),variables('EndTime'))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"Activity": {
+				"type": "String"
+			},
+			"PipelineID": {
+				"type": "String",
+				"defaultValue": "Demo_System"
+			},
+			"ParentPipelineID": {
+				"type": "String"
+			},
+			"ActivityOrder": {
+				"type": "String"
+			},
+			"ActivityName": {
+				"type": "String"
+			},
+			"StartTime": {
+				"type": "String"
+			},
+			"EndTime": {
+				"type": "String"
+			},
+			"LineSeparator": {
+				"type": "String",
+				"defaultValue": "|"
+			},
+			"ColumnSeparator": {
+				"type": "String",
+				"defaultValue": ","
+			},
+			"Logs": {
+				"type": "Array"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

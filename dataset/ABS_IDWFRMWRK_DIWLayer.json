@@ -1,0 +1,36 @@
+{
+	"name": "ABS_IDWFRMWRK_DIWLayer",
+	"properties": {
+		"description": "This is a JSON file connectivity for the DIW Azure Blob container",
+		"linkedServiceName": {
+			"referenceName": "ABS_IDW_FRMWRK_Config",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Path": {
+				"type": "string",
+				"defaultValue": "diw/IDWConfigurations"
+			},
+			"Name": {
+				"type": "string",
+				"defaultValue": "DiF_Azure_Configuration"
+			}
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"format": {
+				"type": "JsonFormat"
+			},
+			"fileName": {
+				"value": "@dataset().Name",
+				"type": "Expression"
+			},
+			"folderPath": {
+				"value": "@dataset().Path",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

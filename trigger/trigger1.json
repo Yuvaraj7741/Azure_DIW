@@ -1,0 +1,30 @@
+{
+	"name": "trigger1",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "EV_RAW_TO_DATALAKE_PKG",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"fileName": ".",
+					"folderName": ".",
+					"metadataPath": ".",
+					"triggerType": "."
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 1,
+				"startTime": "2019-11-26T13:34:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

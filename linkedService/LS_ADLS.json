@@ -1,0 +1,14 @@
+{
+	"name": "LS_ADLS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "https://dacdemo.azuredatalakestore.net/webhdfs/v1",
+			"tenant": "de08c407-19b9-427d-9fe8-edf254300ca7",
+			"subscriptionId": "c799623a-3f04-4e86-b158-d98a2abd8139",
+			"resourceGroupName": "DAC"
+		}
+	}
+}
